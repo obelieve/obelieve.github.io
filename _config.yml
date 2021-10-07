@@ -77,7 +77,7 @@ theme: next
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
    type: git
-   repo: https://github.com/obelieve/obelieve.github.io.git
+   repo: git@github.com:obelieve/obelieve.github.io.git
    branch: master
    message: '更新'
 #百度访问统计  
