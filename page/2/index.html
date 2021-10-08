@@ -2,10 +2,8 @@
 
 
 
-  
 
-
-<html class="theme-next muse use-motion" lang="zh-Hans">
+<html class="theme-next pisces" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -37,11 +35,36 @@
 
 
 
-
   
   
   <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
 
 
 
@@ -50,29 +73,19 @@
 
 <link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+  <meta name="keywords" content="obelieve,java blog" />
 
 
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
 
 
 
-
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
 
 
 
@@ -94,12 +107,11 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Muse',
-    version: '5.1.4',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
     tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    motion: false,
     duoshuo: {
       userId: '0',
       author: '博主'
@@ -142,6 +154,12 @@
 
 
 
+
+
+
+
+
+
 <meta name="generator" content="Hexo 4.2.1"></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -151,8 +169,9 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-right 
+   page-home 
+ ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -189,7 +208,7 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/%20" rel="section">
+          <a href="/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
@@ -198,12 +217,42 @@
         </li>
       
         
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-archives">
-          <a href="/archives/%20" rel="section">
+          <a href="/archives/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
           </a>
         </li>
       
@@ -226,151 +275,6 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/10/08/%E5%8C%85%E6%B3%95%E5%88%A9%E5%A4%AB%E4%BA%BA/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ZXY">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/obelieve.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Obelieve">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2021/10/08/%E5%8C%85%E6%B3%95%E5%88%A9%E5%A4%AB%E4%BA%BA/" itemprop="url">包法利夫人</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-10-08T22:37:57+08:00">
-                2021-10-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%98%85%E8%AF%BB%E6%91%98%E8%A6%81/" itemprop="url" rel="index">
-                    <span itemprop="name">阅读摘要</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>这就是巴黎的发明！京城先生的高见！这和斜视、麻醉药、膀胱石扫除手术一样，荒诞不经，政府应该加以禁止！</p>
-<p>可是人家假装内行，不问结果，乱塞药给你吃！我们不像人家那样有本领；我们不是学者；我们不会异想天开，给大好一个常人行手术！</p>
-<p>治好跷脚?谁能治好跷脚?简直就像好比说，叫驼背挺直脊梁骨！</p>
-<p>-—</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
     
       
 
@@ -456,6 +360,17 @@
 
           
           
+             <span id="/2021/10/08/%E5%BC%82%E7%B1%BB/" class="leancloud_visitors" data-flag-title="异类">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
 
           
 
@@ -478,13 +393,15 @@
       
         
           
-            <p>​        比尔，盖茨可以接受世人冠以他天才的称号，并让这个称号一直放在他的身上。当他回头看他的生活并说。我很幸运”时，在很大程度上这是一种谦虚。这也可以理解，因为Lakeside学院的母亲俱乐部1968年给他买了一台电脑。就这件事而言，对于一个冰球运动员，或者是比尔，乔伊，或者是罗伯特，奥本海默，或其他任何局外人，让他们从高贵的地位上放下姿态并诚实地说：。这些都是我自己做的。，这是不可能的。超级律师，数学天才和软件企业家或许会对他们</p>
-<p>是该领域的局外人感到羞愧，但是，这些人不会。他们是历史，社会，机会和祖辈承传的产物。他们的成功不是例外的，也不神秘。它是植根于一个优势和祖辈承传的网络，有些人当之无愧，有些人不是；有些人赚到钱，有些人只是单凭运气····但所有这些对他们知道自己是谁很关键。那些局人外，到最后，都不再是局外人了。</p>
-<p>​      南美人 –棕色是白人(当地10/1男女比例)和当地土著/奴隶黑人 的混血。当地有色人种等级观念，偏白人种更有优势。</p>
-<p>亚洲人  智商更高  由于远古捕猎更难，喜马拉雅山脉，农耕水稻精细活，更花心思才能做好，更多的工作时长，一年3000多小时。</p>
-<p>数学由于 中文发音数字更短 1/4秒，记忆更多数字，还有学习态度，良性循环。</p>
-
-          
+          ​        比尔，盖茨可以接受世人冠以他天才的称号，并让这个称号一直放在他的身上。当他回头看他的生活并说。我很幸运”时，在很大程度上这是一种谦虚。这也可以理解，因为Lakeside学院的母亲俱乐部1968年给他买了一台电脑。就这件事而言，对于一个冰球运动员，或者是比尔，乔伊，或者是罗伯特，奥本
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2021/10/08/%E5%BC%82%E7%B1%BB/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -602,6 +519,17 @@
 
           
           
+             <span id="/2021/10/08/%E5%B0%8F%E5%BC%BA%E5%8D%87%E8%81%8C%E8%AE%B0/" class="leancloud_visitors" data-flag-title="小强升职记">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
 
           
 
@@ -624,24 +552,22 @@
       
         
           
-            <p>四象限法则：重要紧急、重要不紧急*、不重要紧急、不重要不紧急。</p>
-<p>要多做“重要不紧急”，少做“不重要紧急”的事。</p>
-<p>工作之中，有次重之分。</p>
-<p>及时反馈、奖励自己</p>
-<p>番茄工作法</p>
-<p>工作打断时，1.记下来2.按重要程度优先去做</p>
-<p>成就感：解决技术问题的成就感、与人协调沟通完成项目。</p>
-<p>金字塔模型：原则、愿景、目标、项目、行动。</p>
-<p>制定目标实现的方法：</p>
-<p>Smart法则：</p>
-<p>Specific 具体的</p>
-<p>Measurable 可衡量的</p>
-<p>Attainable   可获得的</p>
-<p>Relavant   与其他目标相关的，对其他目标有什么帮助？</p>
-<p>Time-based   有截止时间的</p>
-<p>循序渐进、事情分解，更容易完成。——跟我想法一致。</p>
-
-          
+          四象限法则：重要紧急、重要不紧急*、不重要紧急、不重要不紧急。
+要多做“重要不紧急”，少做“不重要紧急”的事。
+工作之中，有次重之分。
+及时反馈、奖励自己
+番茄工作法
+工作打断时，1.记下来2.按重要程度优先去做
+成就感：解决技术问题的成就感、与人协调沟通完成项目。
+金字塔模型：原则、愿景、目标、项
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2021/10/08/%E5%B0%8F%E5%BC%BA%E5%8D%87%E8%81%8C%E8%AE%B0/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -759,6 +685,17 @@
 
           
           
+             <span id="/2021/10/08/%E6%88%91%E5%9D%9A%E4%BF%A1/" class="leancloud_visitors" data-flag-title="我坚信">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
 
           
 
@@ -781,15 +718,18 @@
       
         
           
-            <p> 奥普拉9岁被人QJ，14岁未婚先孕，17岁回到她生父那边，去电台工作，生活才走入正轨，25年职业生涯退休，脱口秀女王。</p>
-<p>1.每天写感恩小事，正能量，让自己心情愉悦的事。</p>
-<p>2.已所欲，施与人。</p>
-<p>3.“专家斯坦利·特雷金博士看完后说了让我寒毛直竖的一句话：“除非你下定决心，否则什么事情都不可能发生。”</p>
-<p>4.“如果你让自己枯竭到了某种程度，你的感情和精神的油箱都空空荡荡，只能靠着习惯这一燃料前行时，每个人都不可能从中得到任何好处，特别是你自己。”</p>
-<p>\5. 负面的话和言语 拒绝。</p>
-<p>6.提到的书  “绿野仙踪”、“爱上神秘”。</p>
-
-          
+           奥普拉9岁被人QJ，14岁未婚先孕，17岁回到她生父那边，去电台工作，生活才走入正轨，25年职业生涯退休，脱口秀女王。
+1.每天写感恩小事，正能量，让自己心情愉悦的事。
+2.已所欲，施与人。
+3.“专家斯坦利·特雷金博士看完后说了让我寒毛直竖的一句话：“除非你下定决心，否则什么事情都不可能发生。”
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2021/10/08/%E6%88%91%E5%9D%9A%E4%BF%A1/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -907,6 +847,17 @@
 
           
           
+             <span id="/2021/10/08/%E9%BB%91%E5%AE%A2%E4%B8%8E%E7%94%BB%E5%AE%B6/" class="leancloud_visitors" data-flag-title="黑客与画家">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
 
           
 
@@ -929,42 +880,23 @@
       
         
           
-            <p>黑客与画家</p>
-<p>你要找到一种方式将写论文这件事变得有趣一些。这就是你需要去做的事情。找到一个能让这个世界变得有趣一些的问题。</p>
-<p>不能说的话，他人干扰</p>
-<p>我还没想好</p>
-<p>反击的方式：</p>
-<p>辩论抽象一个层次，不要具体指定某个</p>
-<p>隐喻</p>
-<p>幽默</p>
-<p>他们打电话给客服时，多半是一副胜利者的口吻，而不是怒气冲冲的样子，好像他们击败我们得分了一样。</p>
-<p>让一架18吨重的飞机以225公里的时速平安降落在航空母舰的甲板上，做得比小孩子切面包还要安全。</p>
-<p>盗版，一定数量的盗版对软件公司有好处。不管你的定价多少，有些用户永远不会购买。如果现在你的软件多了一个用户，市场影响力就更大一些，而这个用户可能毕业以后会出钱买你的软件。</p>
-<p>商业性公司 价格歧视，针对不同客户给出不同的报价，使利润最大化。</p>
-<p>操作便捷性，会促进购买行为。</p>
-<p>编译器处理的高级程序代码又叫做源码。它经过翻译以后产生的机器码叫做目标码。</p>
-<p>开放源码的软件：拥有更大的控制权和选择权。</p>
-<p>通往软件圣杯—可重用性</p>
-<p>运行速度和编程便利性之间做出不同的取舍</p>
-<p>新语言更多地以开源项目的形式出现，而不是以研究性项目的形式出现。</p>
-<p>学习开车的时候，一个需要记住的原则就是要把车开直，不是通过将车身对齐画在地上的分隔线，而是通过瞄准远处的某个点。即使你的目标只在几米外，这样做也是正确的。</p>
-<p>拒绝平庸</p>
-<p>埃里克-雷蒙德 写过一篇文章《如何成为一名黑客》他建议从Python-&gt;Java入手，更高级一点 学习C和Perl。前者用于对付Unix，后者用来系统管理和开发CGI脚本。最后真正非常严肃地把黑客作为人生目标的人，应该考虑学习Lisp：带来启发，尽管在实际工作中极少会用到Lisp。</p>
-<p>讨论学习拉丁语的有何价值时，但是它可以训练你的思维，帮助你更好地运用母语（比如：英语）进行写作。</p>
-<p>在这里我不想证明某个人错了，他的观点整体上非常正确，他对Lisp的看法确实是大多数人的看法，但是这里面有一个矛盾：Lisp语言能让你成为更好的程序员，但你却不用它，这难道不奇怪吗？</p>
-<p>/*</p>
-<p>怎么表达不同的观点？</p>
-<p>遇到不同的观点，可以肯定他对的地方（不太可能一无是处吧）然后提出一个质疑？</p>
-<p>*/</p>
-<p>为什么不用呢？编程只是一种工具，如果Lisp真的能开发更好的程序，你就应该用它。如果它无助于编程，那么就不会有人需要它。</p>
-<p>创业公司要么赢得一切，要么彻底失败</p>
-<p>要么成为富翁，要么一无所获。</p>
-<p>其他人都用C++/Perl 开发软件，但是我们不觉得这说明什么问题。如果别人用什么技术，你也什么技术，那么你大概只能使用Windows了。 只要考虑什么样的技术能最好地完成工作。</p>
-<p>我们懂得一些竞争对手不懂的事情。</p>
-<p>在这之前，我和莫里斯甚至连一天正式上班的经历都没有。（这也太爽了吧）</p>
-<p>刺客扮成拄着拐杖的老头从精彩身边经过，没有引起任何人的怀疑。</p>
-
-          
+          黑客与画家
+你要找到一种方式将写论文这件事变得有趣一些。这就是你需要去做的事情。找到一个能让这个世界变得有趣一些的问题。
+不能说的话，他人干扰
+我还没想好
+反击的方式：
+辩论抽象一个层次，不要具体指定某个
+隐喻
+幽默
+他们打电话给客服时，多半是一副胜利者的口吻，而不是怒气冲冲的样子，好像他们击败我们
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2021/10/08/%E9%BB%91%E5%AE%A2%E4%B8%8E%E7%94%BB%E5%AE%B6/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1082,6 +1014,17 @@
 
           
           
+             <span id="/2021/10/08/%E6%97%B6%E9%97%B4%E7%AE%A1%E7%90%86/" class="leancloud_visitors" data-flag-title="时间管理">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
 
           
 
@@ -1104,23 +1047,30 @@
       
         
           
-            <p>《时间管理》 作者：吉姆兰德尔</p>
-<p>意识</p>
-<p>目标</p>
-<p>选择</p>
-<p>空隙时间</p>
-<p>非必要逐字阅读</p>
-<p>记忆技巧</p>
-<p>集中精力</p>
-<p>避免拖延</p>
-<p>未雨绸缪</p>
-<p>每天任务，按重要程度排序</p>
-<p>走路的时候走路，吃饭的时候吃饭。</p>
-<p>干扰—避免 目光接触</p>
-<p>数字秒针显示的运动表，关注时间流逝。</p>
-<p>过去的事过去了。现在是一份礼物present。</p>
+          《时间管理》 作者：吉姆兰德尔
+意识
+目标
+选择
+空隙时间
+非必要逐字阅读
+记忆技巧
+集中精力
+避免拖延
+未雨绸缪
+每天任务，按重要程度排序
+走路的时候走路，吃饭的时候吃饭。
+干扰—避免 目光接触
+数字秒针显示的运动表，关注时间流逝。
+过去的事过去了。现在是一份礼物present。
 
           
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2021/10/08/%E6%97%B6%E9%97%B4%E7%AE%A1%E7%90%86/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1238,6 +1188,17 @@
 
           
           
+             <span id="/2021/10/08/%E6%B8%85%E6%99%B0%E6%80%9D%E8%80%83%E7%9A%84%E8%89%BA%E6%9C%AF/" class="leancloud_visitors" data-flag-title="清晰思考的艺术">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
 
           
 
@@ -1260,15 +1221,22 @@
       
         
           
-            <p>《清晰思考的艺术》</p>
-<p>讨喜偏误</p>
-<p>​    1.外表吸引力；</p>
-<p>​    2.出身、个性、兴趣  相似；</p>
-<p>​    3.他觉得我们讨人喜欢；</p>
-<p>光环效应</p>
-<p>\1. 以偏概全-&gt; 某一方面推及全貌；</p>
+          《清晰思考的艺术》
+讨喜偏误
+​    1.外表吸引力；
+​    2.出身、个性、兴趣  相似；
+​    3.他觉得我们讨人喜欢；
+光环效应
+\1. 以偏概全-&gt; 某一方面推及全貌；
 
           
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2021/10/08/%E6%B8%85%E6%99%B0%E6%80%9D%E8%80%83%E7%9A%84%E8%89%BA%E6%9C%AF/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1315,7 +1283,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/10/08/OiAa/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/10/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%EF%BC%9A%E7%BB%93%E6%9E%84%E5%8C%96%E6%96%B9%E6%B3%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ZXY">
@@ -1334,7 +1302,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2021/10/08/OiAa/" itemprop="url">ÒìÀà</a></h1>
+                <a class="post-title-link" href="/2021/10/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%EF%BC%9A%E7%BB%93%E6%9E%84%E5%8C%96%E6%96%B9%E6%B3%95/" itemprop="url">计算机组成：结构化方法</a></h1>
         
 
         <div class="post-meta">
@@ -1346,7 +1314,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-10-08T22:34:37+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-10-08T22:13:30+08:00">
                 2021-10-08
               </time>
             
@@ -1357,12 +1325,45 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%98%85%E8%AF%BB%E6%91%98%E8%A6%81/" itemprop="url" rel="index">
+                    <span itemprop="name">阅读摘要</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
           
 
           
+          
+             <span id="/2021/10/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%EF%BC%9A%E7%BB%93%E6%9E%84%E5%8C%96%E6%96%B9%E6%B3%95/" class="leancloud_visitors" data-flag-title="计算机组成：结构化方法">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
           
 
           
@@ -1386,8 +1387,21 @@
       
         
           
-            
-          
+          《计算机组成：结构化方法》
+==================
+1.物质的物理特性，来代表1～0
+2.冯•诺依曼 提出的计算机结构：控制器、ALU、存储器、输入输出。
+3.计算机的分层概念：高级语言到底层机器语言，经过翻译或解释的方式。
+解释：把程序当做输入数据，由解释器转为机器语言。
+4.寄存器
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2021/10/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%EF%BC%9A%E7%BB%93%E6%9E%84%E5%8C%96%E6%96%B9%E6%B3%95/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1434,7 +1448,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/10/08/I%D2%BCa%C3%90A/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/10/08/%E8%BD%AF%E6%8A%80%E8%83%BD%EF%BC%9A%E4%BB%A3%E7%A0%81%E4%B9%8B%E5%A4%96%E7%9A%84%E7%94%9F%E5%AD%98%E6%8C%87%E5%8D%97/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ZXY">
@@ -1453,7 +1467,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2021/10/08/I%D2%BCa%C3%90A/" itemprop="url">ÎҼáÐÅ</a></h1>
+                <a class="post-title-link" href="/2021/10/08/%E8%BD%AF%E6%8A%80%E8%83%BD%EF%BC%9A%E4%BB%A3%E7%A0%81%E4%B9%8B%E5%A4%96%E7%9A%84%E7%94%9F%E5%AD%98%E6%8C%87%E5%8D%97/" itemprop="url">软技能：代码之外的生存指南</a></h1>
         
 
         <div class="post-meta">
@@ -1465,7 +1479,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-10-08T22:34:30+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-10-08T22:13:13+08:00">
                 2021-10-08
               </time>
             
@@ -1476,12 +1490,45 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%98%85%E8%AF%BB%E6%91%98%E8%A6%81/" itemprop="url" rel="index">
+                    <span itemprop="name">阅读摘要</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
           
 
           
+          
+             <span id="/2021/10/08/%E8%BD%AF%E6%8A%80%E8%83%BD%EF%BC%9A%E4%BB%A3%E7%A0%81%E4%B9%8B%E5%A4%96%E7%9A%84%E7%94%9F%E5%AD%98%E6%8C%87%E5%8D%97/" class="leancloud_visitors" data-flag-title="软技能：代码之外的生存指南">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
           
 
           
@@ -1505,8 +1552,20 @@
       
         
           
-            
-          
+          作者：约翰 Z. 森梅兹(John Z. Sonmez)、 王小刚
+\1. 标注（黄） | 位置 1496
+如果没有任何潜在客户跟你讲“不行”或者“你的收费太贵了”，马上提高费率！不断给你的收费加
+码，直到你听到“不行”为止。
+\2. 标注（黄） | 位置 2226
+我要推荐的第一个策略就是开始评论
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2021/10/08/%E8%BD%AF%E6%8A%80%E8%83%BD%EF%BC%9A%E4%BB%A3%E7%A0%81%E4%B9%8B%E5%A4%96%E7%9A%84%E7%94%9F%E5%AD%98%E6%8C%87%E5%8D%97/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1553,7 +1612,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/10/08/%C2%BA%DA%BFIO%EB%BB%AD%C2%BCO/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/10/08/%E5%B9%BD%E6%A2%A6%E5%BD%B1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ZXY">
@@ -1572,7 +1631,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2021/10/08/%C2%BA%DA%BFIO%EB%BB%AD%C2%BCO/" itemprop="url">ºڿÍÓ뻭¼Ò</a></h1>
+                <a class="post-title-link" href="/2021/10/08/%E5%B9%BD%E6%A2%A6%E5%BD%B1/" itemprop="url">幽梦影</a></h1>
         
 
         <div class="post-meta">
@@ -1584,7 +1643,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-10-08T22:34:25+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-10-08T22:12:52+08:00">
                 2021-10-08
               </time>
             
@@ -1595,12 +1654,45 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%98%85%E8%AF%BB%E6%91%98%E8%A6%81/" itemprop="url" rel="index">
+                    <span itemprop="name">阅读摘要</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
           
 
           
+          
+             <span id="/2021/10/08/%E5%B9%BD%E6%A2%A6%E5%BD%B1/" class="leancloud_visitors" data-flag-title="幽梦影">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
           
 
           
@@ -1624,8 +1716,178 @@
       
         
           
+          阅历之浅深，所得之浅深。
+读生书，不若温旧业。
+所谓美人者：以花为貌，以鸟为声，以月为神，以柳为态，以玉为骨，以冰雪为肤，以秋水为姿，以诗词为心。吾无间然矣。
+立品，须发乎宋人之道学；涉世，须参以晋代之风流。有青山方有绿水，水惟借色于山；有美酒便有佳诗，诗亦乞灵于酒。
+九世同居，诚为盛事，然止当与割
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2021/10/08/%E5%B9%BD%E6%A2%A6%E5%BD%B1/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/10/08/%E5%B0%91%E6%9C%89%E4%BA%BA%E8%B5%B0%E7%9A%84%E8%B7%AF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZXY">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/obelieve.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Obelieve">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/10/08/%E5%B0%91%E6%9C%89%E4%BA%BA%E8%B5%B0%E7%9A%84%E8%B7%AF/" itemprop="url">少有人走的路</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-10-08T22:12:33+08:00">
+                2021-10-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%98%85%E8%AF%BB%E6%91%98%E8%A6%81/" itemprop="url" rel="index">
+                    <span itemprop="name">阅读摘要</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
             
           
+
+          
+          
+             <span id="/2021/10/08/%E5%B0%91%E6%9C%89%E4%BA%BA%E8%B5%B0%E7%9A%84%E8%B7%AF/" class="leancloud_visitors" data-flag-title="少有人走的路">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          ​       这本书，看了印象只有概念以及一些故事。这本书作者讲了很多抽象的话题比如：爱、精神官能症、心智、懒惰、熵、宗教与世界观、心灵成长、意识和潜意识、痛苦等问题的讨论。他很大一部分只是举例子和结果、很少证明为什么会这样子。不过他后面列举的几个故事让我深有感触比如“特德的故事”讲的是一个特立独
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2021/10/08/%E5%B0%91%E6%9C%89%E4%BA%BA%E8%B5%B0%E7%9A%84%E8%B7%AF/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1663,7 +1925,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/">&lt;i class&#x3D;&quot;fa fa-angle-left&quot;&gt;&lt;&#x2F;i&gt;</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
+    <a class="extend prev" rel="prev" href="/">&lt;i class&#x3D;&quot;fa fa-angle-left&quot;&gt;&lt;&#x2F;i&gt;</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
   </nav>
 
 
@@ -1694,68 +1956,79 @@
 
       
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <img class="site-author-image" itemprop="image"
-                src="/images/obelieve.jpg"
-                alt="ZXY" />
-            
-              <p class="site-author-name" itemprop="name">ZXY</p>
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/obelieve.jpg"
+               alt="ZXY" />
+          <p class="site-author-name" itemprop="name">ZXY</p>
+           
               <p class="site-description motion-element" itemprop="description">不要半途而废~</p>
-          </div>
-
-          <nav class="site-state motion-element">
-
-            
-              <div class="site-state-item site-state-posts">
-              
-                <a href="/archives/%20%7C%7C%20archive">
-              
-                  <span class="site-state-item-count">32</span>
-                  <span class="site-state-item-name">日志</span>
-                </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-categories">
-                <a href="/categories/index.html">
-                  <span class="site-state-item-count">3</span>
-                  <span class="site-state-item-name">分类</span>
-                </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-tags">
-                <a href="/tags/index.html">
-                  <span class="site-state-item-count">5</span>
-                  <span class="site-state-item-name">标签</span>
-                </a>
-              </div>
-            
-
-          </nav>
-
           
-
-          
-
-          
-          
-
-          
-          
-
-          
-
         </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/obelieve" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
       </section>
 
       
@@ -1772,36 +2045,30 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
-    <i class="fa fa-user"></i>
+    <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">ZXY</span>
-
-  
 </div>
 
 
-  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 强力驱动
+</div>
 
-
-
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
-
-
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">
+    NexT.Pisces
+  </a>
+</div>
 
 
         
-
-
-
-
-
-
 
         
       </div>
@@ -1812,8 +2079,6 @@
         <i class="fa fa-arrow-up"></i>
         
       </div>
-    
-
     
 
   </div>
@@ -1848,54 +2113,53 @@
 
 
   
-  
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
 
   
-  
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
 
   
-  
-    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
 
   
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
 
   
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
 
   
-  
-    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
 
 
   
 
 
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
 
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
 
 
 
   
   
 
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
   
 
   
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
 
 
 
@@ -1926,12 +2190,6 @@
 
 
 
-
-
-
-
-
-
   
 
 
@@ -1941,10 +2199,114 @@
   
 
   
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("urOdS8XIqz7Kvt6TwSz8RUpL-gzGzoHsz", "FGI16oy4ykvdDc9jyYSdrNsF");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
 
   
 
-  
   
 
   

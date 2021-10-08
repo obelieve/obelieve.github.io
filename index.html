@@ -2,10 +2,8 @@
 
 
 
-  
 
-
-<html class="theme-next muse use-motion" lang="zh-Hans">
+<html class="theme-next pisces" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -37,11 +35,36 @@
 
 
 
-
   
   
   <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
 
 
 
@@ -50,29 +73,19 @@
 
 <link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+  <meta name="keywords" content="obelieve,java blog" />
 
 
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
 
 
 
-
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
 
 
 
@@ -94,12 +107,11 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Muse',
-    version: '5.1.4',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
     tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    motion: false,
     duoshuo: {
       userId: '0',
       author: '博主'
@@ -142,6 +154,12 @@
 
 
 
+
+
+
+
+
+
 <meta name="generator" content="Hexo 4.2.1"></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -151,8 +169,9 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-right 
+   page-home 
+ ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -189,7 +208,7 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/%20" rel="section">
+          <a href="/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
@@ -198,12 +217,42 @@
         </li>
       
         
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-archives">
-          <a href="/archives/%20" rel="section">
+          <a href="/archives/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
           </a>
         </li>
       
@@ -311,6 +360,17 @@
 
           
           
+             <span id="/2021/10/08/%E7%89%9B%E6%B0%93/" class="leancloud_visitors" data-flag-title="牛氓">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
 
           
 
@@ -333,8 +393,15 @@
       
         
           
-            
           
+          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2021/10/08/%E7%89%9B%E6%B0%93/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -452,6 +519,17 @@
 
           
           
+             <span id="/2021/10/08/%E7%BA%A2%E4%B8%8E%E9%BB%91/" class="leancloud_visitors" data-flag-title="红与黑">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
 
           
 
@@ -474,14 +552,18 @@
       
         
           
-            <p>老实说，他已对英雄主义感到疲倦。那段飞逝的时光中发生的事情，哪怕再微不足道、对他都具有一种不可抵抗的新鲜和魅力。他从不想他在巴黎的成功，他已经厌倦了。</p>
-<p>让它再活五个钟头，它就看见和理解什么是夜了。</p>
-<p>第一，我是虚伪的，就好像有什么人在那儿听似的</p>
-<p>正是这使我感到孤独，而不是因为缺少一位公正、善良、全能、不凶恶、不渴望报复的天主。</p>
-<p>我们在韦尔吉的树林里散步的时候，我本来可以多么地幸福啊，可是一种强烈的野心却把我带到虚幻之国去了。不是把这近在唇边的可爱的胳膊紧抱在胸前，却让未来的幻想给夺去了；我为了建立巨大的财富，不得不进行数不清的战斗……不，如果您不来监狱看我，我死了还不知道什么是幸福呢。</p>
-<p>如果你不对我发誓不做任何使我们俩当众出丑的事，我明天肯定因绝望而自杀。去巴黎的主意不是你的。告诉我那个让你起了这个念头的女阴谋家的名字。</p>
-
-          
+          老实说，他已对英雄主义感到疲倦。那段飞逝的时光中发生的事情，哪怕再微不足道、对他都具有一种不可抵抗的新鲜和魅力。他从不想他在巴黎的成功，他已经厌倦了。
+让它再活五个钟头，它就看见和理解什么是夜了。
+第一，我是虚伪的，就好像有什么人在那儿听似的
+正是这使我感到孤独，而不是因为缺少一位公正、善良、全能、
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2021/10/08/%E7%BA%A2%E4%B8%8E%E9%BB%91/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -599,6 +681,17 @@
 
           
           
+             <span id="/2021/10/08/%E6%BC%82%E4%BA%AE%E6%9C%8B%E5%8F%8B/" class="leancloud_visitors" data-flag-title="漂亮朋友">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
 
           
 
@@ -621,11 +714,17 @@
       
         
           
-            <p>难以启齿，</p>
-<p>我……我……我想告诉你，瓦尔特先生要我写的关于阿尔及利亚的文章，我没有写出来。这很好理解，因为我一篇东西也未写过。干哪一行都得有个熟悉过程，写文章也不例外。我相信，我会很快写出好文章来的，但开始阶段，我却有点不摸门儿。文章的意思我已想好，整篇都想好了，就是不知道怎样把它写出来。</p>
-<p>就是呀，不管做什么，人人在开始的时候都会这样。所以我今天来……是想求你帮个忙……我想费你几分钟时间，请件帮我把文章的架子搭起来。此外，这种文章应采用什么样的格调，遣词造句应当注意什么，也请你给我指点指点。否则，没有你的帮助，这篇文章我是交不了差的。</p>
-
-          
+          难以启齿，
+我……我……我想告诉你，瓦尔特先生要我写的关于阿尔及利亚的文章，我没有写出来。这很好理解，因为我一篇东西也未写过。干哪一行都得有个熟悉过程，写文章也不例外。我相信，我会很快写出好文章来的，但开始阶段，我却有点不摸门儿。文章的意思我已想好，整篇都想好了，就是不知道怎样把它写出来。
+就是呀，
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2021/10/08/%E6%BC%82%E4%BA%AE%E6%9C%8B%E5%8F%8B/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -743,6 +842,17 @@
 
           
           
+             <span id="/2021/10/08/%E6%88%91%E4%BB%AC%E7%9A%84%E5%BF%83/" class="leancloud_visitors" data-flag-title="《我们的心》—莫泊桑">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
 
           
 
@@ -765,33 +875,20 @@
       
         
           
-            <p>“一日不可无此君”</p>
-<p>她只要放纵一步，热情就会变成冲动。她抵抗得太厉害了，她过于理智，她过分抵制人们的魅力。</p>
-<p>他不敢正眼看那个年轻的女人，被这种不曾想到过的亲昵幸福得不敢动弹了；像喝醉了一样，他七上八下地想：“这可能吗？这会可能吗？是我们两个人都失去理智了吧？”</p>
-<p>“天哪！这多美！”</p>
-<p>他看着她回答说：</p>
-<p>“我只能想到您。”</p>
-<p>不傻，这不成功了吗？干成了的事就从来不会是傻事。</p>
-<p>看到这些脚步匆匆，为了一日三餐而奔走，从事叫人头昏脑胀工作的人，他体味到了一种经过考虑而得的愉快，他感到自己的生活真是幸福优越，与世无争，真禁不住想感谢苍天，因为对他而言，上帝大不了是个乱施晴雨，对岁月和人生居心不良的主人。</p>
-<p>她在跨上平台时对他亲切的微微一笑，可是笑里也带着点儿不安。</p>
-<p>他想找到些热情的、充满了感情和感激的动人词句。可是没有找到，而且也太感动，耐不住选字择句，他就反复说：</p>
-<p>“我多么爱您！”</p>
-<p>他就一直节约，倒不是为了积蓄，而是没有必要花，正好现在可以像个大爷似地花钱。</p>
-<p>于是他开始在沙砾的小径上徘徊，边想着现实与期望之间的永恒矛盾。</p>
-<p>“那么，为什么您半辈子都绕着她们的裙子转呢？”</p>
-<p>拉马特怒气冲冲地回答道：</p>
-<p>“为什么？为什么？就是因为我喜欢这样，还用说！还有……还有……您能防止医生进医院去看病人吗？她们就是我的临床病人，这些女人。”</p>
-<p>他也曾大致料到这种感觉会怎样，但刚才发生的变化太大，与想象中的大不一样。</p>
-<p>将自己生命浪费于任何来者，而不将她自己最宝贵的精华留给所爱的人。</p>
-<p>他心灵的表皮过于娇嫩。由于害怕接触和冒犯摩擦，造成了他生活在孤独之中。</p>
-<p>在这儿他每次等待时都全身颤栗，满怀希望地发抖，这里掘发了他的全部感情，于是结局以全盘苦难告终。</p>
-<p>他抑制住自己的情感，不让一点表露出来。来的不是一个女人，而是一个有生命的花球，一个不可想象的花球。</p>
-<p>不能对她们要求太高。但是当涉及到高级事情时这种缺少鉴赏力和理解力，使她们的智力视野黯淡，如果是涉及到我们时，就更使她们失去判断力了。要勾引她们，光靠有良心，有灵魂、智慧、突出的品质和德行是不行的，这和往日因一个男人的价值和勇敢而爱的日子不同了。现在的这些娘儿们是些蹩脚演员，蹩脚的爱情演员，在重复即兴演一出她们传统的、而又不愿再信其有了的戏。得给她们配些提辞接话的蹩脚演员，和她们一样鬼混的角色。我说的‘蹩脚演员’是指社交界或者其他场合中的小丑。</p>
-<p>永别了，夫人，您还记得我的第一封信吗？我也曾对您说‘永别了’；可是我没有走。我大错了！当您接到这封信时我已经离开了巴黎。有必要向您解释为什么吗？像我这样的男人根本不应当遇到您这样的女人。假使我是一个艺术家，而且如果能通过陈述以减轻我的痛苦。那可能是由于您曾赐给我以才能；然而我只是一个可怜的汉子，由于我对您的爱使一种残酷难熬的痛苦渗进了我的心田。当我碰到您的时候，我不曾料到会有这种感受，而且痛苦到如此之甚。在您的位置上如果是另一位女人，也许会向我的心上注入神赐的欢乐，使它享受生活的乐趣。可是您只能折磨它。我知道这也不是您所能自己的；我一点也不责备您，也不想要责备您。我也没有权利给您写这封信。请原谅我。您天生如此，因此您不能有和我一样的感受，因此您不仅不能猜测到当我跨进您家里，当我向您谈话，当我看着您的时候心中的感受。是的，您同意了。您接受了我，您甚至曾提供给我一个安定的。说得过的幸福，对此，我将终身跪下感谢您。可是我不要这种幸福。唉5这是什么爱情，极端的、折磨人的爱，这种不断乞求您施舍一句热情的话、一次色授神与的爱抚，而却永远未能获得的爱！我心里空虚得如同一个在您后面伸着手追随了好久的乞丐。您扔给了他一些漂亮东西，但没有面包。我缺的是面包，是爱情。我走了，又穷又可怜，我穷于您的爱情，虽然只要给一点屑粒就可以救我。除了紧缠着我的对您的苦苦思念之外，我什么也没有了，而我必须一刀斩断。这就是我要试图做的。</p>
-<p>“永别了，夫人。请原谅，谢谢，请原谅。今晚上我仍然全心全意的爱您。永别了，夫人。”</p>
-<p>安德烈-马里奥——</p>
+          “一日不可无此君”
+她只要放纵一步，热情就会变成冲动。她抵抗得太厉害了，她过于理智，她过分抵制人们的魅力。
+他不敢正眼看那个年轻的女人，被这种不曾想到过的亲昵幸福得不敢动弹了；像喝醉了一样，他七上八下地想：“这可能吗？这会可能吗？是我们两个人都失去理智了吧？”
+“天哪！这多美！”
+他看着她回答说：
 
-          
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2021/10/08/%E6%88%91%E4%BB%AC%E7%9A%84%E5%BF%83/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -909,126 +1006,16 @@
 
           
           
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>   教育的作用，是引导本能向发生有益的活动而不发生有害的活动的方向发展。</p>
-<p>美好的人生不能建筑在恐惧、禁忌和彼此干涉自由上。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/10/08/%E7%88%B1%E7%9A%84%E6%95%99%E8%82%B2-1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ZXY">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/obelieve.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Obelieve">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2021/10/08/%E7%88%B1%E7%9A%84%E6%95%99%E8%82%B2-1/" itemprop="url">爱的教育</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-10-08T22:38:25+08:00">
-                2021-10-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
+             <span id="/2021/10/08/%E5%A9%9A%E5%A7%BB%E4%B8%8E%E9%81%93%E5%BE%B7/" class="leancloud_visitors" data-flag-title="婚姻与道德">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
           
 
           
@@ -1052,8 +1039,17 @@
       
         
           
-            
+             教育的作用，是引导本能向发生有益的活动而不发生有害的活动的方向发展。
+美好的人生不能建筑在恐惧、禁忌和彼此干涉自由上。
+
           
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2021/10/08/%E5%A9%9A%E5%A7%BB%E4%B8%8E%E9%81%93%E5%BE%B7/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1171,6 +1167,17 @@
 
           
           
+             <span id="/2021/10/08/%E8%8D%86%E6%A3%98%E9%B8%9F/" class="leancloud_visitors" data-flag-title="荆棘鸟">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
 
           
 
@@ -1193,30 +1200,20 @@
       
         
           
-            <p>​     我用不着为这一点小事而烦恼</p>
-<p>当然不会罗。我也不相信你会傻到以为我置身于教士的行列是出于对惩罚的恐惧。</p>
-<p>我怀疑我是否能比平常更卖力地为你祈祷，不过我试试看吧。</p>
-<p>习惯和畏惧心理的克服比人们实际想去一反多年形成的惯常行为要困难得多。</p>
-<p>生活的实际 梅吉</p>
-<p>我厌倦了，我想要停止下来了。这非常简单。”</p>
-<p>他也感到厌倦了，但却不是厌倦生活，</p>
-<p>不管怎么样，确实是有些太世俗化了。至于说道浪漫和帅，阁下，这只是因为您还没怎么见过基兰博地区常穿的服装。</p>
-<p>我确实热爱他们大家，但是，正如您所说，我对某些人的热爱要超过对另外一些人的热爱。我最爱的是一个叫梅吉的姑娘。我总觉得我对她有一种特殊的责任，因为这个家庭是如此唯儿子的马首是瞻，忘记了她的存在。</p>
-<p>那难以捉摸的、狡猾的头脑根本就没想到，一种外表的坦率也许比任何一种规避都更虚伪。</p>
-<p>她很惊奇地发觉，身体总是处于繁忙之中是对人类所能发挥出来的全面的精神活跃是最有效的阻碍。</p>
-<p>一定是这样的，他们太腼腆了，这是大地的性格，因为大地不需要感情的表达或社交的风度。它只需要他们给予它的东西，那就是默默无言的爱和全心全意的忠顺。</p>
-<p>朱丝婷！我看我得在其他一些事上教教你搪塞的高明技巧。</p>
-<p>我主张编一个无伤大雅的小谎言。因为令人满意地解释一种联系微妙的友谊十分困难，而解释血统关系却很容易。因此，咱们就对所有的人说德·布里克萨特红衣主教是你的舅舅吧，我的戴恩，就让事情这样好了。</p>
-<p>我可以向你保证，伙计，在吻过他之后就没有什么不可能的事了。</p>
-<p>这无伤大雅，是必要的，只工作不玩耍，聪明孩子也变傻，等等。</p>
-<p>你能从男人们那里指望到什么？腼腆得象袋鼠似地死钉在这个地方，从来不和他们有可能娶来的姑娘见面。</p>
-<p>聪明到足以知道我第一眼看到你就希望你作为我的妻子。</p>
-<p>要不是雷恩帮助我，也许还要更长的时间才能认识到这一点，他是个感觉极其敏锐的人。他从来没见过你，然而他似乎比我还要理解你。</p>
-<p>她的签名不是往常那种龙飞凤舞的字迹，更像是她在寄宿学校的监督修女的锐利目光下写在信下方的恭而敬之的字母”朱丝婷”。</p>
-<p>大部分爱行其是的人身上都有这种自傲。</p>
-<p>鸟 儿胸前带着棘刺，它遵循着一个不可改变的法则，她被不知其名的东西刺穿身体，被驱赶着，歌唱着死去。在那荆棘刺进的一瞬，她没有意识到死之将临。 她 只是唱着、唱着，直到生命耗尽，再也唱不出一个音符。但是，当我们把棘刺扎进胸膛时，我们是知道的。我们是明明白白的。然而，我们却依然要这样做。我们依 然把棘刺扎进胸膛。</p>
-
-          
+          ​     我用不着为这一点小事而烦恼
+当然不会罗。我也不相信你会傻到以为我置身于教士的行列是出于对惩罚的恐惧。
+我怀疑我是否能比平常更卖力地为你祈祷，不过我试试看吧。
+习惯和畏惧心理的克服比人们实际想去一反多年形成的惯常行为要困难得多。
+生活的实际 梅吉
+我厌倦了，我想要停止下来了。这非常简单。”
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2021/10/08/%E8%8D%86%E6%A3%98%E9%B8%9F/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1334,6 +1331,17 @@
 
           
           
+             <span id="/2021/10/08/%E5%93%88%E4%BD%9B%E5%A5%B3%E5%AD%A9%E5%88%98%E4%BA%A6%E5%A9%B7/" class="leancloud_visitors" data-flag-title="哈佛女孩刘亦婷">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
 
           
 
@@ -1356,14 +1364,21 @@
       
         
           
-            <p>   唯有走出适合自己的道路，才是最为正确的选择。</p>
-<p>毕竟每个人的成功甚至失败都是不可复制的，会有太多的偶然因素，也会受到他们所处的那个时代的影响。</p>
-<p>凡事预则立，不预则废</p>
-<p>诚为本，本为末。诚则人多自附，术则物终不亲。</p>
-<p>掌握记忆方法</p>
-<p>面临重要抉择时，务必“集思广议”</p>
+             唯有走出适合自己的道路，才是最为正确的选择。
+毕竟每个人的成功甚至失败都是不可复制的，会有太多的偶然因素，也会受到他们所处的那个时代的影响。
+凡事预则立，不预则废
+诚为本，本为末。诚则人多自附，术则物终不亲。
+掌握记忆方法
+面临重要抉择时，务必“集思广议”
 
           
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2021/10/08/%E5%93%88%E4%BD%9B%E5%A5%B3%E5%AD%A9%E5%88%98%E4%BA%A6%E5%A9%B7/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1481,6 +1496,17 @@
 
           
           
+             <span id="/2021/10/08/%E7%AA%97%E8%BE%B9%E7%9A%84%E5%B0%8F%E8%B1%86%E8%B1%86/" class="leancloud_visitors" data-flag-title="窗边的小豆豆">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
 
           
 
@@ -1503,10 +1529,16 @@
       
         
           
-            <p>《窗边的小豆豆》</p>
-<p>讲了个日本的小女孩，小豆豆上学的故事。从上课老是对那种和垃圾桶相似可以开关的课桌，对文具书本放进拿出。还有上课时，老是到窗边对着来往的广告宣传员对话等，让学校给辞退了。后来到了一个名叫巴学园的学校。一个只有50多号人，而且是用电车车厢做的教室来上课。从那位校长，吃午饭时，把你们带来的山里的东西和海里的东西都拿出来。带学生去玩，遇到花的雄蕊和雌蕊，通过蝴蝶传播授粉，让学生分别扮鬼游戏战胜恐惧。还有小豆豆心爱的钱包掉进粪坑，自己用那个挑粪工具找时，校长经过没有责备，只是让她做完后，把这些收拾好原样放到原处。再到游泳时，要大家一起脱掉衣服游泳，消除彼此一些学生的身体自卑心，穿最破的衣服，让想看车厢教室怎么运来的同学，回家跟父母说下，让后可以在学校搭帐篷过夜，看看车厢半夜怎么运到学校的，还有比赛奖品使用蔬菜，通过音乐旋律，让学生按拍节做运动，培养感官，注意力等。还有校长唯一生气的一次，在厨房对着一位老师。那位老师在上课是说人原来是有尾巴的，现在退化了，只剩下尾骨。这时，老师玩笑话说了下班级比较矮的身体缺陷的学生，说了下你也有尾巴等等。小豆豆听见这个对话，觉得如果老师说她有尾巴自己感到很开心。但是，校长觉得对于一个有缺陷的学生再开玩笑就是伤口上撒盐。平时他，有意让那个学生运动会，游泳大家一起脱衣服表示没什么不同，消除了自卑的心态，白做了。反正呢，通过这本书，让我看到了对于对待教育，这些人能够启发式的，让学生能够找到自己感兴趣的，通过身边的事物融入教学，锻炼培养学生的品质等。</p>
-
-          
+          《窗边的小豆豆》
+讲了个日本的小女孩，小豆豆上学的故事。从上课老是对那种和垃圾桶相似可以开关的课桌，对文具书本放进拿出。还有上课时，老是到窗边对着来往的广告宣传员对话等，让学校给辞退了。后来到了一个名叫巴学园的学校。一个只有50多号人，而且是用电车车厢做的教室来上课。从那位校长，吃午饭时，把你们带来
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2021/10/08/%E7%AA%97%E8%BE%B9%E7%9A%84%E5%B0%8F%E8%B1%86%E8%B1%86/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1624,6 +1656,17 @@
 
           
           
+             <span id="/2021/10/08/%E8%8D%B7%E9%A9%AC%E5%8F%B2%E8%AF%97-%E4%BC%8A%E5%88%A9%E4%BA%9A%E7%89%B9/" class="leancloud_visitors" data-flag-title="荷马史诗.伊利亚特">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
 
           
 
@@ -1646,43 +1689,186 @@
       
         
           
-            <p>  阿特柔斯之子，我们为了一个女子，</p>
-<p>心中积郁了那么深的恼人怨气，</p>
-<p>这无论对你或是对我有什么好处?</p>
-<p>愿当初攻破吕尔涅索斯挑选战利品时，</p>
-<p>阿尔特弥斯便用箭把她射死在船边。</p>
-<p>那样我便不会生怨气，也不会有那么多</p>
-<p>阿尔戈斯人被敌人打倒，用嘴啃泥土!</p>
-<p>赫克托尔和特洛亚人从中得到好处，</p>
-<p>阿开奥斯人将会把这件事永远牢记。</p>
-<p>让既成的往事过去吧，即使心中痛苦，</p>
-<p>对胸中的心灵我们必须学会抑制。</p>
-<p>现在我已把胸中的怒火坚决消除，不想总把害人的仇怨永远记心里，</p>
-<p>让我们赶快召唤长发的阿开奥斯人</p>
-<p>投入战斗，我要亲自迎战特洛亚人，</p>
-<p>看他们还想不想在我们的船舶前宿营。</p>
-<p>我想他们定会高兴得跪地庆幸，</p>
-<p>只要在残酷的战斗中能躲过我们的投掷。</p>
-<p>-—–</p>
-<p>-—–</p>
-<p>奥德修斯</p>
-<p>​        足智多谋的奥德修斯回答他这样说”神样的阿基琉斯，不管你如何勇敢，也不能让未早餐的阿开奥斯人去伊利昂同特洛亚人厮杀，因为战斗不可能短时间结束当双方的战线开始接触，神明向交战双方灌输同样的力量。还是首先让阿开奥斯人到快船边用点酒饭，酒饭会给人勇气和力量。一个人不可能空着肚子整天不断地同敌人作战，一直杀到太阳下山。</p>
-<p>即使他心中很想顽强地坚持战斗</p>
-<p>但他的肢节会突然疲软，饥饿和焦渴</p>
-<p>一同袭来，抬动两腿会觉得力乏。如果一个人喝够了酒，吃饱了饭，</p>
-<p>他便能够同敌人整天连续厮杀，</p>
-<p>胸中的心力勇猛不衰，全身肢节</p>
-<p>坚韧不乏，最后一个停止作战。</p>
-<p>你现在应该解散军队，让他们用餐，至于礼物，让士兵的统帅阿伽门农</p>
-<p>把它们放到会场中央，阿尔戈斯人</p>
-<p>可一睹为快，你也可欢娱自己的心灵。</p>
-<p>再让他站在阿尔戈斯人中间起个誓，</p>
-<p>他没有碰过她的床榻，触动过她，</p>
-<p>统帅啊，如同男人或女人常有的那样。</p>
-<p>阿基琉斯，你也要让心灵宽宏大度，</p>
-<p>最后让他在营帐摆设盛宴款待你，从而让你得到你应该得到的一切。阿特柔斯之子啊，这样会使你今后待人更公平。同被自己得罪过的人谦言和解，对君王不是屈辱事情。</p>
+            阿特柔斯之子，我们为了一个女子，
+心中积郁了那么深的恼人怨气，
+这无论对你或是对我有什么好处?
+愿当初攻破吕尔涅索斯挑选战利品时，
+阿尔特弥斯便用箭把她射死在船边。
+那样我便不会生怨气，也不会有那么多
+阿尔戈斯人被敌人打倒，用嘴啃泥土!
+赫克托尔和特洛亚人从中得到好处，
+阿开奥斯人将会把这件事永
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2021/10/08/%E8%8D%B7%E9%A9%AC%E5%8F%B2%E8%AF%97-%E4%BC%8A%E5%88%A9%E4%BA%9A%E7%89%B9/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/10/08/%E5%8C%85%E6%B3%95%E5%88%A9%E5%A4%AB%E4%BA%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZXY">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/obelieve.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Obelieve">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/10/08/%E5%8C%85%E6%B3%95%E5%88%A9%E5%A4%AB%E4%BA%BA/" itemprop="url">包法利夫人</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-10-08T22:37:57+08:00">
+                2021-10-08
+              </time>
+            
+
+            
+
+            
+          </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%98%85%E8%AF%BB%E6%91%98%E8%A6%81/" itemprop="url" rel="index">
+                    <span itemprop="name">阅读摘要</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2021/10/08/%E5%8C%85%E6%B3%95%E5%88%A9%E5%A4%AB%E4%BA%BA/" class="leancloud_visitors" data-flag-title="包法利夫人">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          这就是巴黎的发明！京城先生的高见！这和斜视、麻醉药、膀胱石扫除手术一样，荒诞不经，政府应该加以禁止！
+可是人家假装内行，不问结果，乱塞药给你吃！我们不像人家那样有本领；我们不是学者；我们不会异想天开，给大好一个常人行手术！
+治好跷脚?谁能治好跷脚?简直就像好比说，叫驼背挺直脊梁骨！
+-—
+
+          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2021/10/08/%E5%8C%85%E6%B3%95%E5%88%A9%E5%A4%AB%E4%BA%BA/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1720,7 +1906,7 @@
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
   </nav>
 
 
@@ -1751,68 +1937,79 @@
 
       
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <img class="site-author-image" itemprop="image"
-                src="/images/obelieve.jpg"
-                alt="ZXY" />
-            
-              <p class="site-author-name" itemprop="name">ZXY</p>
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/obelieve.jpg"
+               alt="ZXY" />
+          <p class="site-author-name" itemprop="name">ZXY</p>
+           
               <p class="site-description motion-element" itemprop="description">不要半途而废~</p>
-          </div>
-
-          <nav class="site-state motion-element">
-
-            
-              <div class="site-state-item site-state-posts">
-              
-                <a href="/archives/%20%7C%7C%20archive">
-              
-                  <span class="site-state-item-count">32</span>
-                  <span class="site-state-item-name">日志</span>
-                </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-categories">
-                <a href="/categories/index.html">
-                  <span class="site-state-item-count">3</span>
-                  <span class="site-state-item-name">分类</span>
-                </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-tags">
-                <a href="/tags/index.html">
-                  <span class="site-state-item-count">5</span>
-                  <span class="site-state-item-name">标签</span>
-                </a>
-              </div>
-            
-
-          </nav>
-
           
-
-          
-
-          
-          
-
-          
-          
-
-          
-
         </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/obelieve" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
       </section>
 
       
@@ -1829,36 +2026,30 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
-    <i class="fa fa-user"></i>
+    <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">ZXY</span>
-
-  
 </div>
 
 
-  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 强力驱动
+</div>
 
-
-
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
-
-
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">
+    NexT.Pisces
+  </a>
+</div>
 
 
         
-
-
-
-
-
-
 
         
       </div>
@@ -1869,8 +2060,6 @@
         <i class="fa fa-arrow-up"></i>
         
       </div>
-    
-
     
 
   </div>
@@ -1905,54 +2094,53 @@
 
 
   
-  
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
 
   
-  
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
 
   
-  
-    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
 
   
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
 
   
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
 
   
-  
-    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
 
 
   
 
 
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
 
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
 
 
 
   
   
 
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
   
 
   
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
 
 
 
@@ -1983,12 +2171,6 @@
 
 
 
-
-
-
-
-
-
   
 
 
@@ -1998,10 +2180,114 @@
   
 
   
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("urOdS8XIqz7Kvt6TwSz8RUpL-gzGzoHsz", "FGI16oy4ykvdDc9jyYSdrNsF");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
 
   
 
-  
   
 
   
