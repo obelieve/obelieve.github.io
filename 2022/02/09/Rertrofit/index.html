@@ -98,14 +98,14 @@
 <meta property="og:url" content="http://yoursite.com/2022/02/09/Rertrofit/index.html">
 <meta property="og:site_name" content="Obelieve">
 <meta property="og:description" content="1. 介绍   Retrofit主要是基于OKHttp进一步封装的网络请求的框架。它采用了一种接口方法声明请求的方式，使用方法注解和方法参数注解进行标记请求信息，通过动态代理访问接口方法并解析Method，最后将请求信息汇总组装成okhttp3.Request对象，再根据接口方法返回值类型决定调用适配器(CallAdapter)，内部通过okhttp3.Call.enqueue(..) 或okh">
-<meta property="og:image" content="https://raw.githubusercontent.com/obelieve/Demo/code-retrofit/%E6%B5%81%E7%A8%8B%E5%9B%BE.png">
+<meta property="og:image" content="http://yoursite.com/assets/images/retrofit%E6%B5%81%E7%A8%8B%E5%9B%BE.png">
 <meta property="article:published_time" content="2022-02-09T14:54:52.000Z">
-<meta property="article:modified_time" content="2022-02-09T14:54:50.140Z">
+<meta property="article:modified_time" content="2022-02-09T14:59:43.924Z">
 <meta property="article:author" content="ZXY">
 <meta property="article:tag" content="okhttp">
 <meta property="article:tag" content="retrofit">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/obelieve/Demo/code-retrofit/%E6%B5%81%E7%A8%8B%E5%9B%BE.png">
+<meta name="twitter:image" content="http://yoursite.com/assets/images/retrofit%E6%B5%81%E7%A8%8B%E5%9B%BE.png">
 
 
 
@@ -393,7 +393,7 @@
       
 
       
-        <p><img src="https://raw.githubusercontent.com/obelieve/Demo/code-retrofit/%E6%B5%81%E7%A8%8B%E5%9B%BE.png" alt="流程图.png"></p>
+        <p><img src="/assets/images/retrofit流程图.png" alt="流程图.png"></p>
 <h2 id="1-介绍"><a href="#1-介绍" class="headerlink" title="1. 介绍"></a>1. 介绍</h2><p>   Retrofit主要是基于OKHttp进一步封装的网络请求的框架。它采用了一种接口方法声明请求的方式，使用方法注解和方法参数注解进行标记请求信息，通过动态代理访问接口方法并解析Method，最后将请求信息汇总组装成okhttp3.Request对象，再根据接口方法返回值类型决定调用适配器(CallAdapter)，内部通过okhttp3.Call.enqueue(..) 或okhttp3.Call.execute() 同步/异步请求，请求响应后通过转换器(Converter)把okhttp3.ResponseBody数据再进行一次转换得到最后的数据。</p>
 <h2 id="2-用法"><a href="#2-用法" class="headerlink" title="2.用法"></a>2.用法</h2><p>这一小节通过一系列不同请求方式的代码来展示相关的用法。<br>主要分为6个文件，具体代码文件在最后面。</p>
 <ul>
