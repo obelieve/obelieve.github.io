@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="okhttp,retrofit," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="1. 介绍   Retrofit主要是基于OKHttp进一步封装的网络请求的框架。它采用了一种接口方法声明请求的方式，使用方法注解和方法参数注解进行标记请求信息，通过动态代理访问接口方法并解析Method，最后将请求信息汇总组装成okhttp3.Request对象，再根据接口方法返回值类型决定调用适配器(CallAdapter)，内部通过okhttp3.Call.enqueue(..) 或okh">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Retrofit源码分析 2.10.0-SNAPSHOT">
+<meta property="og:url" content="http://yoursite.com/2017/09/02/Rertrofit/index.html">
+<meta property="og:site_name" content="Obelieve">
+<meta property="og:description" content="1. 介绍   Retrofit主要是基于OKHttp进一步封装的网络请求的框架。它采用了一种接口方法声明请求的方式，使用方法注解和方法参数注解进行标记请求信息，通过动态代理访问接口方法并解析Method，最后将请求信息汇总组装成okhttp3.Request对象，再根据接口方法返回值类型决定调用适配器(CallAdapter)，内部通过okhttp3.Call.enqueue(..) 或okh">
+<meta property="og:image" content="https://github.com/obelieve/Demo/blob/code-retrofit/%E6%B5%81%E7%A8%8B%E5%9B%BE.png">
+<meta property="article:published_time" content="2017-09-02T14:58:52.000Z">
+<meta property="article:modified_time" content="2022-02-09T13:10:04.748Z">
+<meta property="article:author" content="ZXY">
+<meta property="article:tag" content="okhttp">
+<meta property="article:tag" content="retrofit">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/obelieve/Demo/blob/code-retrofit/%E6%B5%81%E7%A8%8B%E5%9B%BE.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: false,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/09/02/Rertrofit/"/>
+
+
+
+
+
+  <title>Retrofit源码分析 2.10.0-SNAPSHOT | Obelieve</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?c8b7b6c7108d09437264b79b4afee62e";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Obelieve</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/02/Rertrofit/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ZXY">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/obelieve.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Obelieve">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Retrofit源码分析 2.10.0-SNAPSHOT</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-02T22:58:52+08:00">
+                2017-09-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/android/" itemprop="url" rel="index">
+                    <span itemprop="name">android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/09/02/Rertrofit/" class="leancloud_visitors" data-flag-title="Retrofit源码分析 2.10.0-SNAPSHOT">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://github.com/obelieve/Demo/blob/code-retrofit/%E6%B5%81%E7%A8%8B%E5%9B%BE.png" alt="流程图.png"></p>
+<h2 id="1-介绍"><a href="#1-介绍" class="headerlink" title="1. 介绍"></a>1. 介绍</h2><p>   Retrofit主要是基于OKHttp进一步封装的网络请求的框架。它采用了一种接口方法声明请求的方式，使用方法注解和方法参数注解进行标记请求信息，通过动态代理访问接口方法并解析Method，最后将请求信息汇总组装成okhttp3.Request对象，再根据接口方法返回值类型决定调用适配器(CallAdapter)，内部通过okhttp3.Call.enqueue(..) 或okhttp3.Call.execute() 同步/异步请求，请求响应后通过转换器(Converter)把okhttp3.ResponseBody数据再进行一次转换得到最后的数据。</p>
+<h2 id="2-用法"><a href="#2-用法" class="headerlink" title="2.用法"></a>2.用法</h2><p>这一小节通过一系列不同请求方式的代码来展示相关的用法。<br>主要分为6个文件，具体代码文件在最后面。</p>
+<ul>
+<li>ServiceInterface.kt 声明接口请求</li>
+<li>Main.kt 测试接口请求</li>
+<li>ApiConverterFactory.java 转换器工厂类</li>
+<li>ApiRequestBodyConverter.java  转为RequestBody对象转换器类 （@Part 参数对象转为RequestBody）</li>
+<li>ApiResponseBodyConverter.java  ResponseBody对象转换器类</li>
+<li>HttpBinResponse.java  ResponseBody装好后的数据类<h3 id="2-1-基本用法"><a href="#2-1-基本用法" class="headerlink" title="2.1 基本用法"></a>2.1 基本用法</h3><ul>
+<li>1.GET 请求下载文件</li>
+<li>2.GET 请求</li>
+<li>3.GET 请求 查询?name=value</li>
+<li>4.GET 请求 查询?name</li>
+<li>5.POST 请求</li>
+<li>6.POST 请求  表单数据提交 name=”名字”&amp;content=”内容”</li>
+<li>7.POST 请求  多部分表单提交 multipart/form-data<h3 id="2-2-进阶用法"><a href="#2-2-进阶用法" class="headerlink" title="2.2 进阶用法"></a>2.2 进阶用法</h3></li>
+</ul>
+</li>
+<li><ol>
+<li>通过@URL 请求一个不同地址的URL</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>通过Interceptor拦截器，实现动态设置不同BaseUrl</li>
+</ol>
+</li>
+</ul>
+<h2 id="3-源码"><a href="#3-源码" class="headerlink" title="3. 源码"></a>3. 源码</h2><pre><code>这一小节，通过一个post表单提交梳理下执行流程。以下是这个post请求的代码：分为三部分
+</code></pre><ul>
+<li><ol>
+<li>接口请求声明部分</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>Retrofit类构建，并返回接口的实现类部分</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>接口请求测试部分<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">interface ServiceInterface &#123;</span><br><span class="line">...</span><br><span class="line">companion object &#123;</span><br><span class="line">        var BASE_URL &#x3D; &quot;http:&#x2F;&#x2F;www.httpbin.org&#x2F;&quot;</span><br><span class="line">    &#125;</span><br><span class="line">@POST(&quot;&#x2F;post&quot;)</span><br><span class="line">    @FormUrlEncoded</span><br><span class="line">    fun post(@Field(&quot;name&quot;) name:String,@Field(&quot;content&quot;) content:String): Call&lt;ResponseBody&gt;</span><br><span class="line">...</span><br><span class="line">&#125;</span><br><span class="line">public class Main &#123;</span><br><span class="line">...</span><br><span class="line">private static ServiceInterface sServiceInterface</span><br><span class="line"> &#x3D; new Retrofit.Builder()</span><br><span class="line">.baseUrl(ServiceInterface.Companion.getBASE_URL())</span><br><span class="line">.client(new OkHttpClient.Builder().build())</span><br><span class="line">.addCallAdapterFactory(RxJava2CallAdapterFactory.create())</span><br><span class="line">.addConverterFactory(ApiConverterFactory.create())</span><br><span class="line">.build()</span><br><span class="line">.create(ServiceInterface.class);</span><br><span class="line">&#x2F;**</span><br><span class="line">     * Post请求，表单提交 @FormUrlEncoded @Field</span><br><span class="line">     *&#x2F;</span><br><span class="line">    @Test</span><br><span class="line">    public void testPostFormUrlEncoded()&#123;</span><br><span class="line">        String s &#x3D; null;</span><br><span class="line">        try &#123;</span><br><span class="line">            Response&lt;ResponseBody&gt; response &#x3D; sServiceInterface.post(&quot;名字&quot;,&quot;内容&quot;).execute();</span><br><span class="line">            s &#x3D; response.body().string();</span><br><span class="line">        &#125; catch (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(s);</span><br><span class="line">    &#125;</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+从<code>sServiceInterface.post(&quot;名字&quot;,&quot;内容&quot;).execute();</code>开始分析<br>1.先看看<code>sServiceInterface</code>是怎么创建的?<br>2.再看看调用<code>post(&quot;名字&quot;,&quot;内容&quot;)</code>方法是怎么回事?<br>3.最后看下执行<code>execute()</code>是怎么样的？</li>
+</ol>
+</li>
+</ul>
+<h4 id="开始分析1"><a href="#开始分析1" class="headerlink" title="开始分析1."></a>开始分析1.</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//先进入Retrofit#create(..)方法</span></span><br><span class="line"><span class="keyword">public</span> &lt;T&gt; <span class="function">T <span class="title">create</span><span class="params">(<span class="keyword">final</span> Class&lt;T&gt; service)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (T)</span><br><span class="line">        Proxy.newProxyInstance(</span><br><span class="line">            service.getClassLoader(),</span><br><span class="line">            <span class="keyword">new</span> Class&lt;?&gt;[] &#123;service&#125;,</span><br><span class="line">            <span class="keyword">new</span> InvocationHandler() &#123;</span><br><span class="line">            ...</span><br><span class="line">              <span class="meta">@Override</span></span><br><span class="line">              <span class="keyword">public</span> <span class="meta">@Nullable</span> <span class="function">Object <span class="title">invoke</span><span class="params">(Object proxy, Method method, @Nullable Object[] args)</span></span></span><br><span class="line"><span class="function">                  <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">               ...</span><br><span class="line">                <span class="keyword">return</span> platform.isDefaultMethod(method)</span><br><span class="line">                    ? platform.invokeDefaultMethod(method, service, proxy, args)</span><br><span class="line">                    : loadServiceMethod(method).invoke(args); <span class="comment">//看重点部分</span></span><br><span class="line">              &#125;</span><br><span class="line">            &#125;);</span><br><span class="line"><span class="comment">//分析1结束，通过Proxy.newProxyInstance(..)动态代理获取接口ServiceInterface代理对象。</span></span><br></pre></td></tr></table></figure>
+<h4 id="开始分析2"><a href="#开始分析2" class="headerlink" title="开始分析2."></a>开始分析2.</h4><p>从上一步的<code>loadServiceMethod(method).invoke(args)</code>开始分为2个部分：</p>
+<ul>
+<li>2.1 <code>loadServiceMethod(method)</code></li>
+<li>2.2 调用<code>invoke(args)</code>方法</li>
+</ul>
+<h5 id="开始分析2-1-loadServiceMethod-method"><a href="#开始分析2-1-loadServiceMethod-method" class="headerlink" title="开始分析2.1 loadServiceMethod(method)"></a>开始分析2.1 <code>loadServiceMethod(method)</code></h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">//从Retrofit#loadServiceMethod(..)开始</span></span><br><span class="line">  ServiceMethod&lt;?&gt; loadServiceMethod(Method method) &#123;</span><br><span class="line">       ...</span><br><span class="line">        result = ServiceMethod.parseAnnotations(<span class="keyword">this</span>, method);</span><br><span class="line">       ...</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">  &#125;</span><br><span class="line"><span class="comment">//ServiceMethod#parseAnnotations(..)</span></span><br><span class="line">  <span class="keyword">static</span> &lt;T&gt; <span class="function">ServiceMethod&lt;T&gt; <span class="title">parseAnnotations</span><span class="params">(Retrofit retrofit, Method method)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//解析生成RequestFactory对象，具体流程在【流程图】图片有描述</span></span><br><span class="line">    RequestFactory requestFactory = RequestFactory.parseAnnotations(retrofit, method);</span><br><span class="line">    <span class="keyword">return</span> HttpServiceMethod.parseAnnotations(retrofit, method, requestFactory);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//HttpServiceMethod.parseAnnotations(..)</span></span><br><span class="line">  <span class="keyword">static</span> &lt;ResponseT, ReturnT&gt; <span class="function">HttpServiceMethod&lt;ResponseT, ReturnT&gt; <span class="title">parseAnnotations</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">      Retrofit retrofit, Method method, RequestFactory requestFactory)</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">      adapterType = method.getGenericReturnType();</span><br><span class="line">    ...</span><br><span class="line">  <span class="comment">//获取调用适配器CallAdapter对象，具体流程在【流程图】图片有描述</span></span><br><span class="line">    CallAdapter&lt;ResponseT, ReturnT&gt; callAdapter =</span><br><span class="line">        createCallAdapter(retrofit, method, adapterType, annotations);</span><br><span class="line">    Type responseType = callAdapter.responseType();</span><br><span class="line">    ...</span><br><span class="line">  <span class="comment">//获取转换器Converter对象，具体流程在【流程图】图片有描述</span></span><br><span class="line">    Converter&lt;ResponseBody, ResponseT&gt; responseConverter =</span><br><span class="line">        createResponseConverter(retrofit, method, responseType);</span><br><span class="line">  ...</span><br><span class="line">  okhttp3.Call.Factory callFactory = retrofit.callFactory;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> CallAdapted&lt;&gt;(requestFactory, callFactory, responseConverter, callAdapter);</span><br><span class="line">  ...</span><br><span class="line">  &#125;</span><br><span class="line"><span class="comment">/**CallAdapted extends HttpServiceMethod&lt;ResponseT, ReturnT&gt;</span></span><br><span class="line"><span class="comment">HttpServiceMethod&lt;ResponseT, ReturnT&gt; extends ServiceMethod&lt;ReturnT&gt;</span></span><br><span class="line"><span class="comment">**/</span></span><br><span class="line"><span class="comment">//最后返回CallAdapted对象，分析2.1结束。</span></span><br></pre></td></tr></table></figure>
+<h5 id="开始分析-2-2-调用invoke-args-方法"><a href="#开始分析-2-2-调用invoke-args-方法" class="headerlink" title="开始分析 2.2  调用invoke(args)方法"></a>开始分析 2.2  调用<code>invoke(args)</code>方法</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**CallAdapted中没有invoke方法，invoke方法的实现位于它的父类HttpServiceMethod中**/</span></span><br><span class="line"><span class="comment">//HttpServiceMethod#invoke(..)</span></span><br><span class="line"> <span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">final</span> <span class="meta">@Nullable</span> <span class="function">ReturnT <span class="title">invoke</span><span class="params">(Object[] args)</span> </span>&#123;</span><br><span class="line">    Call&lt;ResponseT&gt; call = <span class="keyword">new</span> OkHttpCall&lt;&gt;(requestFactory, args, callFactory, responseConverter);</span><br><span class="line">    <span class="keyword">return</span> adapt(call, args);</span><br><span class="line">  &#125;</span><br><span class="line"><span class="comment">//adapt(call, args)方法的实现位于CallAdapted中</span></span><br><span class="line"><span class="comment">//CallAdapted#adapt(..)</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> ReturnT <span class="title">adapt</span><span class="params">(Call&lt;ResponseT&gt; call, Object[] args)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> callAdapter.adapt(call);</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">/**调用到CallAdapter#adapt(call)方法，由于之前请求接口方法返回值是Call&lt;ResponseBody&gt;，所以调用DefaultCallAdapterFactory#get(..)返回callAdapter对象</span></span><br><span class="line"><span class="comment">**/</span></span><br><span class="line"><span class="comment">//DefaultCallAdapterFactory#get(..)</span></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">public</span> <span class="meta">@Nullable</span> CallAdapter&lt;?, ?&gt; get(</span><br><span class="line">      Type returnType, Annotation[] annotations, Retrofit retrofit) &#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> CallAdapter&lt;Object, Call&lt;?&gt;&gt;() &#123;</span><br><span class="line">      <span class="meta">@Override</span></span><br><span class="line">      <span class="function"><span class="keyword">public</span> Type <span class="title">responseType</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> responseType;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="meta">@Override</span></span><br><span class="line">      <span class="function"><span class="keyword">public</span> Call&lt;Object&gt; <span class="title">adapt</span><span class="params">(Call&lt;Object&gt; call)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> executor == <span class="keyword">null</span> ? call : <span class="keyword">new</span> ExecutorCallbackCall&lt;&gt;(executor, call);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line"><span class="comment">//最后返回ExecutorCallbackCall对象，分析2.2结束</span></span><br></pre></td></tr></table></figure>
+<h4 id="开始分析3"><a href="#开始分析3" class="headerlink" title="开始分析3."></a>开始分析3.</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//从上一步最后返回ExecutorCallbackCall对象，开始分析</span></span><br><span class="line"><span class="comment">//在ExecutorCallbackCall类中</span></span><br><span class="line">...</span><br><span class="line">   ExecutorCallbackCall(Executor callbackExecutor, Call&lt;T&gt; delegate) &#123;</span><br><span class="line">      <span class="keyword">this</span>.callbackExecutor = callbackExecutor;</span><br><span class="line">      <span class="keyword">this</span>.delegate = delegate;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">//ExecutorCallbackCall#execute()</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Response&lt;T&gt; <span class="title">execute</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> delegate.execute();</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">//由上可知delegate是OkHttpCall对象</span></span><br><span class="line"><span class="comment">//OkHttpCall#execute()</span></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Response&lt;T&gt; <span class="title">execute</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    okhttp3.Call call;</span><br><span class="line">    ...</span><br><span class="line">      <span class="comment">//获取okhttp3.Call对象，具体流程在【流程图】图片有描述</span></span><br><span class="line">      call = getRawCall();</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">return</span> parseResponse(call.execute());</span><br><span class="line">  &#125;</span><br><span class="line"><span class="comment">//OkHttpCall#parseResponse(call.execute())</span></span><br><span class="line">  <span class="function">Response&lt;T&gt; <span class="title">parseResponse</span><span class="params">(okhttp3.Response rawResponse)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    ResponseBody rawBody = rawResponse.body();</span><br><span class="line">    ...</span><br><span class="line">    ExceptionCatchingResponseBody catchingBody = <span class="keyword">new</span> ExceptionCatchingResponseBody(rawBody);</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="comment">//Converter转换器转换数据，然后返回</span></span><br><span class="line">      T body = responseConverter.convert(catchingBody);</span><br><span class="line">      <span class="keyword">return</span> Response.success(body, rawResponse);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (RuntimeException e) &#123;</span><br><span class="line">      catchingBody.throwIfCaught();</span><br><span class="line">      <span class="keyword">throw</span> e;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"><span class="comment">//最后Converter转换器转换数据，然后返回retrofit2.Response对象，分析3结束。</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<h3 id="总结下："><a href="#总结下：" class="headerlink" title="总结下："></a>总结下：</h3><p><code>sServiceInterface.post(&quot;名字&quot;,&quot;内容&quot;).execute();</code><br>1.<code>sServiceInterface</code>通过Proxy.newProxyInstance(..)动态代理获取接口ServiceInterface代理对象。<br>2.调用<code>post(&quot;名字&quot;,&quot;内容&quot;)</code>方法时，开始执行动态代理内部方法，通过层层解析返回ExecutorCallbackCall类，其中包含OkHttpCall对象变量，OkHttpCall中主要包含了一些okhttp3.Request、okhttp3.Call.execute()等处理。</p>
+<h2 id="3-执行execute-，最后就是执行了okhttp3-Call-execute-。"><a href="#3-执行execute-，最后就是执行了okhttp3-Call-execute-。" class="headerlink" title="3.执行execute()，最后就是执行了okhttp3.Call.execute()。"></a>3.执行<code>execute()</code>，最后就是执行了okhttp3.Call.execute()。</h2><h2 id="4-其他"><a href="#4-其他" class="headerlink" title="4.其他"></a>4.其他</h2><ul>
+<li>1.对于super和extends的上界下界：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">List&lt;? super Food&gt; 表示Food的超类，说明Food是?的下界 （只能add，不能get）</span><br><span class="line">List&lt;? extends Fruit&gt; 表示Fruit的子类，说明Fruit是?的上界 （只能get，不能add）</span><br><span class="line"></span><br><span class="line">class Food&#123;&#125;</span><br><span class="line">class Fruit extends Food &#123;&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><code>【2】用法源码部分</code><br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">ServiceInterface</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">companion</span> <span class="keyword">object</span> &#123;</span><br><span class="line">        <span class="keyword">var</span> BASE_URL = <span class="string">"http://www.httpbin.org/"</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Streaming</span></span><br><span class="line">    <span class="meta">@GET</span></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">downloadFile</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="meta">@Header(<span class="meta-string">"RANGE"</span>)</span> downParam: <span class="type">String</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="meta">@Url</span> fileUrl: <span class="type">String</span></span></span></span><br><span class="line"><span class="function"><span class="params">    )</span></span>: Call&lt;ResponseBody&gt;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GET(<span class="meta-string">"/"</span>)</span></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">get</span><span class="params">()</span></span>: Call&lt;ResponseBody&gt;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GET(<span class="meta-string">"/get"</span>)</span></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">get</span><span class="params">(<span class="meta">@Query(<span class="meta-string">"name"</span>)</span>name:<span class="type">String</span>,<span class="meta">@Query(<span class="meta-string">"content"</span>)</span>content: <span class="type">String</span>)</span></span>: Call&lt;HttpBinResponse&gt;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GET(<span class="meta-string">"/get"</span>)</span></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">get</span><span class="params">(<span class="meta">@QueryName</span> name:<span class="type">String</span>)</span></span>: Call&lt;ResponseBody&gt;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@POST(<span class="meta-string">"/post"</span>)</span></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">post</span><span class="params">()</span></span>: Call&lt;ResponseBody&gt;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@POST(<span class="meta-string">"/post"</span>)</span></span><br><span class="line">    <span class="meta">@FormUrlEncoded</span></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">post</span><span class="params">(<span class="meta">@Field(<span class="meta-string">"name"</span>)</span> name:<span class="type">String</span>,<span class="meta">@Field(<span class="meta-string">"content"</span>)</span> content:<span class="type">String</span>)</span></span>: Call&lt;ResponseBody&gt;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@POST(<span class="meta-string">"/post"</span>)</span></span><br><span class="line">    <span class="meta">@Multipart</span></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">post</span><span class="params">(<span class="meta">@Part(<span class="meta-string">"va"</span>)</span> va:<span class="type">RequestBody</span>,<span class="meta">@Part(<span class="meta-string">"name\"; filename=\"name.png"</span>)</span>name: <span class="type">File</span>, <span class="meta">@Part(<span class="meta-string">"name2\"; filename=\"name2.png"</span>)</span>name2: <span class="type">File</span>)</span></span>: Call&lt;ResponseBody&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> static ServiceInterface sServiceInterface = new Retrofit.Builder().baseUrl(ServiceInterface.Companion.getBASE_URL()).client(</span><br><span class="line">            new OkHttpClient.Builder().addInterceptor(new Interceptor() &#123;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">private</span> <span class="keyword">volatile</span> String host;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">public</span> void setHost(String host) &#123;</span><br><span class="line">                    <span class="keyword">this</span>.host = host;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="meta">@NotNull</span></span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="keyword">public</span> okhttp3.Response intercept(<span class="meta">@NotNull</span> Chain chain) throws IOException &#123;</span><br><span class="line">                        Request request = chain.request();</span><br><span class="line">                    String host = <span class="keyword">this</span>.host;</span><br><span class="line">                    <span class="keyword">if</span> (host != <span class="literal">null</span>) &#123;</span><br><span class="line">                        HttpUrl newUrl = request.url().newBuilder().host(host).build();</span><br><span class="line">                        request = request.newBuilder().url(newUrl).build();</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">return</span> chain.proceed(request);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;).build())</span><br><span class="line">            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())</span><br><span class="line">            .addConverterFactory(ApiConverterFactory.create())</span><br><span class="line">            .build().create(ServiceInterface<span class="class">.<span class="keyword">class</span>);</span></span><br><span class="line"></span><br><span class="line">    &#123;</span><br><span class="line"><span class="comment">//        System.setProperty("http.proxyHost", "127.0.0.1");</span></span><br><span class="line"><span class="comment">//        System.setProperty("https.proxyHost", "127.0.0.1");</span></span><br><span class="line"><span class="comment">//        System.setProperty("http.proxyPort", "8888");</span></span><br><span class="line"><span class="comment">//        System.setProperty("https.proxyPort", "8888");</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> static void main(String[] args) throws Exception &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Get请求,</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> void testGet()&#123;</span><br><span class="line">        String s = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Response&lt;ResponseBody&gt; response = sServiceInterface.<span class="keyword">get</span>().execute();</span><br><span class="line">            s = response.body().string();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.<span class="keyword">out</span>.println(s);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Get请求下载，带有 <span class="doctag">@Streaming</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> void testGetDownload()&#123;</span><br><span class="line">        String url = <span class="string">"https://www.httpbin.org/image/png"</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Response&lt;ResponseBody&gt; response = sServiceInterface.downloadFile(<span class="string">"Range: bytes=0-"</span>,url).execute();</span><br><span class="line">            BufferedSink sink = Okio.buffer(Okio.sink(new File(<span class="string">"C:\\Users\\Administrator\\Desktop"</span>, <span class="string">"testImage.png"</span>)));</span><br><span class="line">            sink.writeAll(response.body().source());</span><br><span class="line">            sink.close();</span><br><span class="line">            System.<span class="keyword">out</span>.println(<span class="string">"req图片"</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Get请求,带有<span class="doctag">@QueryName</span> ?name</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> void testGetQueryName()&#123;</span><br><span class="line">        String s = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Response&lt;ResponseBody&gt; response = sServiceInterface.<span class="keyword">get</span>(<span class="string">"name"</span>).execute();</span><br><span class="line">            s = response.body().string();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.<span class="keyword">out</span>.println(s);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Get请求,带有<span class="doctag">@Query</span> ?name=value&amp;name2=value2</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> void testGetQuery()&#123;</span><br><span class="line">        String s = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Response&lt;HttpBinResponse&gt; response = sServiceInterface.<span class="keyword">get</span>(<span class="string">"名字"</span>,<span class="string">"内容"</span>).execute();</span><br><span class="line">            s = response.body().getData();</span><br><span class="line">            System.<span class="keyword">out</span>.println(<span class="string">"url="</span>+new Gson().fromJson(s,HttpBinResponse.Entity<span class="class">.<span class="keyword">class</span>).<span class="title">getUrl</span></span>()+<span class="string">" \n"</span>+s);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Post请求</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> void testPost()&#123;</span><br><span class="line">        String s = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Response&lt;ResponseBody&gt; response = sServiceInterface.post().execute();</span><br><span class="line">            s = response.body().string();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.<span class="keyword">out</span>.println(s);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Post请求，表单提交 <span class="doctag">@FormUrlEncoded</span> <span class="doctag">@Field</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> void testPostFormUrlEncoded()&#123;</span><br><span class="line">        String s = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Response&lt;ResponseBody&gt; response = sServiceInterface.post(<span class="string">"名字"</span>,<span class="string">"内容"</span>).execute();</span><br><span class="line">            s = response.body().string();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.<span class="keyword">out</span>.println(s);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Post请求，多部分表单提交 <span class="doctag">@Multipart</span> <span class="doctag">@Part</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> void testPostMultipart() &#123;</span><br><span class="line">        RequestBody aa = RequestBody.create(<span class="string">"name=11&amp;value=22"</span>, MediaType.parse(<span class="string">"text/plain"</span>));</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Response&lt;ResponseBody&gt; response = sServiceInterface.post(aa,new File(<span class="string">"C:\\Users\\Administrator\\Desktop\\1.png"</span>),new File(<span class="string">"C:\\Users\\Administrator\\Desktop\\2.png"</span>)).execute();</span><br><span class="line">            String s = response.body().string();</span><br><span class="line">            System.<span class="keyword">out</span>.println(s);</span><br><span class="line">            HttpBinResponse.Entity entity = new Gson().fromJson(s, HttpBinResponse.Entity<span class="class">.<span class="keyword">class</span>);</span></span><br><span class="line">            String name = entity.getFile().<span class="keyword">get</span>(<span class="string">"name"</span>).replace(<span class="string">"data:image/png;base64,"</span>,<span class="string">""</span>);</span><br><span class="line">            File file = new File(<span class="string">"C:\\Users\\Administrator\\Desktop\\multipart.png"</span>);</span><br><span class="line">            FileOutputStream <span class="keyword">out</span> = new FileOutputStream(file);</span><br><span class="line">            <span class="keyword">out</span>.write(Base64.getDecoder().decode(name));</span><br><span class="line">            <span class="keyword">out</span>.flush();</span><br><span class="line">            <span class="keyword">out</span>.close();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ApiConverterFactory</span> <span class="keyword">extends</span> <span class="title">Converter</span>.<span class="title">Factory</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ApiConverterFactory <span class="title">create</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ApiConverterFactory();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Nullable</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Converter&lt;?, RequestBody&gt; requestBodyConverter(Type type, Annotation[] parameterAnnotations, Annotation[] methodAnnotations, Retrofit retrofit) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ApiRequestBodyConverter();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Nullable</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Converter&lt;ResponseBody, ?&gt; responseBodyConverter(Type type, Annotation[] annotations, Retrofit retrofit) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ApiResponseBodyConverter();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ApiRequestBodyConverter</span> <span class="keyword">implements</span> <span class="title">Converter</span>&lt;<span class="title">File</span>, <span class="title">RequestBody</span>&gt; </span>&#123;</span><br><span class="line">    <span class="meta">@Nullable</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> RequestBody <span class="title">convert</span><span class="params">(File value)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(value.getAbsolutePath().contains(<span class="string">".png"</span>))&#123;</span><br><span class="line">            RequestBody bodyParams = RequestBody.create(value,MediaType.parse(<span class="string">"image/png"</span>));</span><br><span class="line">            <span class="keyword">return</span> bodyParams;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ApiResponseBodyConverter</span> <span class="keyword">implements</span> <span class="title">Converter</span>&lt;<span class="title">ResponseBody</span>, <span class="title">HttpBinResponse</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Nullable</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> HttpBinResponse <span class="title">convert</span><span class="params">(ResponseBody value)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        String json = value.string();</span><br><span class="line">        HttpBinResponse response = <span class="keyword">new</span> HttpBinResponse();</span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            response.setCode(<span class="number">1</span>);</span><br><span class="line">            response.setMessage(<span class="string">"Success"</span>);</span><br><span class="line">            response.setData(json);</span><br><span class="line">        &#125;<span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> response;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HttpBinResponse</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String message;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> code;</span><br><span class="line">    <span class="keyword">private</span> Entity entity;</span><br><span class="line">    <span class="keyword">private</span> String data;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getMessage</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> message;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setMessage</span><span class="params">(String message)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.message = message;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> code;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setCode</span><span class="params">(<span class="keyword">int</span> code)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.code = code;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Entity <span class="title">getEntity</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> entity;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setEntity</span><span class="params">(Entity entity)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.entity = entity;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getData</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> data;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setData</span><span class="params">(String data)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.data = data;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Entity</span></span>&#123;</span><br><span class="line">        <span class="keyword">private</span> Object args;</span><br><span class="line">        <span class="keyword">private</span> String data;</span><br><span class="line">        <span class="keyword">private</span> Map&lt;String,String&gt; files;</span><br><span class="line">        <span class="keyword">private</span> Map&lt;String,String&gt; form;</span><br><span class="line">        <span class="keyword">private</span> Map&lt;String,String&gt; headers;</span><br><span class="line">        <span class="keyword">private</span> String json;</span><br><span class="line">        <span class="keyword">private</span> String origin;</span><br><span class="line">        <span class="keyword">private</span> String url;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> Object <span class="title">getArg</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> args;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setArg</span><span class="params">(Object arg)</span> </span>&#123;</span><br><span class="line">            args = arg;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">getData</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> data;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setData</span><span class="params">(String data)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.data = data;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> Map&lt;String,String&gt; <span class="title">getFile</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> files;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setFile</span><span class="params">(Map&lt;String,String&gt; file)</span> </span>&#123;</span><br><span class="line">            files = file;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> Map&lt;String, String&gt; <span class="title">getForm</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> form;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setForm</span><span class="params">(Map&lt;String, String&gt; form)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.form = form;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> Map&lt;String, String&gt; <span class="title">getHeader</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> headers;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setHeader</span><span class="params">(Map&lt;String, String&gt; header)</span> </span>&#123;</span><br><span class="line">            headers = header;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">getJson</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> json;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setJson</span><span class="params">(String json)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.json = json;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">getOrigin</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> origin;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setOrigin</span><span class="params">(String origin)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.origin = origin;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">getUrl</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> url;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setUrl</span><span class="params">(String url)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.url = url;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">"Data&#123;"</span> +</span><br><span class="line">                    <span class="string">"args="</span> + args +</span><br><span class="line">                    <span class="string">", data='"</span> + data + <span class="string">'\''</span> +</span><br><span class="line">                    <span class="string">", files="</span> + files +</span><br><span class="line">                    <span class="string">", form="</span> + form +</span><br><span class="line">                    <span class="string">", headers="</span> + headers +</span><br><span class="line">                    <span class="string">", json='"</span> + json + <span class="string">'\''</span> +</span><br><span class="line">                    <span class="string">", origin='"</span> + origin + <span class="string">'\''</span> +</span><br><span class="line">                    <span class="string">", url='"</span> + url + <span class="string">'\''</span> +</span><br><span class="line">                    <span class="string">'&#125;'</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/okhttp/" rel="tag"># okhttp</a>
+          
+            <a href="/tags/retrofit/" rel="tag"># retrofit</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/02/hexo/" rel="next" title="Hexo 搭建github博客">
+                <i class="fa fa-chevron-left"></i> Hexo 搭建github博客
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/10/10/Http/" rel="prev" title="HTTP简介">
+                HTTP简介 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/obelieve.jpg"
+               alt="ZXY" />
+          <p class="site-author-name" itemprop="name">ZXY</p>
+           
+              <p class="site-description motion-element" itemprop="description">不要半途而废~</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/obelieve" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-介绍"><span class="nav-number">1.</span> <span class="nav-text">1. 介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-用法"><span class="nav-number">2.</span> <span class="nav-text">2.用法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-基本用法"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 基本用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-进阶用法"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 进阶用法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-源码"><span class="nav-number">3.</span> <span class="nav-text">3. 源码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#开始分析1"><span class="nav-number">3.0.1.</span> <span class="nav-text">开始分析1.</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#开始分析2"><span class="nav-number">3.0.2.</span> <span class="nav-text">开始分析2.</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#开始分析2-1-loadServiceMethod-method"><span class="nav-number">3.0.2.1.</span> <span class="nav-text">开始分析2.1 loadServiceMethod(method)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#开始分析-2-2-调用invoke-args-方法"><span class="nav-number">3.0.2.2.</span> <span class="nav-text">开始分析 2.2  调用invoke(args)方法</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#开始分析3"><span class="nav-number">3.0.3.</span> <span class="nav-text">开始分析3.</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结下："><span class="nav-number">3.1.</span> <span class="nav-text">总结下：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-执行execute-，最后就是执行了okhttp3-Call-execute-。"><span class="nav-number">4.</span> <span class="nav-text">3.执行execute()，最后就是执行了okhttp3.Call.execute()。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-其他"><span class="nav-number">5.</span> <span class="nav-text">4.其他</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZXY</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("urOdS8XIqz7Kvt6TwSz8RUpL-gzGzoHsz", "FGI16oy4ykvdDc9jyYSdrNsF");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
