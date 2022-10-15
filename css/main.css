@@ -1808,7 +1808,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #ffcf54;
+  background: #143cff;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -2968,4 +2968,13 @@ pre .javascript .function {
   .post-body {
     text-align: justify;
   }
+}
+.theme-link—gray {
+  font-size: 14px;
+}
+.theme-link—gray a:link {
+  color: #999;
+}
+.theme-link—gray A:hover {
+  color: #555;
 }
