@@ -99,14 +99,14 @@
 <meta property="og:site_name" content="Obelieve">
 <meta property="og:description" content="1. 介绍   Retrofit主要是基于OKHttp进一步封装的网络请求的框架。它采用了一种接口方法声明请求的方式，使用方法注解和方法参数注解进行标记请求信息，通过动态代理访问接口方法并解析Method，最后将请求信息汇总组装成okhttp3.Request对象，再根据接口方法返回值类型决定调用适配器(CallAdapter)，内部通过okhttp3.Call.enqueue(..) 或okh">
 <meta property="og:locale">
-<meta property="og:image" content="http://yoursite.com/assets/images/retrofit%E6%B5%81%E7%A8%8B%E5%9B%BE.png">
+<meta property="og:image" content="https://obelieve.top/assets/images//assets/images/retrofit%E6%B5%81%E7%A8%8B%E5%9B%BE.png">
 <meta property="article:published_time" content="2022-03-06T03:30:00.000Z">
-<meta property="article:modified_time" content="2023-01-21T02:03:17.323Z">
+<meta property="article:modified_time" content="2024-02-03T03:43:21.961Z">
 <meta property="article:author" content="ZXY">
 <meta property="article:tag" content="okhttp">
 <meta property="article:tag" content="retrofit">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/assets/images/retrofit%E6%B5%81%E7%A8%8B%E5%9B%BE.png">
+<meta name="twitter:image" content="https://obelieve.top/assets/images//assets/images/retrofit%E6%B5%81%E7%A8%8B%E5%9B%BE.png">
 
 
 
@@ -384,7 +384,7 @@
       
 
       
-        <p><img src="/../assets/images/retrofit%E6%B5%81%E7%A8%8B%E5%9B%BE.png" alt="流程图.png"></p>
+        <p><img src="https://obelieve.top/assets/images//assets/images/retrofit%E6%B5%81%E7%A8%8B%E5%9B%BE.png" alt="流程图.png"></p>
 <h2 id="1-介绍"><a href="#1-介绍" class="headerlink" title="1. 介绍"></a>1. 介绍</h2><p>   Retrofit主要是基于OKHttp进一步封装的网络请求的框架。它采用了一种接口方法声明请求的方式，使用方法注解和方法参数注解进行标记请求信息，通过动态代理访问接口方法并解析Method，最后将请求信息汇总组装成okhttp3.Request对象，再根据接口方法返回值类型决定调用适配器(CallAdapter)，内部通过okhttp3.Call.enqueue(..) 或okhttp3.Call.execute() 同步&#x2F;异步请求，请求响应后通过转换器(Converter)把okhttp3.ResponseBody数据再进行一次转换得到最后的数据。</p>
 <h2 id="2-suspend-关键字，Kotlin-协程方式使用"><a href="#2-suspend-关键字，Kotlin-协程方式使用" class="headerlink" title="2.suspend 关键字，Kotlin 协程方式使用"></a>2.suspend 关键字，Kotlin 协程方式使用</h2><p>接口方法标记为suspend，会把返回类型T 包装成Call<T>，然后使用异步(enqueue)，通过KotlinExtensions.kt下的Call<T>.await()包装成协程执行（请求时挂起协程，响应后协程resume继续执行）。</p>
 <h2 id="3-CallAdapter实现类介绍"><a href="#3-CallAdapter实现类介绍" class="headerlink" title="3.CallAdapter实现类介绍"></a>3.CallAdapter实现类介绍</h2><ul>
@@ -662,7 +662,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2023</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -680,18 +680,6 @@
     NexT.Pisces
   </a>
 </div>
-
-
-
-  </br>
-  <a class="theme-link—gray" target="_blank" rel="noopener" href="https://beian.miit.gov.cn/">闽ICP备2022012365号-1</a>
-    
-	<div class="theme-info">
-         </span>&nbsp;&nbsp;&nbsp;</span>
-  	<a class="theme-link—gray" target="_blank" rel="noopener" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=35012202350267">闽联网备35012202350267号</a>
-	</div>
-    
-
 
 
 
