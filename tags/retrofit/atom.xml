@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh">
     <title>Obelieve的博客 - Retrofit</title>
-    <link rel="self" type="application/atom+xml" href="https://www.obelieve.top/tags/retrofit/atom.xml"/>
-    <link rel="alternate" type="text/html" href="https://www.obelieve.top"/>
+    <link rel="self" type="application/atom+xml" href="https://obelieve.github.io/tags/retrofit/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://obelieve.github.io"/>
     <generator uri="https://www.getzola.org/">Zola</generator>
     <updated>2025-09-03T00:00:00+00:00</updated>
-    <id>https://www.obelieve.top/tags/retrofit/atom.xml</id>
+    <id>https://obelieve.github.io/tags/retrofit/atom.xml</id>
     <entry xml:lang="zh">
         <title>Retrofit源码分析 2.10.0-SNAPSHOT</title>
         <published>2022-03-06T00:00:00+00:00</published>
@@ -19,10 +19,10 @@
           </name>
         </author>
         
-        <link rel="alternate" type="text/html" href="https://www.obelieve.top/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/"/>
-        <id>https://www.obelieve.top/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/</id>
+        <link rel="alternate" type="text/html" href="https://obelieve.github.io/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/"/>
+        <id>https://obelieve.github.io/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/</id>
         
-        <content type="html" xml:base="https://www.obelieve.top/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/">&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;obelieve.top&#x2F;site&#x2F;images&#x2F;retrofit%E6%B5%81%E7%A8%8B%E5%9B%BE.png&quot; alt=&quot;流程图.png&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+        <content type="html" xml:base="https://obelieve.github.io/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/">&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;obelieve.top&#x2F;site&#x2F;images&#x2F;retrofit%E6%B5%81%E7%A8%8B%E5%9B%BE.png&quot; alt=&quot;流程图.png&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;1-jie-shao&quot;&gt;1. 介绍&lt;a class=&quot;zola-anchor&quot; href=&quot;#1-jie-shao&quot; aria-label=&quot;Anchor link for: 1-jie-shao&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
 &lt;p&gt;Retrofit主要是基于OKHttp进一步封装的网络请求的框架。它采用了一种接口方法声明请求的方式，使用方法注解和方法参数注解进行标记请求信息，通过动态代理访问接口方法并解析Method，最后将请求信息汇总组装成okhttp3.Request对象，再根据接口方法返回值类型决定调用适配器(CallAdapter)，内部通过okhttp3.Call.enqueue(..) 或okhttp3.Call.execute() 同步&#x2F;异步请求，请求响应后通过转换器(Converter)把okhttp3.ResponseBody数据再进行一次转换得到最后的数据。&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;2-suspend-guan-jian-zi-kotlin-xie-cheng-fang-shi-shi-yong&quot;&gt;2.suspend 关键字，Kotlin 协程方式使用&lt;a class=&quot;zola-anchor&quot; href=&quot;#2-suspend-guan-jian-zi-kotlin-xie-cheng-fang-shi-shi-yong&quot; aria-label=&quot;Anchor link for: 2-suspend-guan-jian-zi-kotlin-xie-cheng-fang-shi-shi-yong&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;

@@ -10,31 +10,31 @@
   <meta itemprop="headline" content="Retrofit源码分析 2.10.0-SNAPSHOT" />
   <meta property="og:description" content="1. 介绍🔗Retrofit主要是基于OKHttp进一步封装的网络请求的框架。它采用了一种接口方法声明请求的方式，使用方法注解和方法参数注解进行标记请求信息，通过动态代理访问接口方法并解析Method，最后将请求信息汇总组装成okhttp3.Request对象，再根据接口方法返回值类型决定调用适配器(CallAdapter)，内部通过okhttp3.Call.enqueue(..) 或okhttp…" />
   <meta name="description" content="1. 介绍🔗Retrofit主要是基于OKHttp进一步封装的网络请求的框架。它采用了一种接口方法声明请求的方式，使用方法注解和方法参数注解进行标记请求信息，通过动态代理访问接口方法并解析Method，最后将请求信息汇总组装成okhttp3.Request对象，再根据接口方法返回值类型决定调用适配器(CallAdapter)，内部通过okhttp3.Call.enqueue(..) 或okhttp…" />
-  <meta property="og:url" content="https://www.obelieve.top/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/" /><meta name="og:type" content="summary" />
+  <meta property="og:url" content="https://obelieve.github.io/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/" /><meta name="og:type" content="summary" />
   <meta name="keywords" content="注意力, 读书, 工具分享, 纯文本, 英语学习" />
   <meta name="author" content="Obelieve" />
   <meta itemprop="copyrightYear" content=" 2025" />
-  <link rel="icon" href="https://www.obelieve.top/site/images/favicon-32x32.png?h=68480d370330a1370abf" type="image/x-icon">
-  <link rel="apple-touch-icon" sizes="57x57" href="https://www.obelieve.top/site/images/apple-icon-57x57.png?h=920192bead2a51cc200b">
-  <link rel="apple-touch-icon" sizes="60x60" href="https://www.obelieve.top/site/images/apple-icon-60x60.png?h=a7a48024c2427638d967">
-  <link rel="apple-touch-icon" sizes="72x72" href="https://www.obelieve.top/site/images/apple-icon-72x72.png?h=bf72d3c24257c21e2c32">
-  <link rel="apple-touch-icon" sizes="76x76" href="https://www.obelieve.top/site/images/apple-icon-76x76.png?h=cc4dba10aa538acb3c49">
-  <link rel="apple-touch-icon" sizes="114x114" href="https://www.obelieve.top/site/images/apple-icon-114x114.png?h=1aefbd93c1c89c4cbb8a">
-  <link rel="apple-touch-icon" sizes="120x120" href="https://www.obelieve.top/site/images/apple-icon-120x120.png?h=409d89ac71c055f60c18">
-  <link rel="apple-touch-icon" sizes="144x144" href="https://www.obelieve.top/site/images/apple-icon-144x144.png?h=5deaaef8a0670003fd10">
-  <link rel="apple-touch-icon" sizes="152x152" href="https://www.obelieve.top/site/images/apple-icon-152x152.png?h=71161064c00cec1a4f44">
-  <link rel="apple-touch-icon" sizes="180x180" href="https://www.obelieve.top/site/images/apple-icon-180x180.png?h=098b2b0d572b07220509">
-  <link rel="icon" type="image/png" sizes="192x192" href="https://www.obelieve.top/site/images/android-icon-192x192.png?h=8fc96efc0d93b2ca4d24">
-  <link rel="icon" type="image/png" sizes="32x32" href="https://www.obelieve.top/site/images/favicon-32x32.png?h=68480d370330a1370abf">
-  <link rel="icon" type="image/png" sizes="96x96" href="https://www.obelieve.top/site/images/favicon-96x96.png?h=0db83734130603a067c1">
-  <link rel="icon" type="image/png" sizes="16x16" href="https://www.obelieve.top/site/images/favicon-16x16.png?h=c5a1bcfc63c8f941cce5">
+  <link rel="icon" href="https://obelieve.github.io/site/images/favicon-32x32.png?h=68480d370330a1370abf" type="image/x-icon">
+  <link rel="apple-touch-icon" sizes="57x57" href="https://obelieve.github.io/site/images/apple-icon-57x57.png?h=920192bead2a51cc200b">
+  <link rel="apple-touch-icon" sizes="60x60" href="https://obelieve.github.io/site/images/apple-icon-60x60.png?h=a7a48024c2427638d967">
+  <link rel="apple-touch-icon" sizes="72x72" href="https://obelieve.github.io/site/images/apple-icon-72x72.png?h=bf72d3c24257c21e2c32">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://obelieve.github.io/site/images/apple-icon-76x76.png?h=cc4dba10aa538acb3c49">
+  <link rel="apple-touch-icon" sizes="114x114" href="https://obelieve.github.io/site/images/apple-icon-114x114.png?h=1aefbd93c1c89c4cbb8a">
+  <link rel="apple-touch-icon" sizes="120x120" href="https://obelieve.github.io/site/images/apple-icon-120x120.png?h=409d89ac71c055f60c18">
+  <link rel="apple-touch-icon" sizes="144x144" href="https://obelieve.github.io/site/images/apple-icon-144x144.png?h=5deaaef8a0670003fd10">
+  <link rel="apple-touch-icon" sizes="152x152" href="https://obelieve.github.io/site/images/apple-icon-152x152.png?h=71161064c00cec1a4f44">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://obelieve.github.io/site/images/apple-icon-180x180.png?h=098b2b0d572b07220509">
+  <link rel="icon" type="image/png" sizes="192x192" href="https://obelieve.github.io/site/images/android-icon-192x192.png?h=8fc96efc0d93b2ca4d24">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://obelieve.github.io/site/images/favicon-32x32.png?h=68480d370330a1370abf">
+  <link rel="icon" type="image/png" sizes="96x96" href="https://obelieve.github.io/site/images/favicon-96x96.png?h=0db83734130603a067c1">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://obelieve.github.io/site/images/favicon-16x16.png?h=c5a1bcfc63c8f941cce5">
   <meta name="msapplication-TileColor" content="#fffcf9" />
-  <meta name="msapplication-TileImage" content="https://www.obelieve.top/site/images/ms-icon-144x144.png?h=5deaaef8a0670003fd10">
+  <meta name="msapplication-TileImage" content="https://obelieve.github.io/site/images/ms-icon-144x144.png?h=5deaaef8a0670003fd10">
   <meta name="theme-color" content="#fffcf9" />
   <meta property="og:site_name" content="Obelieve的博客" />
   
   
-  <link rel="alternate" type="application/atom+xml" title="Obelieve的博客 - RSS" href="https://www.obelieve.top/atom.xml">
+  <link rel="alternate" type="application/atom+xml" title="Obelieve的博客 - RSS" href="https://obelieve.github.io/atom.xml">
   <style>@charset "UTF-8";
 html,
 body,
@@ -981,7 +981,7 @@ a.theme-link-gray {
     "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK",
     "WenQuanYi Micro Hei", sans-serif;
 }
-</style><link rel="manifest" href="https://www.obelieve.top/site/images/manifest.json">
+</style><link rel="manifest" href="https://obelieve.github.io/site/images/manifest.json">
   
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-W03M6ZDZWG"></script>
   <script>
@@ -1004,12 +1004,12 @@ a.theme-link-gray {
       
   <header class="header post-header" id="overview">
        <div class="pb">
-          <a class="" href="https://www.obelieve.top/">Obelieve&#x27;s Blog</a>
+          <a class="" href="https://obelieve.github.io/">Obelieve&#x27;s Blog</a>
           <span class="divider">&nbsp;&gt;&nbsp;</span>
           <a class="" href="&#x2F;categories/">All Categories</a>
           
           <span class="divider">&nbsp;&gt;&nbsp;</span>
-          <a  class="category" href="https://www.obelieve.top/categories/notes/"> Notes</a>
+          <a  class="category" href="https://obelieve.github.io/categories/notes/"> Notes</a>
           
           
           <span class="divider">&nbsp;&gt;&nbsp;</span>
@@ -1031,7 +1031,7 @@ a.theme-link-gray {
     <div class="display-none p-summary">
       
     </div>
-    <a class="display-none u-url" href="https:&#x2F;&#x2F;www.obelieve.top&#x2F;blog&#x2F;retrofityuan-ma-fen-xi-2-10-0-snapshot&#x2F;">Permanent Link</a>
+    <a class="display-none u-url" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;retrofityuan-ma-fen-xi-2-10-0-snapshot&#x2F;">Permanent Link</a>
     
       <div class="main-toc pb">
         <details>
@@ -1041,39 +1041,39 @@ a.theme-link-gray {
       <ul>
 
         <li>
-          <a href="https://www.obelieve.top/">博客首页</a>
+          <a href="https://obelieve.github.io/">博客首页</a>
         </li>
         <li>
           <a href="#start">正文开始</a>
         </li>
         
           <li>
-            <a href="https://www.obelieve.top/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#1-jie-shao">1. 介绍</a>
+            <a href="https://obelieve.github.io/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#1-jie-shao">1. 介绍</a>
             
           </li>
         
           <li>
-            <a href="https://www.obelieve.top/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#2-suspend-guan-jian-zi-kotlin-xie-cheng-fang-shi-shi-yong">2.suspend 关键字，Kotlin 协程方式使用</a>
+            <a href="https://obelieve.github.io/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#2-suspend-guan-jian-zi-kotlin-xie-cheng-fang-shi-shi-yong">2.suspend 关键字，Kotlin 协程方式使用</a>
             
           </li>
         
           <li>
-            <a href="https://www.obelieve.top/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#3-calladaptershi-xian-lei-jie-shao">3.CallAdapter实现类介绍</a>
+            <a href="https://obelieve.github.io/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#3-calladaptershi-xian-lei-jie-shao">3.CallAdapter实现类介绍</a>
             
           </li>
         
           <li>
-            <a href="https://www.obelieve.top/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#4-yong-fa">4.用法</a>
+            <a href="https://obelieve.github.io/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#4-yong-fa">4.用法</a>
             
               <ul>
                 
                   <li>
-                    <a href="https://www.obelieve.top/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#4-1-ji-ben-yong-fa">4.1 基本用法</a>
+                    <a href="https://obelieve.github.io/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#4-1-ji-ben-yong-fa">4.1 基本用法</a>
                     
                   </li>
                 
                   <li>
-                    <a href="https://www.obelieve.top/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#4-2-jin-jie-yong-fa">4.2 进阶用法</a>
+                    <a href="https://obelieve.github.io/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#4-2-jin-jie-yong-fa">4.2 进阶用法</a>
                     
                   </li>
                 
@@ -1082,27 +1082,27 @@ a.theme-link-gray {
           </li>
         
           <li>
-            <a href="https://www.obelieve.top/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#5-yuan-ma-ju-ti-shi-li-fen-xi">5. 源码具体示例分析</a>
+            <a href="https://obelieve.github.io/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#5-yuan-ma-ju-ti-shi-li-fen-xi">5. 源码具体示例分析</a>
             
               <ul>
                 
                   <li>
-                    <a href="https://www.obelieve.top/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#kai-shi-fen-xi-1">开始分析1.</a>
+                    <a href="https://obelieve.github.io/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#kai-shi-fen-xi-1">开始分析1.</a>
                     
                   </li>
                 
                   <li>
-                    <a href="https://www.obelieve.top/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#kai-shi-fen-xi-2">开始分析2.</a>
+                    <a href="https://obelieve.github.io/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#kai-shi-fen-xi-2">开始分析2.</a>
                     
                       <ul>
                         
                           <li>
-                            <a href="https://www.obelieve.top/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#kai-shi-fen-xi-2-1-loadservicemethod-method">开始分析2.1 loadServiceMethod(method)</a>
+                            <a href="https://obelieve.github.io/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#kai-shi-fen-xi-2-1-loadservicemethod-method">开始分析2.1 loadServiceMethod(method)</a>
                             
                           </li>
                         
                           <li>
-                            <a href="https://www.obelieve.top/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#kai-shi-fen-xi-2-2-diao-yong-invoke-args-fang-fa">开始分析 2.2  调用invoke(args)方法</a>
+                            <a href="https://obelieve.github.io/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#kai-shi-fen-xi-2-2-diao-yong-invoke-args-fang-fa">开始分析 2.2  调用invoke(args)方法</a>
                             
                           </li>
                         
@@ -1111,17 +1111,17 @@ a.theme-link-gray {
                   </li>
                 
                   <li>
-                    <a href="https://www.obelieve.top/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#kai-shi-fen-xi-3">开始分析3.</a>
+                    <a href="https://obelieve.github.io/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#kai-shi-fen-xi-3">开始分析3.</a>
                     
                   </li>
                 
                   <li>
-                    <a href="https://www.obelieve.top/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#zong-jie">总结</a>
+                    <a href="https://obelieve.github.io/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#zong-jie">总结</a>
                     
                   </li>
                 
                   <li>
-                    <a href="https://www.obelieve.top/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#qi-ta">其他</a>
+                    <a href="https://obelieve.github.io/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#qi-ta">其他</a>
                     
                   </li>
                 
@@ -1130,7 +1130,7 @@ a.theme-link-gray {
           </li>
         
           <li>
-            <a href="https://www.obelieve.top/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#6-fu-lu">6. 附录</a>
+            <a href="https://obelieve.github.io/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#6-fu-lu">6. 附录</a>
             
           </li>
         
@@ -1767,7 +1767,7 @@ class Fruit extends Food {}</li>
         <div class="muted">
           <div class="pb">
             
-            <span>分类</span>: <a rel="category tag" class="p-category category" href="https://www.obelieve.top/categories/notes/">Notes</a>&nbsp;
+            <span>分类</span>: <a rel="category tag" class="p-category category" href="https://obelieve.github.io/categories/notes/">Notes</a>&nbsp;
             
           </div>
           
@@ -1776,17 +1776,17 @@ class Fruit extends Food {}</li>
               <span>标签</span>:&nbsp;
               
               
-                <a class="p-tag" href="https://www.obelieve.top/tags/android/">Android</a>
+                <a class="p-tag" href="https://obelieve.github.io/tags/android/">Android</a>
                 
                   ,&nbsp;
                 
               
-                <a class="p-tag" href="https://www.obelieve.top/tags/okhttp/">Okhttp</a>
+                <a class="p-tag" href="https://obelieve.github.io/tags/okhttp/">Okhttp</a>
                 
                   ,&nbsp;
                 
               
-                <a class="p-tag" href="https://www.obelieve.top/tags/retrofit/">Retrofit</a>
+                <a class="p-tag" href="https://obelieve.github.io/tags/retrofit/">Retrofit</a>
                 
                   
                 
@@ -1825,39 +1825,39 @@ class Fruit extends Food {}</li>
       <ul>
 
         <li>
-          <a href="https://www.obelieve.top/">博客首页</a>
+          <a href="https://obelieve.github.io/">博客首页</a>
         </li>
         <li>
           <a href="#start">正文开始</a>
         </li>
         
           <li>
-            <a href="https://www.obelieve.top/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#1-jie-shao">1. 介绍</a>
+            <a href="https://obelieve.github.io/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#1-jie-shao">1. 介绍</a>
             
           </li>
         
           <li>
-            <a href="https://www.obelieve.top/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#2-suspend-guan-jian-zi-kotlin-xie-cheng-fang-shi-shi-yong">2.suspend 关键字，Kotlin 协程方式使用</a>
+            <a href="https://obelieve.github.io/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#2-suspend-guan-jian-zi-kotlin-xie-cheng-fang-shi-shi-yong">2.suspend 关键字，Kotlin 协程方式使用</a>
             
           </li>
         
           <li>
-            <a href="https://www.obelieve.top/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#3-calladaptershi-xian-lei-jie-shao">3.CallAdapter实现类介绍</a>
+            <a href="https://obelieve.github.io/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#3-calladaptershi-xian-lei-jie-shao">3.CallAdapter实现类介绍</a>
             
           </li>
         
           <li>
-            <a href="https://www.obelieve.top/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#4-yong-fa">4.用法</a>
+            <a href="https://obelieve.github.io/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#4-yong-fa">4.用法</a>
             
               <ul>
                 
                   <li>
-                    <a href="https://www.obelieve.top/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#4-1-ji-ben-yong-fa">4.1 基本用法</a>
+                    <a href="https://obelieve.github.io/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#4-1-ji-ben-yong-fa">4.1 基本用法</a>
                     
                   </li>
                 
                   <li>
-                    <a href="https://www.obelieve.top/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#4-2-jin-jie-yong-fa">4.2 进阶用法</a>
+                    <a href="https://obelieve.github.io/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#4-2-jin-jie-yong-fa">4.2 进阶用法</a>
                     
                   </li>
                 
@@ -1866,27 +1866,27 @@ class Fruit extends Food {}</li>
           </li>
         
           <li>
-            <a href="https://www.obelieve.top/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#5-yuan-ma-ju-ti-shi-li-fen-xi">5. 源码具体示例分析</a>
+            <a href="https://obelieve.github.io/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#5-yuan-ma-ju-ti-shi-li-fen-xi">5. 源码具体示例分析</a>
             
               <ul>
                 
                   <li>
-                    <a href="https://www.obelieve.top/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#kai-shi-fen-xi-1">开始分析1.</a>
+                    <a href="https://obelieve.github.io/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#kai-shi-fen-xi-1">开始分析1.</a>
                     
                   </li>
                 
                   <li>
-                    <a href="https://www.obelieve.top/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#kai-shi-fen-xi-2">开始分析2.</a>
+                    <a href="https://obelieve.github.io/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#kai-shi-fen-xi-2">开始分析2.</a>
                     
                       <ul>
                         
                           <li>
-                            <a href="https://www.obelieve.top/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#kai-shi-fen-xi-2-1-loadservicemethod-method">开始分析2.1 loadServiceMethod(method)</a>
+                            <a href="https://obelieve.github.io/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#kai-shi-fen-xi-2-1-loadservicemethod-method">开始分析2.1 loadServiceMethod(method)</a>
                             
                           </li>
                         
                           <li>
-                            <a href="https://www.obelieve.top/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#kai-shi-fen-xi-2-2-diao-yong-invoke-args-fang-fa">开始分析 2.2  调用invoke(args)方法</a>
+                            <a href="https://obelieve.github.io/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#kai-shi-fen-xi-2-2-diao-yong-invoke-args-fang-fa">开始分析 2.2  调用invoke(args)方法</a>
                             
                           </li>
                         
@@ -1895,17 +1895,17 @@ class Fruit extends Food {}</li>
                   </li>
                 
                   <li>
-                    <a href="https://www.obelieve.top/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#kai-shi-fen-xi-3">开始分析3.</a>
+                    <a href="https://obelieve.github.io/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#kai-shi-fen-xi-3">开始分析3.</a>
                     
                   </li>
                 
                   <li>
-                    <a href="https://www.obelieve.top/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#zong-jie">总结</a>
+                    <a href="https://obelieve.github.io/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#zong-jie">总结</a>
                     
                   </li>
                 
                   <li>
-                    <a href="https://www.obelieve.top/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#qi-ta">其他</a>
+                    <a href="https://obelieve.github.io/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#qi-ta">其他</a>
                     
                   </li>
                 
@@ -1914,7 +1914,7 @@ class Fruit extends Food {}</li>
           </li>
         
           <li>
-            <a href="https://www.obelieve.top/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#6-fu-lu">6. 附录</a>
+            <a href="https://obelieve.github.io/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/#6-fu-lu">6. 附录</a>
             
           </li>
         

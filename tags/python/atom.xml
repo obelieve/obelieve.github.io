@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh">
     <title>Obelieve的博客 - Python</title>
-    <link rel="self" type="application/atom+xml" href="https://www.obelieve.top/tags/python/atom.xml"/>
-    <link rel="alternate" type="text/html" href="https://www.obelieve.top"/>
+    <link rel="self" type="application/atom+xml" href="https://obelieve.github.io/tags/python/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://obelieve.github.io"/>
     <generator uri="https://www.getzola.org/">Zola</generator>
     <updated>2025-09-04T00:00:00+00:00</updated>
-    <id>https://www.obelieve.top/tags/python/atom.xml</id>
+    <id>https://obelieve.github.io/tags/python/atom.xml</id>
     <entry xml:lang="zh">
         <title>Celery 分布式任务队列</title>
         <published>2025-09-04T00:00:00+00:00</published>
@@ -19,10 +19,10 @@
           </name>
         </author>
         
-        <link rel="alternate" type="text/html" href="https://www.obelieve.top/blog/celeryku/"/>
-        <id>https://www.obelieve.top/blog/celeryku/</id>
+        <link rel="alternate" type="text/html" href="https://obelieve.github.io/blog/celeryku/"/>
+        <id>https://obelieve.github.io/blog/celeryku/</id>
         
-        <content type="html" xml:base="https://www.obelieve.top/blog/celeryku/">&lt;h2 id=&quot;jing-ji-ren-broker&quot;&gt;经纪人（broker）&lt;a class=&quot;zola-anchor&quot; href=&quot;#jing-ji-ren-broker&quot; aria-label=&quot;Anchor link for: jing-ji-ren-broker&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+        <content type="html" xml:base="https://obelieve.github.io/blog/celeryku/">&lt;h2 id=&quot;jing-ji-ren-broker&quot;&gt;经纪人（broker）&lt;a class=&quot;zola-anchor&quot; href=&quot;#jing-ji-ren-broker&quot; aria-label=&quot;Anchor link for: jing-ji-ren-broker&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
 &lt;p&gt;需要发送消息&#x2F;接收消息，通过第三方消息代理软件，来实现。&lt;&#x2F;p&gt;
 &lt;ul&gt;
 &lt;li&gt;RabbitMQ&lt;&#x2F;li&gt;
@@ -123,10 +123,10 @@ python -m celeryconfig # 验证配置模块是否正确
           </name>
         </author>
         
-        <link rel="alternate" type="text/html" href="https://www.obelieve.top/blog/pythonyu-fa/"/>
-        <id>https://www.obelieve.top/blog/pythonyu-fa/</id>
+        <link rel="alternate" type="text/html" href="https://obelieve.github.io/blog/pythonyu-fa/"/>
+        <id>https://obelieve.github.io/blog/pythonyu-fa/</id>
         
-        <content type="html" xml:base="https://www.obelieve.top/blog/pythonyu-fa/">&lt;p&gt;[TOC]&lt;&#x2F;p&gt;
+        <content type="html" xml:base="https://obelieve.github.io/blog/pythonyu-fa/">&lt;p&gt;[TOC]&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;zhu&quot;&gt;注:&lt;a class=&quot;zola-anchor&quot; href=&quot;#zhu&quot; aria-label=&quot;Anchor link for: zhu&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
 &lt;ul&gt;
 &lt;li&gt;跨行字符串使用&lt;code&gt;&#x27;&#x27;&#x27;&lt;&#x2F;code&gt;表示&lt;&#x2F;li&gt;
