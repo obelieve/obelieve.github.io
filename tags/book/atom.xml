@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh">
+    <title>Obelieve的博客 - Book</title>
+    <link rel="self" type="application/atom+xml" href="https://obelieve.github.io/tags/book/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://obelieve.github.io"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2025-09-18T00:00:00+00:00</updated>
+    <id>https://obelieve.github.io/tags/book/atom.xml</id>
+    <entry xml:lang="zh">
+        <title>阅读摘要</title>
+        <published>2025-09-03T00:00:00+00:00</published>
+        <updated>2025-09-18T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Obelieve
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://obelieve.github.io/blog/quotes/"/>
+        <id>https://obelieve.github.io/blog/quotes/</id>
+        
+        <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;“多读而不求甚解，则如驰骋十里洋场，虽珍奇满目，徒惹得心花意乱，空手而归。” —— 朱光潜&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;“我记不住我读过的书,就像我记不住我吃过的饭一样;即便如此,它们塑造了我。” —— 爱默生&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;创建较短的反馈回路能协助测量你的进步。找一个实际问题来解决，这是你的学习，跟之于现实世界，从而为你提供一个较大的反馈回路。 《软件开发者路线图-从学徒到高手》&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;你不应该嫁给任何特定技术，而应该有足够广的技术背景和经验基础，使自己能针对特定的情景选择好的解决方案。《软件开发者路线图-从学徒到高手》&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;不管哪种方式适合你，都不要忘了问问周围的同道中人和指导者，看是否有人掌握的这项技能，并愿意分享所学有时其他人也可能在学习这项技能，跟他们一起工作，你会获得更快的进步，到某个时刻，你将在这个新领域找到你能满意的，能逆水者，这时你就可以做决定了，是继续深挖下去，更有成效，还是将注意力转移到其他技能空白上。《软件开发者路线图-从学徒到 高手》&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;每天只有24小时，你无法将每一项技能都研磨到很高水平，因此你必须学会在他们中间做必要的权衡。《软件开发者路线图从学徒到高手》&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;在能不能看到的地方学习到可以向别人传授技能期间只差一小步。　《软件开发者路线图从学徒到高手》&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;技艺意思是使用可能带有装饰性的手法来制作有用的对象，美术的意思则是制作东西纯粹为了使之美丽。　《软件开发者路线图从学徒到高手》&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;工艺的磨练在于为真能解决实际问题，而不是只为自己踌躇满志。《软件开发者路线图从学徒到高手》&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;公用和美好并不对立，而是相辅相成。一款软件一有用软件，拥有高质量局又越重要，但质量需要时间来保证。你必须在不断在美好和公园之间折中向着适量的质量级别前进。《软件开发者路线图从学徒到高手》&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;写下15项能为你提供动力的事情。稍等一会儿再写下另外五项。列出五项最重要的为你提供动力的事情，把这个列表保存在某个地方，遇到困难时可以看看。《软件开发者路线图从学徒到高手》&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;</summary>
+        
+    </entry>
+</feed>

