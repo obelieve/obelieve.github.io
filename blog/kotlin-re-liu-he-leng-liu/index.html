@@ -5,12 +5,24 @@
 <head>
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" /><title>Tags | Shell - Obelieve的博客</title>
-  <meta property="og:title" content="Tags | Shell" />
-  <meta itemprop="headline" content="Tags | Shell" />
-  <meta property="og:description" content="" />
-  <meta name="description" content="" />
-  <meta property="og:url" content="https://obelieve.github.io/tags/shell/" /><meta name="og:type" content="summary" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" /><title>Kotlin 热流和冷流 - Obelieve的博客</title>
+  <meta property="og:title" content="Kotlin 热流和冷流" />
+  <meta itemprop="headline" content="Kotlin 热流和冷流" />
+  <meta property="og:description" content="冷流🔗订阅时，才发送数据。多次订阅，每个订阅都是新的数据。热流🔗创建时，就发送数据。类似广播形式，订阅时，之前发送的数据不会收到。Kotlin 冷流🔗val flow1 = flow&amp;lt;Int&amp;gt; {  
+    repeat(10){  
+        emit(it)  
+        delay(1000L)  
+    }  
+}
+val flow2 = callbackFlo…" />
+  <meta name="description" content="冷流🔗订阅时，才发送数据。多次订阅，每个订阅都是新的数据。热流🔗创建时，就发送数据。类似广播形式，订阅时，之前发送的数据不会收到。Kotlin 冷流🔗val flow1 = flow&amp;lt;Int&amp;gt; {  
+    repeat(10){  
+        emit(it)  
+        delay(1000L)  
+    }  
+}
+val flow2 = callbackFlo…" />
+  <meta property="og:url" content="https://obelieve.github.io/blog/kotlin-re-liu-he-leng-liu/" /><meta name="og:type" content="summary" />
   <meta name="keywords" content="注意力, 读书, 工具分享, 纯文本, 英语学习" />
   <meta name="author" content="Obelieve" />
   <meta itemprop="copyrightYear" content=" 2025" />
@@ -34,9 +46,7 @@
   <meta property="og:site_name" content="Obelieve的博客" />
   
   
-  
-  
-  <link rel="alternate" type="application/atom+xml" title="tags: Shell - Obelieve的博客 RSS" href="https://obelieve.github.io/tags/shell/atom.xml">
+  <link rel="alternate" type="application/atom+xml" title="Obelieve的博客 - RSS" href="https://obelieve.github.io/atom.xml">
   <style>@charset "UTF-8";
 html,
 body,
@@ -995,7 +1005,8 @@ a.theme-link-gray {
     gtag("config", "G-W03M6ZDZWG");
   </script>
   
-  
+  <meta name="title" content="Kotlin 热流和冷流">
+
 </head>
 
 <body>
@@ -1003,331 +1014,236 @@ a.theme-link-gray {
   <div id="root">
     <div class="body-zone">
       
-      <header id="overview" class="pt">
-      <div class="">
-        <a href="https://obelieve.github.io/">Obelieve&#x27;s Blog</a>
-        <span class="divider">&nbsp;&gt;&nbsp;</span>
-          <a href="&#x2F;categories/">All tags</a>
+  <header class="header post-header" id="overview">
+       <div class="pb">
+          <a class="" href="https://obelieve.github.io/">Obelieve&#x27;s Blog</a>
           <span class="divider">&nbsp;&gt;&nbsp;</span>
-          Shell
+          <a class="" href="&#x2F;categories/">All Categories</a>
+          
+          <span class="divider">&nbsp;&gt;&nbsp;</span>
+          <a  class="category" href="https://obelieve.github.io/categories/notes/"> Notes</a>
+          
+          
+          <span class="divider">&nbsp;&gt;&nbsp;</span>
+          Kotlin 热流和冷流
         </div>
+      
+      <div>
+        <h1 class="no-border pt4 p-name entry-title" >Kotlin 热流和冷流</h1>
+      </div>
+      
     </header>
   
       <div class="main-zone relative">
         <div class="main">
           <div class="main-inner">
             
-    <div class="taxonomy-single-page main-box-block h-feed hfeed">
-      <div class="display-none">
-        <div class="p-name site-title">Obelieve的博客</div>
-        <p class="p-summary site-description"></p>
-      </div>
-      <div>
-        
-          
-            
-  <article class="h-entry hentry feed-entry">
-    <h2 class="no-border pb-sm entry-title">
-      <a class="no-underline  u-url p-name entry-title" rel="bookmark" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;askill&#x2F;">收集小技巧</a> <a href="#index-1" id="index-1" class="zola-anchor"></a>
-    </h2>
-    <div class="p-summary entry-summary"><p><strong>python ascii-数字转换</strong></p>
-<pre data-lang="py" class="language-py "><code class="language-py" data-lang="py">a = &#x27;a&#x27;
-ord(a) #转数字
-chr(10) #转字符
-</code></pre>
-<p><strong>python 双端队列</strong></p>
-<pre data-lang="py" class="language-py "><code class="language-py" data-lang="py">from collections import deque
-a = deque()
-a.append(1)
-a.append(2)
-a.pop()
-a.popleft()
-</code></pre>
-<p><strong>python 堆结构</strong></p>
-<pre data-lang="py" class="language-py "><code class="language-py" data-lang="py">import heapq
-a = [3,2,1]
-heapq.heapify(a) #最小堆排序
-heapq.heappush(a,4) #添加元素，再次排序
-heapq.heappop(a) #弹出堆顶元素
-
-</code></pre>
-<p><strong>shell列出目录树形结构</strong></p>
-<pre data-lang="shell" class="language-shell "><code class="language-shell" data-lang="shell">#安装tree
-brew install tree
-#使用tree命令
-tree
-#深层结构
-tree -L 2
-</code></pre>
-<p><strong>python 初始化数组</strong></p>
-<pre data-lang="py" class="language-py "><code class="language-py" data-lang="py">res = [&quot;&quot; for _ in range(10)]
-res[0]=&quot;abc&quot;
-</code></pre></div>
-      <p><a rel="bookmark" href="https://obelieve.github.io/blog/askill/#continue-reading">
-       &rarr;&nbsp; 继续阅读需要: 
-  
-    1
-  
- min
-      </a></p>
-    <div class="muted text-sm">
-      <a title="2025-09-03" class="no-underline u-url p-name entry-title" rel="bookmark" href="https://obelieve.github.io/blog/askill/">
-        <time class="dt-published published" datetime="2025-09-03">2025.09.03</time>
-      </a>
+<div class="h-entry hentry detail-page">
+<div class="page-body">
+    <div class="display-none p-summary">
       
-      <span>&nbsp;on</span>
-      <a title="Notes" class="no-underline p-category" rel="category tag" href="https://obelieve.github.io/categories/notes/">
-          Notes
-        </a>
-      
-
     </div>
-  </article>
-  
+    <a class="display-none u-url" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;kotlin-re-liu-he-leng-liu&#x2F;">Permanent Link</a>
+    
+      <div class="main-toc pb">
+        <details>
+          <summary>快速导航</summary>
           
-          
-    <div class="pagination py">
-      <ul class="list-none flex justify-between">
+    <div class="sidebar-table-content">
+      <ul>
+
+        <li>
+          <a href="https://obelieve.github.io/">博客首页</a>
+        </li>
+        <li>
+          <a href="#start">正文开始</a>
+        </li>
         
-          <li class="disabled">
-            <a title="First" class="no-underline" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;tags&#x2F;shell&#x2F;">&larrb;</a>
+          <li>
+            <a href="https://obelieve.github.io/blog/kotlin-re-liu-he-leng-liu/#leng-liu">冷流</a>
+            
           </li>
         
+          <li>
+            <a href="https://obelieve.github.io/blog/kotlin-re-liu-he-leng-liu/#re-liu">热流</a>
+            
+          </li>
         
-          <li class="disabled">
-            <a title="Previous"  class="no-underline" href="#">&larr;</a>
+          <li>
+            <a href="https://obelieve.github.io/blog/kotlin-re-liu-he-leng-liu/#kotlin-leng-liu">Kotlin 冷流</a>
+            
+          </li>
+        
+          <li>
+            <a href="https://obelieve.github.io/blog/kotlin-re-liu-he-leng-liu/#leng-liu-zhuan-re-liu">冷流转热流</a>
+            
+          </li>
+        
+          <li>
+            <a href="https://obelieve.github.io/blog/kotlin-re-liu-he-leng-liu/#kotlin-re-liu">Kotlin 热流</a>
+            
           </li>
         
         <li>
-          <a title="All Posts" class="no-underline" href="https://obelieve.github.io/archive/">1/1</a>
+          <a href="#response">回应区</a>
         </li>
-        
-          <li class="disabled">
-            <a title="Next" class="no-underline" href="#">&rarr;</a>
-          </li>
-        
-        
-          <li class="disabled">
-            <a title="Last" class="no-underline" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;tags&#x2F;shell&#x2F;">&rarrb;</a>
-          </li>
-        
+
       </ul>
     </div>
   
-        
+        </details>
       </div>
-    </div>
+    
+    <div id="start"></div>
+    <article class="e-content entry-content">
+      <h2 id="leng-liu">冷流<a class="zola-anchor" href="#leng-liu" aria-label="Anchor link for: leng-liu">🔗</a></h2>
+<p>订阅时，才发送数据。多次订阅，每个订阅都是新的数据。</p>
+<h2 id="re-liu">热流<a class="zola-anchor" href="#re-liu" aria-label="Anchor link for: re-liu">🔗</a></h2>
+<p>创建时，就发送数据。类似广播形式，订阅时，之前发送的数据不会收到。</p>
+<h2 id="kotlin-leng-liu">Kotlin 冷流<a class="zola-anchor" href="#kotlin-leng-liu" aria-label="Anchor link for: kotlin-leng-liu">🔗</a></h2>
+<pre data-lang="kotlin" class="language-kotlin "><code class="language-kotlin" data-lang="kotlin">val flow1 = flow&lt;Int&gt; {  
+    repeat(10){  
+        emit(it)  
+        delay(1000L)  
+    }  
+}
+val flow2 = callbackFlow&lt;Int&gt; {  
+    repeat(10){  
+        trySend(it)  
+        delay(1000L)  
+    }  
+    awaitClose{  
+        cancel()  
+    }  
+}
+</code></pre>
+<h2 id="leng-liu-zhuan-re-liu">冷流转热流<a class="zola-anchor" href="#leng-liu-zhuan-re-liu" aria-label="Anchor link for: leng-liu-zhuan-re-liu">🔗</a></h2>
+<pre data-lang="kotlin" class="language-kotlin "><code class="language-kotlin" data-lang="kotlin">Flow&lt;&gt;.stateIn(GlobalScope, SharingStarted.Eagerly,null)  
+
+Flow&lt;&gt;.shareIn(GlobalScope, SharingStarted.Eagerly)
+</code></pre>
+<h2 id="kotlin-re-liu">Kotlin 热流<a class="zola-anchor" href="#kotlin-re-liu" aria-label="Anchor link for: kotlin-re-liu">🔗</a></h2>
+<pre data-lang="kotlin" class="language-kotlin "><code class="language-kotlin" data-lang="kotlin">val flow3 = MutableStateFlow(1)
+flow3.value = 2
+flow3  
+    .onEach { value -&gt; println(&quot;${value}&quot;) }  
+    .launchIn(this)  &#x2F;&#x2F; 启动收集但不阻塞
+flow3.value = 3
+
+MutableSharedFlow(1) 
+</code></pre>
+
+      
+      <div class="display-none"><a class="u-bridgy-fed" href="https://fed.brid.gy/"></a></div>
+    </article>
+      
+        <div class="muted">
+          <div class="pb">
+            
+            <span>分类</span>: <a rel="category tag" class="p-category category" href="https://obelieve.github.io/categories/notes/">Notes</a>&nbsp;
+            
+          </div>
+          
+            <div class="inline-block p-tags pb">
+              
+              <span>标签</span>:&nbsp;
+              
+              
+                <a class="p-tag" href="https://obelieve.github.io/tags/kotlin/">Kotlin</a>
+                
+              
+              </div>
+          
+            <div class="pb">
+              
+              
+              
+                发布于:&nbsp;
+                <time class="dt-published published" datetime="2025-12-04">2025.12.04</time>
+              
+              
+            </div>
+          </div>
+      
+      
+    
   
+     
+  </div>
+</div>
+
           </div>
         </div>
         
-        <aside class="sidebar px">
-          
+  <aside class="sidebar px ">
+    
+      <h2 class="pt0">快速导航</h2>
+      
+    <div class="sidebar-table-content">
+      <ul>
 
-          
-          <h2 id="zhong-yao-lian-jie">重要链接</h2>
-<ul>
-<li><a href="https://github.com/obelieve">Github 主页</a></li>
-</ul>
-<h2 id="guan-yu">关于</h2>
-<ul>
-<li><a href="/about/">关于我</a></li>
-</ul>
-<h2 id="dao-hang">导航</h2>
-<ul>
-<li><a href="https://obelieve.github.io/blog/quotes/">阅读摘要</a></li>
-<li><a href="https://obelieve.github.io/blog/askill/">收集小技巧</a></li>
-</ul>
-
-          <div class="taxonomy-list-page pt">
-            <div class="main-box-block">
-              <div class="by">按 <a href="/categories/">分类</a> 查看：</div>
-              
-              <details class="pb-sm">
-                <summary class="text-bigger">Notes&nbsp;(<a href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;categories&#x2F;notes&#x2F;">9</a>)</summary>
-                <ul>
-                  
-                  <li>
-    <a href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;kotlin-re-liu-he-leng-liu&#x2F;">Kotlin 热流和冷流</a>
-    <span class="muted text-sm">2025-12-04</span>
-  </li>
-                  
-                  <li>
-    <a href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;bian-cheng-yu-yan-chang-yong-de-shu-ju-jie-gou-api&#x2F;">编程语言常用的数据结构api</a>
-    <span class="muted text-sm">2025-11-25</span>
-  </li>
-                  
-                  <li>
-    <a href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;celeryku&#x2F;">Celery 分布式任务队列</a>
-    <span class="muted text-sm">2025-09-04</span>
-  </li>
-                  
-                  <li>
-    <a href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;askill&#x2F;">收集小技巧</a>
-    <span class="muted text-sm">2025-09-03</span>
-  </li>
-                  
-                  <li>
-    <a href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;quotes&#x2F;">阅读摘要</a>
-    <span class="muted text-sm">2025-09-18</span>
-  </li>
-                  
-                  <li>
-    <a href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;guan-yu-http&#x2F;">关于HTTP</a>
-    <span class="muted text-sm">2025-09-16</span>
-  </li>
-                  
-                  <li>
-    <a href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;uijiao-hu-she-ji-yuan-ze&#x2F;">UI交互设计原则</a>
-    <span class="muted text-sm">2025-09-07</span>
-  </li>
-                  
-                  <li>
-    <a href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;retrofityuan-ma-fen-xi-2-10-0-snapshot&#x2F;">Retrofit源码分析 2.10.0-SNAPSHOT</a>
-    <span class="muted text-sm">2025-09-03</span>
-  </li>
-                  
-                  <li>
-    <a href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;pythonyu-fa&#x2F;">Python语法</a>
-    <span class="muted text-sm">2025-09-03</span>
-  </li>
-                  
-                </ul>
-              </details>
-              
-            </div>
-          </div>
-
-          <div class="taxonomy-list-page pt">
-            <div class="main-box-block">
-              <div class="main-box-block">
-                <div class="by">按 <a href="/archive/">归档</a> 查看：</div>
-                
-                <details class="pb-sm">
-                  <summary class="text-bigger">2025</summary>
-                  <ul>
-                    
-                    <li>
-    <a href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;kotlin-re-liu-he-leng-liu&#x2F;">Kotlin 热流和冷流</a>
-    <span class="muted text-sm">2025-12-04</span>
-  </li>
-                    
-                    <li>
-    <a href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;bian-cheng-yu-yan-chang-yong-de-shu-ju-jie-gou-api&#x2F;">编程语言常用的数据结构api</a>
-    <span class="muted text-sm">2025-11-25</span>
-  </li>
-                    
-                    <li>
-    <a href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;celeryku&#x2F;">Celery 分布式任务队列</a>
-    <span class="muted text-sm">2025-09-04</span>
-  </li>
-                    
-                    <li>
-    <a href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;askill&#x2F;">收集小技巧</a>
-    <span class="muted text-sm">2025-09-03</span>
-  </li>
-                    
-                    <li>
-    <a href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;quotes&#x2F;">阅读摘要</a>
-    <span class="muted text-sm">2025-09-18</span>
-  </li>
-                    
-                    <li>
-    <a href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;guan-yu-http&#x2F;">关于HTTP</a>
-    <span class="muted text-sm">2025-09-16</span>
-  </li>
-                    
-                  </ul>
-                </details>
-                
-                <details class="pb-sm">
-                  <summary class="text-bigger">2024</summary>
-                  <ul>
-                    
-                    <li>
-    <a href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;uijiao-hu-she-ji-yuan-ze&#x2F;">UI交互设计原则</a>
-    <span class="muted text-sm">2025-09-07</span>
-  </li>
-                    
-                  </ul>
-                </details>
-                
-                <details class="pb-sm">
-                  <summary class="text-bigger">2022</summary>
-                  <ul>
-                    
-                    <li>
-    <a href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;retrofityuan-ma-fen-xi-2-10-0-snapshot&#x2F;">Retrofit源码分析 2.10.0-SNAPSHOT</a>
-    <span class="muted text-sm">2025-09-03</span>
-  </li>
-                    
-                  </ul>
-                </details>
-                
-                <details class="pb-sm">
-                  <summary class="text-bigger">2021</summary>
-                  <ul>
-                    
-                    <li>
-    <a href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;pythonyu-fa&#x2F;">Python语法</a>
-    <span class="muted text-sm">2025-09-03</span>
-  </li>
-                    
-                  </ul>
-                </details>
-                
-              </div>
-            </div>
-          </div>
-
-
-          <h2>
-            <a class="no-underline" title="标签"
-              href="&#x2F;tags/">标签</a>
-          </h2>
-          <ul class="list-none text-sm">
-            
-            <li class="inline">
-              <a class="no-underline" title="About" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;tags&#x2F;about&#x2F;">About(1)</a>
-            </li>
-            <li class="inline">
-              <a class="no-underline" title="Android" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;tags&#x2F;android&#x2F;">Android(1)</a>
-            </li>
-            <li class="inline">
-              <a class="no-underline" title="api" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;tags&#x2F;api&#x2F;">api(1)</a>
-            </li>
-            <li class="inline">
-              <a class="no-underline" title="Book" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;tags&#x2F;book&#x2F;">Book(1)</a>
-            </li>
-            <li class="inline">
-              <a class="no-underline" title="http" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;tags&#x2F;http&#x2F;">http(1)</a>
-            </li>
-            <li class="inline">
-              <a class="no-underline" title="Kotlin" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;tags&#x2F;kotlin&#x2F;">Kotlin(1)</a>
-            </li>
-            <li class="inline">
-              <a class="no-underline" title="Okhttp" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;tags&#x2F;okhttp&#x2F;">Okhttp(1)</a>
-            </li>
-            <li class="inline">
-              <a class="no-underline" title="Python" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;tags&#x2F;python&#x2F;">Python(2)</a>
-            </li>
-            <li class="inline">
-              <a class="no-underline" title="Retrofit" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;tags&#x2F;retrofit&#x2F;">Retrofit(1)</a>
-            </li>
-            <li class="inline">
-              <a class="no-underline" title="Shell" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;tags&#x2F;shell&#x2F;">Shell(1)</a>
-            </li>
-            <li class="inline">
-              <a class="no-underline" title="UI" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;tags&#x2F;ui&#x2F;">UI(1)</a>
-            </li>
-            
-          </ul>
-        </aside>
+        <li>
+          <a href="https://obelieve.github.io/">博客首页</a>
+        </li>
+        <li>
+          <a href="#start">正文开始</a>
+        </li>
         
+          <li>
+            <a href="https://obelieve.github.io/blog/kotlin-re-liu-he-leng-liu/#leng-liu">冷流</a>
+            
+          </li>
+        
+          <li>
+            <a href="https://obelieve.github.io/blog/kotlin-re-liu-he-leng-liu/#re-liu">热流</a>
+            
+          </li>
+        
+          <li>
+            <a href="https://obelieve.github.io/blog/kotlin-re-liu-he-leng-liu/#kotlin-leng-liu">Kotlin 冷流</a>
+            
+          </li>
+        
+          <li>
+            <a href="https://obelieve.github.io/blog/kotlin-re-liu-he-leng-liu/#leng-liu-zhuan-re-liu">冷流转热流</a>
+            
+          </li>
+        
+          <li>
+            <a href="https://obelieve.github.io/blog/kotlin-re-liu-he-leng-liu/#kotlin-re-liu">Kotlin 热流</a>
+            
+          </li>
+        
+        <li>
+          <a href="#response">回应区</a>
+        </li>
+
+      </ul>
+    </div>
+  
+    
+  </aside>
+
       </div>
     </div>
     </div>
   <div id="bottom"></div>
-  </body>
+  <script>
+  document.getElementById('copyButton').addEventListener('click', function(event) {
+    event.preventDefault();
+    var text = '《Kotlin 热流和冷流》 ' + window.location.href;
+    var textArea = document.createElement('textarea');
+    textArea.textContent = text;
+    document.body.append(textArea);
+    textArea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textArea);
+    document.getElementById('copyStatus').textContent = '已复制 ✅';
+    setTimeout(function() {
+      document.getElementById('copyStatus').textContent = '';
+    }, 1500);
+  });
+</script>
+</body>
 
 </html>

@@ -5,12 +5,12 @@
 <head>
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" /><title>Tags | Shell - Obelieve的博客</title>
-  <meta property="og:title" content="Tags | Shell" />
-  <meta itemprop="headline" content="Tags | Shell" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" /><title>Tags | Kotlin - Obelieve的博客</title>
+  <meta property="og:title" content="Tags | Kotlin" />
+  <meta itemprop="headline" content="Tags | Kotlin" />
   <meta property="og:description" content="" />
   <meta name="description" content="" />
-  <meta property="og:url" content="https://obelieve.github.io/tags/shell/" /><meta name="og:type" content="summary" />
+  <meta property="og:url" content="https://obelieve.github.io/tags/kotlin/" /><meta name="og:type" content="summary" />
   <meta name="keywords" content="注意力, 读书, 工具分享, 纯文本, 英语学习" />
   <meta name="author" content="Obelieve" />
   <meta itemprop="copyrightYear" content=" 2025" />
@@ -36,7 +36,7 @@
   
   
   
-  <link rel="alternate" type="application/atom+xml" title="tags: Shell - Obelieve的博客 RSS" href="https://obelieve.github.io/tags/shell/atom.xml">
+  <link rel="alternate" type="application/atom+xml" title="tags: Kotlin - Obelieve的博客 RSS" href="https://obelieve.github.io/tags/kotlin/atom.xml">
   <style>@charset "UTF-8";
 html,
 body,
@@ -1009,7 +1009,7 @@ a.theme-link-gray {
         <span class="divider">&nbsp;&gt;&nbsp;</span>
           <a href="&#x2F;categories/">All tags</a>
           <span class="divider">&nbsp;&gt;&nbsp;</span>
-          Shell
+          Kotlin
         </div>
     </header>
   
@@ -1028,51 +1028,48 @@ a.theme-link-gray {
             
   <article class="h-entry hentry feed-entry">
     <h2 class="no-border pb-sm entry-title">
-      <a class="no-underline  u-url p-name entry-title" rel="bookmark" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;askill&#x2F;">收集小技巧</a> <a href="#index-1" id="index-1" class="zola-anchor"></a>
+      <a class="no-underline  u-url p-name entry-title" rel="bookmark" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;kotlin-re-liu-he-leng-liu&#x2F;">Kotlin 热流和冷流</a> <a href="#index-1" id="index-1" class="zola-anchor"></a>
     </h2>
-    <div class="p-summary entry-summary"><p><strong>python ascii-数字转换</strong></p>
-<pre data-lang="py" class="language-py "><code class="language-py" data-lang="py">a = &#x27;a&#x27;
-ord(a) #转数字
-chr(10) #转字符
+    <h2 id="leng-liu">冷流<a class="zola-anchor" href="#leng-liu" aria-label="Anchor link for: leng-liu">🔗</a></h2>
+<p>订阅时，才发送数据。多次订阅，每个订阅都是新的数据。</p>
+<h2 id="re-liu">热流<a class="zola-anchor" href="#re-liu" aria-label="Anchor link for: re-liu">🔗</a></h2>
+<p>创建时，就发送数据。类似广播形式，订阅时，之前发送的数据不会收到。</p>
+<h2 id="kotlin-leng-liu">Kotlin 冷流<a class="zola-anchor" href="#kotlin-leng-liu" aria-label="Anchor link for: kotlin-leng-liu">🔗</a></h2>
+<pre data-lang="kotlin" class="language-kotlin "><code class="language-kotlin" data-lang="kotlin">val flow1 = flow&lt;Int&gt; {  
+    repeat(10){  
+        emit(it)  
+        delay(1000L)  
+    }  
+}
+val flow2 = callbackFlow&lt;Int&gt; {  
+    repeat(10){  
+        trySend(it)  
+        delay(1000L)  
+    }  
+    awaitClose{  
+        cancel()  
+    }  
+}
 </code></pre>
-<p><strong>python 双端队列</strong></p>
-<pre data-lang="py" class="language-py "><code class="language-py" data-lang="py">from collections import deque
-a = deque()
-a.append(1)
-a.append(2)
-a.pop()
-a.popleft()
-</code></pre>
-<p><strong>python 堆结构</strong></p>
-<pre data-lang="py" class="language-py "><code class="language-py" data-lang="py">import heapq
-a = [3,2,1]
-heapq.heapify(a) #最小堆排序
-heapq.heappush(a,4) #添加元素，再次排序
-heapq.heappop(a) #弹出堆顶元素
+<h2 id="leng-liu-zhuan-re-liu">冷流转热流<a class="zola-anchor" href="#leng-liu-zhuan-re-liu" aria-label="Anchor link for: leng-liu-zhuan-re-liu">🔗</a></h2>
+<pre data-lang="kotlin" class="language-kotlin "><code class="language-kotlin" data-lang="kotlin">Flow&lt;&gt;.stateIn(GlobalScope, SharingStarted.Eagerly,null)  
 
+Flow&lt;&gt;.shareIn(GlobalScope, SharingStarted.Eagerly)
 </code></pre>
-<p><strong>shell列出目录树形结构</strong></p>
-<pre data-lang="shell" class="language-shell "><code class="language-shell" data-lang="shell">#安装tree
-brew install tree
-#使用tree命令
-tree
-#深层结构
-tree -L 2
+<h2 id="kotlin-re-liu">Kotlin 热流<a class="zola-anchor" href="#kotlin-re-liu" aria-label="Anchor link for: kotlin-re-liu">🔗</a></h2>
+<pre data-lang="kotlin" class="language-kotlin "><code class="language-kotlin" data-lang="kotlin">val flow3 = MutableStateFlow(1)
+flow3.value = 2
+flow3  
+    .onEach { value -&gt; println(&quot;${value}&quot;) }  
+    .launchIn(this)  &#x2F;&#x2F; 启动收集但不阻塞
+flow3.value = 3
+
+MutableSharedFlow(1) 
 </code></pre>
-<p><strong>python 初始化数组</strong></p>
-<pre data-lang="py" class="language-py "><code class="language-py" data-lang="py">res = [&quot;&quot; for _ in range(10)]
-res[0]=&quot;abc&quot;
-</code></pre></div>
-      <p><a rel="bookmark" href="https://obelieve.github.io/blog/askill/#continue-reading">
-       &rarr;&nbsp; 继续阅读需要: 
-  
-    1
-  
- min
-      </a></p>
+
     <div class="muted text-sm">
-      <a title="2025-09-03" class="no-underline u-url p-name entry-title" rel="bookmark" href="https://obelieve.github.io/blog/askill/">
-        <time class="dt-published published" datetime="2025-09-03">2025.09.03</time>
+      <a title="2025-12-04" class="no-underline u-url p-name entry-title" rel="bookmark" href="https://obelieve.github.io/blog/kotlin-re-liu-he-leng-liu/">
+        <time class="dt-published published" datetime="2025-12-04">2025.12.04</time>
       </a>
       
       <span>&nbsp;on</span>
@@ -1090,7 +1087,7 @@ res[0]=&quot;abc&quot;
       <ul class="list-none flex justify-between">
         
           <li class="disabled">
-            <a title="First" class="no-underline" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;tags&#x2F;shell&#x2F;">&larrb;</a>
+            <a title="First" class="no-underline" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;tags&#x2F;kotlin&#x2F;">&larrb;</a>
           </li>
         
         
@@ -1108,7 +1105,7 @@ res[0]=&quot;abc&quot;
         
         
           <li class="disabled">
-            <a title="Last" class="no-underline" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;tags&#x2F;shell&#x2F;">&rarrb;</a>
+            <a title="Last" class="no-underline" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;tags&#x2F;kotlin&#x2F;">&rarrb;</a>
           </li>
         
       </ul>

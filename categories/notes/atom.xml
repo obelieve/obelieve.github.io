@@ -4,8 +4,63 @@
     <link rel="self" type="application/atom+xml" href="https://obelieve.github.io/categories/notes/atom.xml"/>
     <link rel="alternate" type="text/html" href="https://obelieve.github.io"/>
     <generator uri="https://www.getzola.org/">Zola</generator>
-    <updated>2025-11-25T00:00:00+00:00</updated>
+    <updated>2025-12-04T00:00:00+00:00</updated>
     <id>https://obelieve.github.io/categories/notes/atom.xml</id>
+    <entry xml:lang="zh">
+        <title>Kotlin 热流和冷流</title>
+        <published>2025-12-04T00:00:00+00:00</published>
+        <updated>2025-12-04T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Obelieve
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://obelieve.github.io/blog/kotlin-re-liu-he-leng-liu/"/>
+        <id>https://obelieve.github.io/blog/kotlin-re-liu-he-leng-liu/</id>
+        
+        <content type="html" xml:base="https://obelieve.github.io/blog/kotlin-re-liu-he-leng-liu/">&lt;h2 id=&quot;leng-liu&quot;&gt;冷流&lt;a class=&quot;zola-anchor&quot; href=&quot;#leng-liu&quot; aria-label=&quot;Anchor link for: leng-liu&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;p&gt;订阅时，才发送数据。多次订阅，每个订阅都是新的数据。&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;re-liu&quot;&gt;热流&lt;a class=&quot;zola-anchor&quot; href=&quot;#re-liu&quot; aria-label=&quot;Anchor link for: re-liu&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;p&gt;创建时，就发送数据。类似广播形式，订阅时，之前发送的数据不会收到。&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;kotlin-leng-liu&quot;&gt;Kotlin 冷流&lt;a class=&quot;zola-anchor&quot; href=&quot;#kotlin-leng-liu&quot; aria-label=&quot;Anchor link for: kotlin-leng-liu&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;pre data-lang=&quot;kotlin&quot; class=&quot;language-kotlin &quot;&gt;&lt;code class=&quot;language-kotlin&quot; data-lang=&quot;kotlin&quot;&gt;val flow1 = flow&amp;lt;Int&amp;gt; {  
+    repeat(10){  
+        emit(it)  
+        delay(1000L)  
+    }  
+}
+val flow2 = callbackFlow&amp;lt;Int&amp;gt; {  
+    repeat(10){  
+        trySend(it)  
+        delay(1000L)  
+    }  
+    awaitClose{  
+        cancel()  
+    }  
+}
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;leng-liu-zhuan-re-liu&quot;&gt;冷流转热流&lt;a class=&quot;zola-anchor&quot; href=&quot;#leng-liu-zhuan-re-liu&quot; aria-label=&quot;Anchor link for: leng-liu-zhuan-re-liu&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;pre data-lang=&quot;kotlin&quot; class=&quot;language-kotlin &quot;&gt;&lt;code class=&quot;language-kotlin&quot; data-lang=&quot;kotlin&quot;&gt;Flow&amp;lt;&amp;gt;.stateIn(GlobalScope, SharingStarted.Eagerly,null)  
+
+Flow&amp;lt;&amp;gt;.shareIn(GlobalScope, SharingStarted.Eagerly)
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;kotlin-re-liu&quot;&gt;Kotlin 热流&lt;a class=&quot;zola-anchor&quot; href=&quot;#kotlin-re-liu&quot; aria-label=&quot;Anchor link for: kotlin-re-liu&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;pre data-lang=&quot;kotlin&quot; class=&quot;language-kotlin &quot;&gt;&lt;code class=&quot;language-kotlin&quot; data-lang=&quot;kotlin&quot;&gt;val flow3 = MutableStateFlow(1)
+flow3.value = 2
+flow3  
+    .onEach { value -&amp;gt; println(&amp;quot;${value}&amp;quot;) }  
+    .launchIn(this)  &amp;#x2F;&amp;#x2F; 启动收集但不阻塞
+flow3.value = 3
+
+MutableSharedFlow(1) 
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+</content>
+        
+    </entry>
     <entry xml:lang="zh">
         <title>编程语言常用的数据结构api</title>
         <published>2025-11-25T00:00:00+00:00</published>
