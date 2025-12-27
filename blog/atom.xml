@@ -22,7 +22,7 @@
         <link rel="alternate" type="text/html" href="https://obelieve.github.io/blog/android-zi-yuan-xian-ding-fu/"/>
         <id>https://obelieve.github.io/blog/android-zi-yuan-xian-ding-fu/</id>
         
-        <content type="html" xml:base="https://obelieve.github.io/blog/android-zi-yuan-xian-ding-fu/">&lt;p&gt;&lt;a href=&quot;https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;android-zi-yuan-xian-ding-fu&#x2F;!https:&#x2F;&#x2F;developer.android.com&#x2F;guide&#x2F;topics&#x2F;resources&#x2F;providing-resources?hl=zh-cn#BestMatch&quot;&gt;官方资源限定符查找顺序&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+        <content type="html" xml:base="https://obelieve.github.io/blog/android-zi-yuan-xian-ding-fu/">&lt;p&gt;&lt;a href=&quot;https:&#x2F;&#x2F;developer.android.com&#x2F;guide&#x2F;topics&#x2F;resources&#x2F;providing-resources?hl=zh-cn#BestMatch&quot;&gt;官方资源限定符查找顺序&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
 &lt;h2 id=&quot;sw-n-dp&quot;&gt;&lt;code&gt;sw&amp;lt;N&amp;gt;dp&lt;&#x2F;code&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#sw-n-dp&quot; aria-label=&quot;Anchor link for: sw-n-dp&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
 &lt;p&gt;应用可用屏幕区域的最短尺寸，系统会选择最接近（但不超过）设备的值。&lt;&#x2F;p&gt;
 &lt;ul&gt;
