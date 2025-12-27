@@ -1032,7 +1032,42 @@ a.theme-link-gray {
           
   <article class="h-entry hentry feed-entry">
     <h2 class="no-border pb-sm entry-title">
-      <a class="no-underline  u-url p-name entry-title" rel="bookmark" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;kotlin-re-liu-he-leng-liu&#x2F;">Kotlin 热流和冷流</a> <a href="#index-1" id="index-1" class="zola-anchor"></a>
+      <a class="no-underline  u-url p-name entry-title" rel="bookmark" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;android-zi-yuan-xian-ding-fu&#x2F;">Android 资源限定符</a> <a href="#index-1" id="index-1" class="zola-anchor"></a>
+    </h2>
+    <p><a href="https://obelieve.github.io/blog/android-zi-yuan-xian-ding-fu/!https://developer.android.com/guide/topics/resources/providing-resources?hl=zh-cn#BestMatch">官方资源限定符查找顺序</a></p>
+<h2 id="sw-n-dp"><code>sw&lt;N&gt;dp</code><a class="zola-anchor" href="#sw-n-dp" aria-label="Anchor link for: sw-n-dp">🔗</a></h2>
+<p>应用可用屏幕区域的最短尺寸，系统会选择最接近（但不超过）设备的值。</p>
+<ul>
+<li>
+<p>限定符顺序：<code>drawable-sw300dp-xhdpi</code>，不然会报错。</p>
+</li>
+<li>
+<p>对于 <code>drawable</code> 资源：如果只有一个资源，只在某个<code>drawable-sw&lt;N&gt;dp</code>目录下，编译时不会报错，但是如果sw不匹配，应用会判定找不到资源，<code>应用会奔溃</code>。</p>
+</li>
+<li>
+<p>对于 <code>values</code> 资源：如果只有一个资源，只在某个<code>values-sw&lt;N&gt;dp</code>定义IDE会提示报错，必须 <code>values</code> 要有定义同名的资源。</p>
+</li>
+</ul>
+
+    <div class="muted text-sm">
+      <a title="2025-12-21" class="no-underline u-url p-name entry-title" rel="bookmark" href="https://obelieve.github.io/blog/android-zi-yuan-xian-ding-fu/">
+        <time class="dt-published published" datetime="2025-12-21">2025.12.21</time>
+      </a>
+      
+      <span>&nbsp;on</span>
+      <a title="Notes" class="no-underline p-category" rel="category tag" href="https://obelieve.github.io/categories/notes/">
+          Notes
+        </a>
+      
+
+    </div>
+  </article>
+  
+        
+          
+  <article class="h-entry hentry feed-entry">
+    <h2 class="no-border pb-sm entry-title">
+      <a class="no-underline  u-url p-name entry-title" rel="bookmark" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;kotlin-re-liu-he-leng-liu&#x2F;">Kotlin 热流和冷流</a> <a href="#index-2" id="index-2" class="zola-anchor"></a>
     </h2>
     <h2 id="leng-liu">冷流<a class="zola-anchor" href="#leng-liu" aria-label="Anchor link for: leng-liu">🔗</a></h2>
 <p>订阅时，才发送数据。多次订阅，每个订阅都是新的数据。</p>
@@ -1089,7 +1124,7 @@ MutableSharedFlow(1)
           
   <article class="h-entry hentry feed-entry">
     <h2 class="no-border pb-sm entry-title">
-      <a class="no-underline  u-url p-name entry-title" rel="bookmark" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;bian-cheng-yu-yan-chang-yong-de-shu-ju-jie-gou-api&#x2F;">编程语言常用的数据结构api</a> <a href="#index-2" id="index-2" class="zola-anchor"></a>
+      <a class="no-underline  u-url p-name entry-title" rel="bookmark" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;bian-cheng-yu-yan-chang-yong-de-shu-ju-jie-gou-api&#x2F;">编程语言常用的数据结构api</a> <a href="#index-3" id="index-3" class="zola-anchor"></a>
     </h2>
     <h2 id="java">Java<a class="zola-anchor" href="#java" aria-label="Anchor link for: java">🔗</a></h2>
 <h3 id="zui-xiao-dui-priorityqueue">最小堆 PriorityQueue<a class="zola-anchor" href="#zui-xiao-dui-priorityqueue" aria-label="Anchor link for: zui-xiao-dui-priorityqueue">🔗</a></h3>
@@ -1128,7 +1163,7 @@ heapq.heappush(heap,(value,key)) #key-value关系存到最小堆中， 以value�
           
   <article class="h-entry hentry feed-entry">
     <h2 class="no-border pb-sm entry-title">
-      <a class="no-underline  u-url p-name entry-title" rel="bookmark" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;celeryku&#x2F;">Celery 分布式任务队列</a> <a href="#index-3" id="index-3" class="zola-anchor"></a>
+      <a class="no-underline  u-url p-name entry-title" rel="bookmark" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;celeryku&#x2F;">Celery 分布式任务队列</a> <a href="#index-4" id="index-4" class="zola-anchor"></a>
     </h2>
     <h2 id="jing-ji-ren-broker">经纪人（broker）<a class="zola-anchor" href="#jing-ji-ren-broker" aria-label="Anchor link for: jing-ji-ren-broker">🔗</a></h2>
 <p>需要发送消息/接收消息，通过第三方消息代理软件，来实现。</p>
@@ -1234,7 +1269,7 @@ python -m celeryconfig # 验证配置模块是否正确
           
   <article class="h-entry hentry feed-entry">
     <h2 class="no-border pb-sm entry-title">
-      <a class="no-underline  u-url p-name entry-title" rel="bookmark" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;askill&#x2F;">收集小技巧</a> <a href="#index-4" id="index-4" class="zola-anchor"></a>
+      <a class="no-underline  u-url p-name entry-title" rel="bookmark" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;askill&#x2F;">收集小技巧</a> <a href="#index-5" id="index-5" class="zola-anchor"></a>
     </h2>
     <div class="p-summary entry-summary"><p><strong>python ascii-数字转换</strong></p>
 <pre data-lang="py" class="language-py "><code class="language-py" data-lang="py">a = &#x27;a&#x27;
@@ -1294,7 +1329,7 @@ res[0]=&quot;abc&quot;
           
   <article class="h-entry hentry feed-entry">
     <h2 class="no-border pb-sm entry-title">
-      <a class="no-underline  u-url p-name entry-title" rel="bookmark" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;quotes&#x2F;">阅读摘要</a> <a href="#index-5" id="index-5" class="zola-anchor"></a>
+      <a class="no-underline  u-url p-name entry-title" rel="bookmark" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;quotes&#x2F;">阅读摘要</a> <a href="#index-6" id="index-6" class="zola-anchor"></a>
     </h2>
     <div class="p-summary entry-summary"><blockquote>
 <p>“多读而不求甚解，则如驰骋十里洋场，虽珍奇满目，徒惹得心花意乱，空手而归。” —— 朱光潜</p>
@@ -1354,7 +1389,7 @@ res[0]=&quot;abc&quot;
           
   <article class="h-entry hentry feed-entry">
     <h2 class="no-border pb-sm entry-title">
-      <a class="no-underline  u-url p-name entry-title" rel="bookmark" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;guan-yu-http&#x2F;">关于HTTP</a> <a href="#index-6" id="index-6" class="zola-anchor"></a>
+      <a class="no-underline  u-url p-name entry-title" rel="bookmark" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;guan-yu-http&#x2F;">关于HTTP</a> <a href="#index-7" id="index-7" class="zola-anchor"></a>
     </h2>
     <h2 id="yi-ci-httpqing-qiu-lian-lu-guo-cheng">一次HTTP请求链路过程<a class="zola-anchor" href="#yi-ci-httpqing-qiu-lian-lu-guo-cheng" aria-label="Anchor link for: yi-ci-httpqing-qiu-lian-lu-guo-cheng">🔗</a></h2>
 <ul>
@@ -1544,7 +1579,7 @@ Markup Language）</p>
           
   <article class="h-entry hentry feed-entry">
     <h2 class="no-border pb-sm entry-title">
-      <a class="no-underline  u-url p-name entry-title" rel="bookmark" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;uijiao-hu-she-ji-yuan-ze&#x2F;">UI交互设计原则</a> <a href="#index-7" id="index-7" class="zola-anchor"></a>
+      <a class="no-underline  u-url p-name entry-title" rel="bookmark" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;uijiao-hu-she-ji-yuan-ze&#x2F;">UI交互设计原则</a> <a href="#index-8" id="index-8" class="zola-anchor"></a>
     </h2>
     <p>首要目标是评估用户体验。
 用户体验：
@@ -1636,7 +1671,7 @@ Markup Language）</p>
           
   <article class="h-entry hentry feed-entry">
     <h2 class="no-border pb-sm entry-title">
-      <a class="no-underline  u-url p-name entry-title" rel="bookmark" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;retrofityuan-ma-fen-xi-2-10-0-snapshot&#x2F;">Retrofit源码分析 2.10.0-SNAPSHOT</a> <a href="#index-8" id="index-8" class="zola-anchor"></a>
+      <a class="no-underline  u-url p-name entry-title" rel="bookmark" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;retrofityuan-ma-fen-xi-2-10-0-snapshot&#x2F;">Retrofit源码分析 2.10.0-SNAPSHOT</a> <a href="#index-9" id="index-9" class="zola-anchor"></a>
     </h2>
     <p><img src="https://obelieve.top/site/images/retrofit%E6%B5%81%E7%A8%8B%E5%9B%BE.png" alt="流程图.png" /></p>
 <h2 id="1-jie-shao">1. 介绍<a class="zola-anchor" href="#1-jie-shao" aria-label="Anchor link for: 1-jie-shao">🔗</a></h2>
@@ -2270,7 +2305,7 @@ class Fruit extends Food {}</li>
           
   <article class="h-entry hentry feed-entry">
     <h2 class="no-border pb-sm entry-title">
-      <a class="no-underline  u-url p-name entry-title" rel="bookmark" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;pythonyu-fa&#x2F;">Python语法</a> <a href="#index-9" id="index-9" class="zola-anchor"></a>
+      <a class="no-underline  u-url p-name entry-title" rel="bookmark" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;pythonyu-fa&#x2F;">Python语法</a> <a href="#index-10" id="index-10" class="zola-anchor"></a>
     </h2>
     <p>[TOC]</p>
 <h2 id="zhu">注:<a class="zola-anchor" href="#zhu" aria-label="Anchor link for: zhu">🔗</a></h2>
@@ -3756,8 +3791,13 @@ loop.run_forever()
               <div class="by">按 <a href="/categories/">分类</a> 查看：</div>
               
               <details class="pb-sm">
-                <summary class="text-bigger">Notes&nbsp;(<a href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;categories&#x2F;notes&#x2F;">9</a>)</summary>
+                <summary class="text-bigger">Notes&nbsp;(<a href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;categories&#x2F;notes&#x2F;">10</a>)</summary>
                 <ul>
+                  
+                  <li>
+    <a href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;android-zi-yuan-xian-ding-fu&#x2F;">Android 资源限定符</a>
+    <span class="muted text-sm">2025-12-21</span>
+  </li>
                   
                   <li>
     <a href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;kotlin-re-liu-he-leng-liu&#x2F;">Kotlin 热流和冷流</a>
@@ -3818,6 +3858,11 @@ loop.run_forever()
                 <details class="pb-sm">
                   <summary class="text-bigger">2025</summary>
                   <ul>
+                    
+                    <li>
+    <a href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;android-zi-yuan-xian-ding-fu&#x2F;">Android 资源限定符</a>
+    <span class="muted text-sm">2025-12-21</span>
+  </li>
                     
                     <li>
     <a href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;kotlin-re-liu-he-leng-liu&#x2F;">Kotlin 热流和冷流</a>
@@ -3903,7 +3948,7 @@ loop.run_forever()
               <a class="no-underline" title="About" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;tags&#x2F;about&#x2F;">About(1)</a>
             </li>
             <li class="inline">
-              <a class="no-underline" title="Android" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;tags&#x2F;android&#x2F;">Android(1)</a>
+              <a class="no-underline" title="Android" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;tags&#x2F;android&#x2F;">Android(2)</a>
             </li>
             <li class="inline">
               <a class="no-underline" title="api" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;tags&#x2F;api&#x2F;">api(1)</a>
@@ -3931,6 +3976,9 @@ loop.run_forever()
             </li>
             <li class="inline">
               <a class="no-underline" title="UI" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;tags&#x2F;ui&#x2F;">UI(1)</a>
+            </li>
+            <li class="inline">
+              <a class="no-underline" title="资源限定符" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;tags&#x2F;zi-yuan-xian-ding-fu&#x2F;">资源限定符(1)</a>
             </li>
             
           </ul>
