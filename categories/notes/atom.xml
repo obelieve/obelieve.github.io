@@ -42,7 +42,7 @@
         storePassword = &amp;quot;123456&amp;quot;  
     }  
     create(&amp;quot;release&amp;quot;) {  
-        keyAlias = &amp;quot;key0&amp;quot;  
+        keyAlias = &amp;quot;aa&amp;quot;  
         keyPassword = &amp;quot;123456&amp;quot;  
         storeFile = file(&amp;quot;..&amp;#x2F;keystore&amp;#x2F;platform_123456_aa_.jks&amp;quot;)  
         storePassword = &amp;quot;123456&amp;quot;  
