@@ -13,7 +13,7 @@
   <meta property="og:url" content="https://obelieve.github.io/categories/notes/" /><meta name="og:type" content="summary" />
   <meta name="keywords" content="注意力, 读书, 工具分享, 纯文本, 英语学习" />
   <meta name="author" content="Obelieve" />
-  <meta itemprop="copyrightYear" content=" 2025" />
+  <meta itemprop="copyrightYear" content=" 2026" />
   <link rel="icon" href="https://obelieve.github.io/site/images/favicon-32x32.png?h=68480d370330a1370abf" type="image/x-icon">
   <link rel="apple-touch-icon" sizes="57x57" href="https://obelieve.github.io/site/images/apple-icon-57x57.png?h=920192bead2a51cc200b">
   <link rel="apple-touch-icon" sizes="60x60" href="https://obelieve.github.io/site/images/apple-icon-60x60.png?h=a7a48024c2427638d967">
@@ -1385,7 +1385,90 @@ res[0]=&quot;abc&quot;
             
   <article class="h-entry hentry feed-entry">
     <h2 class="no-border pb-sm entry-title">
-      <a class="no-underline  u-url p-name entry-title" rel="bookmark" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;guan-yu-http&#x2F;">关于HTTP</a> <a href="#index-7" id="index-7" class="zola-anchor"></a>
+      <a class="no-underline  u-url p-name entry-title" rel="bookmark" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;android-mo-ni-qi-chuang-jian-xi-tong-ying-yong&#x2F;">Android 模拟器创建系统应用</a> <a href="#index-7" id="index-7" class="zola-anchor"></a>
+    </h2>
+    <p>Android应用使用到系统级的API，需要对apk进行系统级签名，本文记录下在Android 模拟器中创建系统应用的流程。</p>
+<h2 id="1-aospjing-xiang-chuang-jian-mo-ni-qi">1.AOSP镜像创建模拟器<a class="zola-anchor" href="#1-aospjing-xiang-chuang-jian-mo-ni-qi" aria-label="Anchor link for: 1-aospjing-xiang-chuang-jian-mo-ni-qi">🔗</a></h2>
+<p>在Android Studio中的Tools-&gt;Device Manager-&gt;Add Device，选择Android Open Source创建模拟器。</p>
+<h2 id="2-sheng-cheng-aospde-xi-tong-qian-ming-wen-jian">2.生成AOSP的系统签名文件<a class="zola-anchor" href="#2-sheng-cheng-aospde-xi-tong-qian-ming-wen-jian" aria-label="Anchor link for: 2-sheng-cheng-aospde-xi-tong-qian-ming-wen-jian">🔗</a></h2>
+<ul>
+<li>生成jks签名文件使用到<a href="https://github.com/getfatday/keytool-importkeypair">keytool-importkeypair</a>，生成系统签名文件。<a href="https://github.com/obelieve/AOSP-jks">AOSP-jks</a></li>
+</ul>
+<pre data-lang="shell" class="language-shell "><code class="language-shell" data-lang="shell">keytool-importkeypair [-k keystore] [-p storepass] -pk8 pk8 -cert cert -alias key_alias
+</code></pre>
+<ul>
+<li>gradle文件配置签名文件</li>
+</ul>
+<pre data-lang="groovy" class="language-groovy "><code class="language-groovy" data-lang="groovy">signingConfigs {  
+    getByName(&quot;debug&quot;) {  
+        keyAlias = &quot;aa&quot;  
+        keyPassword = &quot;123456&quot;  
+        storeFile = file(&quot;..&#x2F;keystore&#x2F;platform_123456_aa_.jks&quot;)  
+        storePassword = &quot;123456&quot;  
+    }  
+    create(&quot;release&quot;) {  
+        keyAlias = &quot;key0&quot;  
+        keyPassword = &quot;123456&quot;  
+        storeFile = file(&quot;..&#x2F;keystore&#x2F;platform_123456_aa_.jks&quot;)  
+        storePassword = &quot;123456&quot;  
+    }  
+  
+}  
+  
+buildTypes {  
+    release {  
+        proguardFiles(getDefaultProguardFile(&quot;proguard-android-optimize.txt&quot;), &quot;proguard-rules.pro&quot;)  
+        signingConfig = signingConfigs.getByName(&quot;release&quot;)  
+    }  
+    debug {  
+        signingConfig = signingConfigs.getByName(&quot;debug&quot;)  
+    }  
+}
+</code></pre>
+<h3 id="fu-apkjin-xing-xi-tong-ji-qian-ming">附： apk进行系统级签名<a class="zola-anchor" href="#fu-apkjin-xing-xi-tong-ji-qian-ming" aria-label="Anchor link for: fu-apkjin-xing-xi-tong-ji-qian-ming">🔗</a></h3>
+<p>还有一种是对apk直接系统级签名，这个还没试过，暂且记录下📝。</p>
+<ul>
+<li><a href="https://android.googlesource.com/platform/build/+/master/target/product/security">AOSP源码</a>中找到签名文件platform.pk8 和 platform.x509.pem</li>
+<li>在Android SDK中找到$ANDROID_HOME/build-tools/33.0.0（选择其中一个版本），找到apksigner 程序执行下面命令直接签名apk。
+<code>apksigner sign --key platform.pk8 --cert platform.x509.pem &lt;path of YourAPK&gt;</code></li>
+</ul>
+<h2 id="3-dao-ru-apkdao-xi-tong-jing-xiang">3.导入apk到系统镜像<a class="zola-anchor" href="#3-dao-ru-apkdao-xi-tong-jing-xiang" aria-label="Anchor link for: 3-dao-ru-apkdao-xi-tong-jing-xiang">🔗</a></h2>
+<pre data-lang="shell" class="language-shell "><code class="language-shell" data-lang="shell">#启动模拟器，置为可写状态
+emulator -avd &lt;YourAVDNameHere&gt; -writable-system
+#导入apk到系统目录下
+adb root 
+adb remount 
+adb shell mkdir &#x2F;system&#x2F;app&#x2F;&lt;YourAppFolder&gt; 
+adb push &lt;YourAPK&gt; &#x2F;system&#x2F;app&#x2F;&lt;YourAppFolder&gt;&#x2F; 
+adb reboot
+</code></pre>
+<h2 id="4-ying-yong-zhong-shi-yong-uid">4.应用中使用uid<a class="zola-anchor" href="#4-ying-yong-zhong-shi-yong-uid" aria-label="Anchor link for: 4-ying-yong-zhong-shi-yong-uid">🔗</a></h2>
+<pre data-lang="xml" class="language-xml "><code class="language-xml" data-lang="xml">&lt;manifest xmlns:tools=&quot;http:&#x2F;&#x2F;schemas.android.com&#x2F;tools&quot;  
+    package=&quot;com.zxy.demo&quot;  
+          xmlns:android=&quot;http:&#x2F;&#x2F;schemas.android.com&#x2F;apk&#x2F;res&#x2F;android&quot;  
+    android:sharedUserId=&quot;android.uid.system&quot;&gt;
+&lt;&#x2F;manifest&gt;
+</code></pre>
+
+    <div class="muted text-sm">
+      <a title="2025-02-07" class="no-underline u-url p-name entry-title" rel="bookmark" href="https://obelieve.github.io/blog/android-mo-ni-qi-chuang-jian-xi-tong-ying-yong/">
+        <time class="dt-published published" datetime="2025-02-07">2025.02.07</time>
+      </a>
+      
+      <span>&nbsp;on</span>
+      <a title="Notes" class="no-underline p-category" rel="category tag" href="https://obelieve.github.io/categories/notes/">
+          Notes
+        </a>
+      
+
+    </div>
+  </article>
+  
+          
+            
+  <article class="h-entry hentry feed-entry">
+    <h2 class="no-border pb-sm entry-title">
+      <a class="no-underline  u-url p-name entry-title" rel="bookmark" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;guan-yu-http&#x2F;">关于HTTP</a> <a href="#index-8" id="index-8" class="zola-anchor"></a>
     </h2>
     <h2 id="yi-ci-httpqing-qiu-lian-lu-guo-cheng">一次HTTP请求链路过程<a class="zola-anchor" href="#yi-ci-httpqing-qiu-lian-lu-guo-cheng" aria-label="Anchor link for: yi-ci-httpqing-qiu-lian-lu-guo-cheng">🔗</a></h2>
 <ul>
@@ -1575,7 +1658,7 @@ Markup Language）</p>
             
   <article class="h-entry hentry feed-entry">
     <h2 class="no-border pb-sm entry-title">
-      <a class="no-underline  u-url p-name entry-title" rel="bookmark" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;uijiao-hu-she-ji-yuan-ze&#x2F;">UI交互设计原则</a> <a href="#index-8" id="index-8" class="zola-anchor"></a>
+      <a class="no-underline  u-url p-name entry-title" rel="bookmark" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;uijiao-hu-she-ji-yuan-ze&#x2F;">UI交互设计原则</a> <a href="#index-9" id="index-9" class="zola-anchor"></a>
     </h2>
     <p>首要目标是评估用户体验。
 用户体验：
@@ -1667,7 +1750,7 @@ Markup Language）</p>
             
   <article class="h-entry hentry feed-entry">
     <h2 class="no-border pb-sm entry-title">
-      <a class="no-underline  u-url p-name entry-title" rel="bookmark" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;retrofityuan-ma-fen-xi-2-10-0-snapshot&#x2F;">Retrofit源码分析 2.10.0-SNAPSHOT</a> <a href="#index-9" id="index-9" class="zola-anchor"></a>
+      <a class="no-underline  u-url p-name entry-title" rel="bookmark" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;retrofityuan-ma-fen-xi-2-10-0-snapshot&#x2F;">Retrofit源码分析 2.10.0-SNAPSHOT</a> <a href="#index-10" id="index-10" class="zola-anchor"></a>
     </h2>
     <p><img src="https://obelieve.top/site/images/retrofit%E6%B5%81%E7%A8%8B%E5%9B%BE.png" alt="流程图.png" /></p>
 <h2 id="1-jie-shao">1. 介绍<a class="zola-anchor" href="#1-jie-shao" aria-label="Anchor link for: 1-jie-shao">🔗</a></h2>
@@ -2301,7 +2384,7 @@ class Fruit extends Food {}</li>
             
   <article class="h-entry hentry feed-entry">
     <h2 class="no-border pb-sm entry-title">
-      <a class="no-underline  u-url p-name entry-title" rel="bookmark" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;pythonyu-fa&#x2F;">Python语法</a> <a href="#index-10" id="index-10" class="zola-anchor"></a>
+      <a class="no-underline  u-url p-name entry-title" rel="bookmark" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;pythonyu-fa&#x2F;">Python语法</a> <a href="#index-11" id="index-11" class="zola-anchor"></a>
     </h2>
     <p>[TOC]</p>
 <h2 id="zhu">注:<a class="zola-anchor" href="#zhu" aria-label="Anchor link for: zhu">🔗</a></h2>
@@ -3787,7 +3870,7 @@ loop.run_forever()
               <div class="by">按 <a href="/categories/">分类</a> 查看：</div>
               
               <details class="pb-sm">
-                <summary class="text-bigger">Notes&nbsp;(<a href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;categories&#x2F;notes&#x2F;">10</a>)</summary>
+                <summary class="text-bigger">Notes&nbsp;(<a href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;categories&#x2F;notes&#x2F;">11</a>)</summary>
                 <ul>
                   
                   <li>
@@ -3818,6 +3901,11 @@ loop.run_forever()
                   <li>
     <a href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;quotes&#x2F;">阅读摘要</a>
     <span class="muted text-sm">2025-09-18</span>
+  </li>
+                  
+                  <li>
+    <a href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;android-mo-ni-qi-chuang-jian-xi-tong-ying-yong&#x2F;">Android 模拟器创建系统应用</a>
+    <span class="muted text-sm">2025-02-07</span>
   </li>
                   
                   <li>
@@ -3886,6 +3974,11 @@ loop.run_forever()
   </li>
                     
                     <li>
+    <a href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;android-mo-ni-qi-chuang-jian-xi-tong-ying-yong&#x2F;">Android 模拟器创建系统应用</a>
+    <span class="muted text-sm">2025-02-07</span>
+  </li>
+                    
+                    <li>
     <a href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;guan-yu-http&#x2F;">关于HTTP</a>
     <span class="muted text-sm">2025-09-16</span>
   </li>
@@ -3944,7 +4037,7 @@ loop.run_forever()
               <a class="no-underline" title="About" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;tags&#x2F;about&#x2F;">About(1)</a>
             </li>
             <li class="inline">
-              <a class="no-underline" title="Android" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;tags&#x2F;android&#x2F;">Android(2)</a>
+              <a class="no-underline" title="Android" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;tags&#x2F;android&#x2F;">Android(3)</a>
             </li>
             <li class="inline">
               <a class="no-underline" title="api" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;tags&#x2F;api&#x2F;">api(1)</a>
