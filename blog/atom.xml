@@ -4,8 +4,89 @@
     <link rel="self" type="application/atom+xml" href="https://obelieve.github.io/blog/atom.xml"/>
     <link rel="alternate" type="text/html" href="https://obelieve.github.io/blog/"/>
     <generator uri="https://www.getzola.org/">Zola</generator>
-    <updated>2025-12-21T00:00:00+00:00</updated>
+    <updated>2026-02-07T00:00:00+00:00</updated>
     <id>https://obelieve.github.io/blog/atom.xml</id>
+    <entry xml:lang="zh">
+        <title>Android 模拟器创建系统应用</title>
+        <published>2026-02-07T00:00:00+00:00</published>
+        <updated>2026-02-07T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Obelieve
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://obelieve.github.io/blog/android-mo-ni-qi-chuang-jian-xi-tong-ying-yong/"/>
+        <id>https://obelieve.github.io/blog/android-mo-ni-qi-chuang-jian-xi-tong-ying-yong/</id>
+        
+        <content type="html" xml:base="https://obelieve.github.io/blog/android-mo-ni-qi-chuang-jian-xi-tong-ying-yong/">&lt;p&gt;Android应用使用到系统级的API，需要对apk进行系统级签名，本文记录下在Android 模拟器中创建系统应用的流程。&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;1-aospjing-xiang-chuang-jian-mo-ni-qi&quot;&gt;1.AOSP镜像创建模拟器&lt;a class=&quot;zola-anchor&quot; href=&quot;#1-aospjing-xiang-chuang-jian-mo-ni-qi&quot; aria-label=&quot;Anchor link for: 1-aospjing-xiang-chuang-jian-mo-ni-qi&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;p&gt;在Android Studio中的Tools-&amp;gt;Device Manager-&amp;gt;Add Device，选择Android Open Source创建模拟器。&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;2-sheng-cheng-aospde-xi-tong-qian-ming-wen-jian&quot;&gt;2.生成AOSP的系统签名文件&lt;a class=&quot;zola-anchor&quot; href=&quot;#2-sheng-cheng-aospde-xi-tong-qian-ming-wen-jian&quot; aria-label=&quot;Anchor link for: 2-sheng-cheng-aospde-xi-tong-qian-ming-wen-jian&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;ul&gt;
+&lt;li&gt;生成jks签名文件使用到&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;getfatday&#x2F;keytool-importkeypair&quot;&gt;keytool-importkeypair&lt;&#x2F;a&gt;，生成系统签名文件。&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;obelieve&#x2F;AOSP-jks&quot;&gt;AOSP-jks&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre data-lang=&quot;shell&quot; class=&quot;language-shell &quot;&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;keytool-importkeypair [-k keystore] [-p storepass] -pk8 pk8 -cert cert -alias key_alias
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;ul&gt;
+&lt;li&gt;gradle文件配置签名文件&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;pre data-lang=&quot;groovy&quot; class=&quot;language-groovy &quot;&gt;&lt;code class=&quot;language-groovy&quot; data-lang=&quot;groovy&quot;&gt;signingConfigs {  
+    getByName(&amp;quot;debug&amp;quot;) {  
+        keyAlias = &amp;quot;aa&amp;quot;  
+        keyPassword = &amp;quot;123456&amp;quot;  
+        storeFile = file(&amp;quot;..&amp;#x2F;keystore&amp;#x2F;platform_123456_aa_.jks&amp;quot;)  
+        storePassword = &amp;quot;123456&amp;quot;  
+    }  
+    create(&amp;quot;release&amp;quot;) {  
+        keyAlias = &amp;quot;key0&amp;quot;  
+        keyPassword = &amp;quot;123456&amp;quot;  
+        storeFile = file(&amp;quot;..&amp;#x2F;keystore&amp;#x2F;platform_123456_aa_.jks&amp;quot;)  
+        storePassword = &amp;quot;123456&amp;quot;  
+    }  
+  
+}  
+  
+buildTypes {  
+    release {  
+        proguardFiles(getDefaultProguardFile(&amp;quot;proguard-android-optimize.txt&amp;quot;), &amp;quot;proguard-rules.pro&amp;quot;)  
+        signingConfig = signingConfigs.getByName(&amp;quot;release&amp;quot;)  
+    }  
+    debug {  
+        signingConfig = signingConfigs.getByName(&amp;quot;debug&amp;quot;)  
+    }  
+}
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;fu-apkjin-xing-xi-tong-ji-qian-ming&quot;&gt;附： apk进行系统级签名&lt;a class=&quot;zola-anchor&quot; href=&quot;#fu-apkjin-xing-xi-tong-ji-qian-ming&quot; aria-label=&quot;Anchor link for: fu-apkjin-xing-xi-tong-ji-qian-ming&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;p&gt;还有一种是对apk直接系统级签名，这个还没试过，暂且记录下📝。&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;android.googlesource.com&#x2F;platform&#x2F;build&#x2F;+&#x2F;master&#x2F;target&#x2F;product&#x2F;security&quot;&gt;AOSP源码&lt;&#x2F;a&gt;中找到签名文件platform.pk8 和 platform.x509.pem&lt;&#x2F;li&gt;
+&lt;li&gt;在Android SDK中找到$ANDROID_HOME&#x2F;build-tools&#x2F;33.0.0（选择其中一个版本），找到apksigner 程序执行下面命令直接签名apk。
+&lt;code&gt;apksigner sign --key platform.pk8 --cert platform.x509.pem &amp;lt;path of YourAPK&amp;gt;&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;3-dao-ru-apkdao-xi-tong-jing-xiang&quot;&gt;3.导入apk到系统镜像&lt;a class=&quot;zola-anchor&quot; href=&quot;#3-dao-ru-apkdao-xi-tong-jing-xiang&quot; aria-label=&quot;Anchor link for: 3-dao-ru-apkdao-xi-tong-jing-xiang&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;pre data-lang=&quot;shell&quot; class=&quot;language-shell &quot;&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;#启动模拟器，置为可写状态
+emulator -avd &amp;lt;YourAVDNameHere&amp;gt; -writable-system
+#导入apk到系统目录下
+adb root 
+adb remount 
+adb shell mkdir &amp;#x2F;system&amp;#x2F;app&amp;#x2F;&amp;lt;YourAppFolder&amp;gt; 
+adb push &amp;lt;YourAPK&amp;gt; &amp;#x2F;system&amp;#x2F;app&amp;#x2F;&amp;lt;YourAppFolder&amp;gt;&amp;#x2F; 
+adb reboot
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;4-ying-yong-zhong-shi-yong-uid&quot;&gt;4.应用中使用uid&lt;a class=&quot;zola-anchor&quot; href=&quot;#4-ying-yong-zhong-shi-yong-uid&quot; aria-label=&quot;Anchor link for: 4-ying-yong-zhong-shi-yong-uid&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;pre data-lang=&quot;xml&quot; class=&quot;language-xml &quot;&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&amp;lt;manifest xmlns:tools=&amp;quot;http:&amp;#x2F;&amp;#x2F;schemas.android.com&amp;#x2F;tools&amp;quot;  
+    package=&amp;quot;com.zxy.demo&amp;quot;  
+          xmlns:android=&amp;quot;http:&amp;#x2F;&amp;#x2F;schemas.android.com&amp;#x2F;apk&amp;#x2F;res&amp;#x2F;android&amp;quot;  
+    android:sharedUserId=&amp;quot;android.uid.system&amp;quot;&amp;gt;
+&amp;lt;&amp;#x2F;manifest&amp;gt;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+</content>
+        
+    </entry>
     <entry xml:lang="zh">
         <title>Android 资源限定符</title>
         <published>2025-12-21T00:00:00+00:00</published>
@@ -335,87 +416,6 @@ res[0]=&amp;quot;abc&amp;quot;
 &lt;blockquote&gt;
 &lt;p&gt;写下15项能为你提供动力的事情。稍等一会儿再写下另外五项。列出五项最重要的为你提供动力的事情，把这个列表保存在某个地方，遇到困难时可以看看。《软件开发者路线图从学徒到高手》&lt;&#x2F;p&gt;
 &lt;&#x2F;blockquote&gt;</summary>
-        
-    </entry>
-    <entry xml:lang="zh">
-        <title>Android 模拟器创建系统应用</title>
-        <published>2025-02-07T00:00:00+00:00</published>
-        <updated>2025-02-07T00:00:00+00:00</updated>
-        
-        <author>
-          <name>
-            
-              Obelieve
-            
-          </name>
-        </author>
-        
-        <link rel="alternate" type="text/html" href="https://obelieve.github.io/blog/android-mo-ni-qi-chuang-jian-xi-tong-ying-yong/"/>
-        <id>https://obelieve.github.io/blog/android-mo-ni-qi-chuang-jian-xi-tong-ying-yong/</id>
-        
-        <content type="html" xml:base="https://obelieve.github.io/blog/android-mo-ni-qi-chuang-jian-xi-tong-ying-yong/">&lt;p&gt;Android应用使用到系统级的API，需要对apk进行系统级签名，本文记录下在Android 模拟器中创建系统应用的流程。&lt;&#x2F;p&gt;
-&lt;h2 id=&quot;1-aospjing-xiang-chuang-jian-mo-ni-qi&quot;&gt;1.AOSP镜像创建模拟器&lt;a class=&quot;zola-anchor&quot; href=&quot;#1-aospjing-xiang-chuang-jian-mo-ni-qi&quot; aria-label=&quot;Anchor link for: 1-aospjing-xiang-chuang-jian-mo-ni-qi&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
-&lt;p&gt;在Android Studio中的Tools-&amp;gt;Device Manager-&amp;gt;Add Device，选择Android Open Source创建模拟器。&lt;&#x2F;p&gt;
-&lt;h2 id=&quot;2-sheng-cheng-aospde-xi-tong-qian-ming-wen-jian&quot;&gt;2.生成AOSP的系统签名文件&lt;a class=&quot;zola-anchor&quot; href=&quot;#2-sheng-cheng-aospde-xi-tong-qian-ming-wen-jian&quot; aria-label=&quot;Anchor link for: 2-sheng-cheng-aospde-xi-tong-qian-ming-wen-jian&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
-&lt;ul&gt;
-&lt;li&gt;生成jks签名文件使用到&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;getfatday&#x2F;keytool-importkeypair&quot;&gt;keytool-importkeypair&lt;&#x2F;a&gt;，生成系统签名文件。&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;obelieve&#x2F;AOSP-jks&quot;&gt;AOSP-jks&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
-&lt;&#x2F;ul&gt;
-&lt;pre data-lang=&quot;shell&quot; class=&quot;language-shell &quot;&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;keytool-importkeypair [-k keystore] [-p storepass] -pk8 pk8 -cert cert -alias key_alias
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-&lt;ul&gt;
-&lt;li&gt;gradle文件配置签名文件&lt;&#x2F;li&gt;
-&lt;&#x2F;ul&gt;
-&lt;pre data-lang=&quot;groovy&quot; class=&quot;language-groovy &quot;&gt;&lt;code class=&quot;language-groovy&quot; data-lang=&quot;groovy&quot;&gt;signingConfigs {  
-    getByName(&amp;quot;debug&amp;quot;) {  
-        keyAlias = &amp;quot;aa&amp;quot;  
-        keyPassword = &amp;quot;123456&amp;quot;  
-        storeFile = file(&amp;quot;..&amp;#x2F;keystore&amp;#x2F;platform_123456_aa_.jks&amp;quot;)  
-        storePassword = &amp;quot;123456&amp;quot;  
-    }  
-    create(&amp;quot;release&amp;quot;) {  
-        keyAlias = &amp;quot;key0&amp;quot;  
-        keyPassword = &amp;quot;123456&amp;quot;  
-        storeFile = file(&amp;quot;..&amp;#x2F;keystore&amp;#x2F;platform_123456_aa_.jks&amp;quot;)  
-        storePassword = &amp;quot;123456&amp;quot;  
-    }  
-  
-}  
-  
-buildTypes {  
-    release {  
-        proguardFiles(getDefaultProguardFile(&amp;quot;proguard-android-optimize.txt&amp;quot;), &amp;quot;proguard-rules.pro&amp;quot;)  
-        signingConfig = signingConfigs.getByName(&amp;quot;release&amp;quot;)  
-    }  
-    debug {  
-        signingConfig = signingConfigs.getByName(&amp;quot;debug&amp;quot;)  
-    }  
-}
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-&lt;h3 id=&quot;fu-apkjin-xing-xi-tong-ji-qian-ming&quot;&gt;附： apk进行系统级签名&lt;a class=&quot;zola-anchor&quot; href=&quot;#fu-apkjin-xing-xi-tong-ji-qian-ming&quot; aria-label=&quot;Anchor link for: fu-apkjin-xing-xi-tong-ji-qian-ming&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
-&lt;p&gt;还有一种是对apk直接系统级签名，这个还没试过，暂且记录下📝。&lt;&#x2F;p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;android.googlesource.com&#x2F;platform&#x2F;build&#x2F;+&#x2F;master&#x2F;target&#x2F;product&#x2F;security&quot;&gt;AOSP源码&lt;&#x2F;a&gt;中找到签名文件platform.pk8 和 platform.x509.pem&lt;&#x2F;li&gt;
-&lt;li&gt;在Android SDK中找到$ANDROID_HOME&#x2F;build-tools&#x2F;33.0.0（选择其中一个版本），找到apksigner 程序执行下面命令直接签名apk。
-&lt;code&gt;apksigner sign --key platform.pk8 --cert platform.x509.pem &amp;lt;path of YourAPK&amp;gt;&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
-&lt;&#x2F;ul&gt;
-&lt;h2 id=&quot;3-dao-ru-apkdao-xi-tong-jing-xiang&quot;&gt;3.导入apk到系统镜像&lt;a class=&quot;zola-anchor&quot; href=&quot;#3-dao-ru-apkdao-xi-tong-jing-xiang&quot; aria-label=&quot;Anchor link for: 3-dao-ru-apkdao-xi-tong-jing-xiang&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
-&lt;pre data-lang=&quot;shell&quot; class=&quot;language-shell &quot;&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;#启动模拟器，置为可写状态
-emulator -avd &amp;lt;YourAVDNameHere&amp;gt; -writable-system
-#导入apk到系统目录下
-adb root 
-adb remount 
-adb shell mkdir &amp;#x2F;system&amp;#x2F;app&amp;#x2F;&amp;lt;YourAppFolder&amp;gt; 
-adb push &amp;lt;YourAPK&amp;gt; &amp;#x2F;system&amp;#x2F;app&amp;#x2F;&amp;lt;YourAppFolder&amp;gt;&amp;#x2F; 
-adb reboot
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-&lt;h2 id=&quot;4-ying-yong-zhong-shi-yong-uid&quot;&gt;4.应用中使用uid&lt;a class=&quot;zola-anchor&quot; href=&quot;#4-ying-yong-zhong-shi-yong-uid&quot; aria-label=&quot;Anchor link for: 4-ying-yong-zhong-shi-yong-uid&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
-&lt;pre data-lang=&quot;xml&quot; class=&quot;language-xml &quot;&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;&amp;lt;manifest xmlns:tools=&amp;quot;http:&amp;#x2F;&amp;#x2F;schemas.android.com&amp;#x2F;tools&amp;quot;  
-    package=&amp;quot;com.zxy.demo&amp;quot;  
-          xmlns:android=&amp;quot;http:&amp;#x2F;&amp;#x2F;schemas.android.com&amp;#x2F;apk&amp;#x2F;res&amp;#x2F;android&amp;quot;  
-    android:sharedUserId=&amp;quot;android.uid.system&amp;quot;&amp;gt;
-&amp;lt;&amp;#x2F;manifest&amp;gt;
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-</content>
         
     </entry>
     <entry xml:lang="zh">

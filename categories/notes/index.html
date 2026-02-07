@@ -1028,7 +1028,90 @@ a.theme-link-gray {
             
   <article class="h-entry hentry feed-entry">
     <h2 class="no-border pb-sm entry-title">
-      <a class="no-underline  u-url p-name entry-title" rel="bookmark" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;android-zi-yuan-xian-ding-fu&#x2F;">Android 资源限定符</a> <a href="#index-1" id="index-1" class="zola-anchor"></a>
+      <a class="no-underline  u-url p-name entry-title" rel="bookmark" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;android-mo-ni-qi-chuang-jian-xi-tong-ying-yong&#x2F;">Android 模拟器创建系统应用</a> <a href="#index-1" id="index-1" class="zola-anchor"></a>
+    </h2>
+    <p>Android应用使用到系统级的API，需要对apk进行系统级签名，本文记录下在Android 模拟器中创建系统应用的流程。</p>
+<h2 id="1-aospjing-xiang-chuang-jian-mo-ni-qi">1.AOSP镜像创建模拟器<a class="zola-anchor" href="#1-aospjing-xiang-chuang-jian-mo-ni-qi" aria-label="Anchor link for: 1-aospjing-xiang-chuang-jian-mo-ni-qi">🔗</a></h2>
+<p>在Android Studio中的Tools-&gt;Device Manager-&gt;Add Device，选择Android Open Source创建模拟器。</p>
+<h2 id="2-sheng-cheng-aospde-xi-tong-qian-ming-wen-jian">2.生成AOSP的系统签名文件<a class="zola-anchor" href="#2-sheng-cheng-aospde-xi-tong-qian-ming-wen-jian" aria-label="Anchor link for: 2-sheng-cheng-aospde-xi-tong-qian-ming-wen-jian">🔗</a></h2>
+<ul>
+<li>生成jks签名文件使用到<a href="https://github.com/getfatday/keytool-importkeypair">keytool-importkeypair</a>，生成系统签名文件。<a href="https://github.com/obelieve/AOSP-jks">AOSP-jks</a></li>
+</ul>
+<pre data-lang="shell" class="language-shell "><code class="language-shell" data-lang="shell">keytool-importkeypair [-k keystore] [-p storepass] -pk8 pk8 -cert cert -alias key_alias
+</code></pre>
+<ul>
+<li>gradle文件配置签名文件</li>
+</ul>
+<pre data-lang="groovy" class="language-groovy "><code class="language-groovy" data-lang="groovy">signingConfigs {  
+    getByName(&quot;debug&quot;) {  
+        keyAlias = &quot;aa&quot;  
+        keyPassword = &quot;123456&quot;  
+        storeFile = file(&quot;..&#x2F;keystore&#x2F;platform_123456_aa_.jks&quot;)  
+        storePassword = &quot;123456&quot;  
+    }  
+    create(&quot;release&quot;) {  
+        keyAlias = &quot;key0&quot;  
+        keyPassword = &quot;123456&quot;  
+        storeFile = file(&quot;..&#x2F;keystore&#x2F;platform_123456_aa_.jks&quot;)  
+        storePassword = &quot;123456&quot;  
+    }  
+  
+}  
+  
+buildTypes {  
+    release {  
+        proguardFiles(getDefaultProguardFile(&quot;proguard-android-optimize.txt&quot;), &quot;proguard-rules.pro&quot;)  
+        signingConfig = signingConfigs.getByName(&quot;release&quot;)  
+    }  
+    debug {  
+        signingConfig = signingConfigs.getByName(&quot;debug&quot;)  
+    }  
+}
+</code></pre>
+<h3 id="fu-apkjin-xing-xi-tong-ji-qian-ming">附： apk进行系统级签名<a class="zola-anchor" href="#fu-apkjin-xing-xi-tong-ji-qian-ming" aria-label="Anchor link for: fu-apkjin-xing-xi-tong-ji-qian-ming">🔗</a></h3>
+<p>还有一种是对apk直接系统级签名，这个还没试过，暂且记录下📝。</p>
+<ul>
+<li><a href="https://android.googlesource.com/platform/build/+/master/target/product/security">AOSP源码</a>中找到签名文件platform.pk8 和 platform.x509.pem</li>
+<li>在Android SDK中找到$ANDROID_HOME/build-tools/33.0.0（选择其中一个版本），找到apksigner 程序执行下面命令直接签名apk。
+<code>apksigner sign --key platform.pk8 --cert platform.x509.pem &lt;path of YourAPK&gt;</code></li>
+</ul>
+<h2 id="3-dao-ru-apkdao-xi-tong-jing-xiang">3.导入apk到系统镜像<a class="zola-anchor" href="#3-dao-ru-apkdao-xi-tong-jing-xiang" aria-label="Anchor link for: 3-dao-ru-apkdao-xi-tong-jing-xiang">🔗</a></h2>
+<pre data-lang="shell" class="language-shell "><code class="language-shell" data-lang="shell">#启动模拟器，置为可写状态
+emulator -avd &lt;YourAVDNameHere&gt; -writable-system
+#导入apk到系统目录下
+adb root 
+adb remount 
+adb shell mkdir &#x2F;system&#x2F;app&#x2F;&lt;YourAppFolder&gt; 
+adb push &lt;YourAPK&gt; &#x2F;system&#x2F;app&#x2F;&lt;YourAppFolder&gt;&#x2F; 
+adb reboot
+</code></pre>
+<h2 id="4-ying-yong-zhong-shi-yong-uid">4.应用中使用uid<a class="zola-anchor" href="#4-ying-yong-zhong-shi-yong-uid" aria-label="Anchor link for: 4-ying-yong-zhong-shi-yong-uid">🔗</a></h2>
+<pre data-lang="xml" class="language-xml "><code class="language-xml" data-lang="xml">&lt;manifest xmlns:tools=&quot;http:&#x2F;&#x2F;schemas.android.com&#x2F;tools&quot;  
+    package=&quot;com.zxy.demo&quot;  
+          xmlns:android=&quot;http:&#x2F;&#x2F;schemas.android.com&#x2F;apk&#x2F;res&#x2F;android&quot;  
+    android:sharedUserId=&quot;android.uid.system&quot;&gt;
+&lt;&#x2F;manifest&gt;
+</code></pre>
+
+    <div class="muted text-sm">
+      <a title="2026-02-07" class="no-underline u-url p-name entry-title" rel="bookmark" href="https://obelieve.github.io/blog/android-mo-ni-qi-chuang-jian-xi-tong-ying-yong/">
+        <time class="dt-published published" datetime="2026-02-07">2026.02.07</time>
+      </a>
+      
+      <span>&nbsp;on</span>
+      <a title="Notes" class="no-underline p-category" rel="category tag" href="https://obelieve.github.io/categories/notes/">
+          Notes
+        </a>
+      
+
+    </div>
+  </article>
+  
+          
+            
+  <article class="h-entry hentry feed-entry">
+    <h2 class="no-border pb-sm entry-title">
+      <a class="no-underline  u-url p-name entry-title" rel="bookmark" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;android-zi-yuan-xian-ding-fu&#x2F;">Android 资源限定符</a> <a href="#index-2" id="index-2" class="zola-anchor"></a>
     </h2>
     <p><a href="https://developer.android.com/guide/topics/resources/providing-resources?hl=zh-cn#BestMatch">官方资源限定符查找顺序</a></p>
 <h2 id="sw-n-dp"><code>sw&lt;N&gt;dp</code><a class="zola-anchor" href="#sw-n-dp" aria-label="Anchor link for: sw-n-dp">🔗</a></h2>
@@ -1063,7 +1146,7 @@ a.theme-link-gray {
             
   <article class="h-entry hentry feed-entry">
     <h2 class="no-border pb-sm entry-title">
-      <a class="no-underline  u-url p-name entry-title" rel="bookmark" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;kotlin-re-liu-he-leng-liu&#x2F;">Kotlin 热流和冷流</a> <a href="#index-2" id="index-2" class="zola-anchor"></a>
+      <a class="no-underline  u-url p-name entry-title" rel="bookmark" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;kotlin-re-liu-he-leng-liu&#x2F;">Kotlin 热流和冷流</a> <a href="#index-3" id="index-3" class="zola-anchor"></a>
     </h2>
     <h2 id="leng-liu">冷流<a class="zola-anchor" href="#leng-liu" aria-label="Anchor link for: leng-liu">🔗</a></h2>
 <p>订阅时，才发送数据。多次订阅，每个订阅都是新的数据。</p>
@@ -1120,7 +1203,7 @@ MutableSharedFlow(1)
             
   <article class="h-entry hentry feed-entry">
     <h2 class="no-border pb-sm entry-title">
-      <a class="no-underline  u-url p-name entry-title" rel="bookmark" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;bian-cheng-yu-yan-chang-yong-de-shu-ju-jie-gou-api&#x2F;">编程语言常用的数据结构api</a> <a href="#index-3" id="index-3" class="zola-anchor"></a>
+      <a class="no-underline  u-url p-name entry-title" rel="bookmark" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;bian-cheng-yu-yan-chang-yong-de-shu-ju-jie-gou-api&#x2F;">编程语言常用的数据结构api</a> <a href="#index-4" id="index-4" class="zola-anchor"></a>
     </h2>
     <h2 id="java">Java<a class="zola-anchor" href="#java" aria-label="Anchor link for: java">🔗</a></h2>
 <h3 id="zui-xiao-dui-priorityqueue">最小堆 PriorityQueue<a class="zola-anchor" href="#zui-xiao-dui-priorityqueue" aria-label="Anchor link for: zui-xiao-dui-priorityqueue">🔗</a></h3>
@@ -1159,7 +1242,7 @@ heapq.heappush(heap,(value,key)) #key-value关系存到最小堆中， 以value�
             
   <article class="h-entry hentry feed-entry">
     <h2 class="no-border pb-sm entry-title">
-      <a class="no-underline  u-url p-name entry-title" rel="bookmark" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;celeryku&#x2F;">Celery 分布式任务队列</a> <a href="#index-4" id="index-4" class="zola-anchor"></a>
+      <a class="no-underline  u-url p-name entry-title" rel="bookmark" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;celeryku&#x2F;">Celery 分布式任务队列</a> <a href="#index-5" id="index-5" class="zola-anchor"></a>
     </h2>
     <h2 id="jing-ji-ren-broker">经纪人（broker）<a class="zola-anchor" href="#jing-ji-ren-broker" aria-label="Anchor link for: jing-ji-ren-broker">🔗</a></h2>
 <p>需要发送消息/接收消息，通过第三方消息代理软件，来实现。</p>
@@ -1265,7 +1348,7 @@ python -m celeryconfig # 验证配置模块是否正确
             
   <article class="h-entry hentry feed-entry">
     <h2 class="no-border pb-sm entry-title">
-      <a class="no-underline  u-url p-name entry-title" rel="bookmark" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;askill&#x2F;">收集小技巧</a> <a href="#index-5" id="index-5" class="zola-anchor"></a>
+      <a class="no-underline  u-url p-name entry-title" rel="bookmark" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;askill&#x2F;">收集小技巧</a> <a href="#index-6" id="index-6" class="zola-anchor"></a>
     </h2>
     <div class="p-summary entry-summary"><p><strong>python ascii-数字转换</strong></p>
 <pre data-lang="py" class="language-py "><code class="language-py" data-lang="py">a = &#x27;a&#x27;
@@ -1325,7 +1408,7 @@ res[0]=&quot;abc&quot;
             
   <article class="h-entry hentry feed-entry">
     <h2 class="no-border pb-sm entry-title">
-      <a class="no-underline  u-url p-name entry-title" rel="bookmark" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;quotes&#x2F;">阅读摘要</a> <a href="#index-6" id="index-6" class="zola-anchor"></a>
+      <a class="no-underline  u-url p-name entry-title" rel="bookmark" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;quotes&#x2F;">阅读摘要</a> <a href="#index-7" id="index-7" class="zola-anchor"></a>
     </h2>
     <div class="p-summary entry-summary"><blockquote>
 <p>“多读而不求甚解，则如驰骋十里洋场，虽珍奇满目，徒惹得心花意乱，空手而归。” —— 朱光潜</p>
@@ -1370,89 +1453,6 @@ res[0]=&quot;abc&quot;
     <div class="muted text-sm">
       <a title="2025-09-03" class="no-underline u-url p-name entry-title" rel="bookmark" href="https://obelieve.github.io/blog/quotes/">
         <time class="dt-published published" datetime="2025-09-03">2025.09.03</time>
-      </a>
-      
-      <span>&nbsp;on</span>
-      <a title="Notes" class="no-underline p-category" rel="category tag" href="https://obelieve.github.io/categories/notes/">
-          Notes
-        </a>
-      
-
-    </div>
-  </article>
-  
-          
-            
-  <article class="h-entry hentry feed-entry">
-    <h2 class="no-border pb-sm entry-title">
-      <a class="no-underline  u-url p-name entry-title" rel="bookmark" href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;android-mo-ni-qi-chuang-jian-xi-tong-ying-yong&#x2F;">Android 模拟器创建系统应用</a> <a href="#index-7" id="index-7" class="zola-anchor"></a>
-    </h2>
-    <p>Android应用使用到系统级的API，需要对apk进行系统级签名，本文记录下在Android 模拟器中创建系统应用的流程。</p>
-<h2 id="1-aospjing-xiang-chuang-jian-mo-ni-qi">1.AOSP镜像创建模拟器<a class="zola-anchor" href="#1-aospjing-xiang-chuang-jian-mo-ni-qi" aria-label="Anchor link for: 1-aospjing-xiang-chuang-jian-mo-ni-qi">🔗</a></h2>
-<p>在Android Studio中的Tools-&gt;Device Manager-&gt;Add Device，选择Android Open Source创建模拟器。</p>
-<h2 id="2-sheng-cheng-aospde-xi-tong-qian-ming-wen-jian">2.生成AOSP的系统签名文件<a class="zola-anchor" href="#2-sheng-cheng-aospde-xi-tong-qian-ming-wen-jian" aria-label="Anchor link for: 2-sheng-cheng-aospde-xi-tong-qian-ming-wen-jian">🔗</a></h2>
-<ul>
-<li>生成jks签名文件使用到<a href="https://github.com/getfatday/keytool-importkeypair">keytool-importkeypair</a>，生成系统签名文件。<a href="https://github.com/obelieve/AOSP-jks">AOSP-jks</a></li>
-</ul>
-<pre data-lang="shell" class="language-shell "><code class="language-shell" data-lang="shell">keytool-importkeypair [-k keystore] [-p storepass] -pk8 pk8 -cert cert -alias key_alias
-</code></pre>
-<ul>
-<li>gradle文件配置签名文件</li>
-</ul>
-<pre data-lang="groovy" class="language-groovy "><code class="language-groovy" data-lang="groovy">signingConfigs {  
-    getByName(&quot;debug&quot;) {  
-        keyAlias = &quot;aa&quot;  
-        keyPassword = &quot;123456&quot;  
-        storeFile = file(&quot;..&#x2F;keystore&#x2F;platform_123456_aa_.jks&quot;)  
-        storePassword = &quot;123456&quot;  
-    }  
-    create(&quot;release&quot;) {  
-        keyAlias = &quot;key0&quot;  
-        keyPassword = &quot;123456&quot;  
-        storeFile = file(&quot;..&#x2F;keystore&#x2F;platform_123456_aa_.jks&quot;)  
-        storePassword = &quot;123456&quot;  
-    }  
-  
-}  
-  
-buildTypes {  
-    release {  
-        proguardFiles(getDefaultProguardFile(&quot;proguard-android-optimize.txt&quot;), &quot;proguard-rules.pro&quot;)  
-        signingConfig = signingConfigs.getByName(&quot;release&quot;)  
-    }  
-    debug {  
-        signingConfig = signingConfigs.getByName(&quot;debug&quot;)  
-    }  
-}
-</code></pre>
-<h3 id="fu-apkjin-xing-xi-tong-ji-qian-ming">附： apk进行系统级签名<a class="zola-anchor" href="#fu-apkjin-xing-xi-tong-ji-qian-ming" aria-label="Anchor link for: fu-apkjin-xing-xi-tong-ji-qian-ming">🔗</a></h3>
-<p>还有一种是对apk直接系统级签名，这个还没试过，暂且记录下📝。</p>
-<ul>
-<li><a href="https://android.googlesource.com/platform/build/+/master/target/product/security">AOSP源码</a>中找到签名文件platform.pk8 和 platform.x509.pem</li>
-<li>在Android SDK中找到$ANDROID_HOME/build-tools/33.0.0（选择其中一个版本），找到apksigner 程序执行下面命令直接签名apk。
-<code>apksigner sign --key platform.pk8 --cert platform.x509.pem &lt;path of YourAPK&gt;</code></li>
-</ul>
-<h2 id="3-dao-ru-apkdao-xi-tong-jing-xiang">3.导入apk到系统镜像<a class="zola-anchor" href="#3-dao-ru-apkdao-xi-tong-jing-xiang" aria-label="Anchor link for: 3-dao-ru-apkdao-xi-tong-jing-xiang">🔗</a></h2>
-<pre data-lang="shell" class="language-shell "><code class="language-shell" data-lang="shell">#启动模拟器，置为可写状态
-emulator -avd &lt;YourAVDNameHere&gt; -writable-system
-#导入apk到系统目录下
-adb root 
-adb remount 
-adb shell mkdir &#x2F;system&#x2F;app&#x2F;&lt;YourAppFolder&gt; 
-adb push &lt;YourAPK&gt; &#x2F;system&#x2F;app&#x2F;&lt;YourAppFolder&gt;&#x2F; 
-adb reboot
-</code></pre>
-<h2 id="4-ying-yong-zhong-shi-yong-uid">4.应用中使用uid<a class="zola-anchor" href="#4-ying-yong-zhong-shi-yong-uid" aria-label="Anchor link for: 4-ying-yong-zhong-shi-yong-uid">🔗</a></h2>
-<pre data-lang="xml" class="language-xml "><code class="language-xml" data-lang="xml">&lt;manifest xmlns:tools=&quot;http:&#x2F;&#x2F;schemas.android.com&#x2F;tools&quot;  
-    package=&quot;com.zxy.demo&quot;  
-          xmlns:android=&quot;http:&#x2F;&#x2F;schemas.android.com&#x2F;apk&#x2F;res&#x2F;android&quot;  
-    android:sharedUserId=&quot;android.uid.system&quot;&gt;
-&lt;&#x2F;manifest&gt;
-</code></pre>
-
-    <div class="muted text-sm">
-      <a title="2025-02-07" class="no-underline u-url p-name entry-title" rel="bookmark" href="https://obelieve.github.io/blog/android-mo-ni-qi-chuang-jian-xi-tong-ying-yong/">
-        <time class="dt-published published" datetime="2025-02-07">2025.02.07</time>
       </a>
       
       <span>&nbsp;on</span>
@@ -3874,6 +3874,11 @@ loop.run_forever()
                 <ul>
                   
                   <li>
+    <a href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;android-mo-ni-qi-chuang-jian-xi-tong-ying-yong&#x2F;">Android 模拟器创建系统应用</a>
+    <span class="muted text-sm">2026-02-07</span>
+  </li>
+                  
+                  <li>
     <a href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;android-zi-yuan-xian-ding-fu&#x2F;">Android 资源限定符</a>
     <span class="muted text-sm">2025-12-21</span>
   </li>
@@ -3901,11 +3906,6 @@ loop.run_forever()
                   <li>
     <a href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;quotes&#x2F;">阅读摘要</a>
     <span class="muted text-sm">2025-09-18</span>
-  </li>
-                  
-                  <li>
-    <a href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;android-mo-ni-qi-chuang-jian-xi-tong-ying-yong&#x2F;">Android 模拟器创建系统应用</a>
-    <span class="muted text-sm">2025-02-07</span>
   </li>
                   
                   <li>
@@ -3940,6 +3940,18 @@ loop.run_forever()
                 <div class="by">按 <a href="/archive/">归档</a> 查看：</div>
                 
                 <details class="pb-sm">
+                  <summary class="text-bigger">2026</summary>
+                  <ul>
+                    
+                    <li>
+    <a href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;android-mo-ni-qi-chuang-jian-xi-tong-ying-yong&#x2F;">Android 模拟器创建系统应用</a>
+    <span class="muted text-sm">2026-02-07</span>
+  </li>
+                    
+                  </ul>
+                </details>
+                
+                <details class="pb-sm">
                   <summary class="text-bigger">2025</summary>
                   <ul>
                     
@@ -3971,11 +3983,6 @@ loop.run_forever()
                     <li>
     <a href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;quotes&#x2F;">阅读摘要</a>
     <span class="muted text-sm">2025-09-18</span>
-  </li>
-                    
-                    <li>
-    <a href="https:&#x2F;&#x2F;obelieve.github.io&#x2F;blog&#x2F;android-mo-ni-qi-chuang-jian-xi-tong-ying-yong&#x2F;">Android 模拟器创建系统应用</a>
-    <span class="muted text-sm">2025-02-07</span>
   </li>
                     
                     <li>

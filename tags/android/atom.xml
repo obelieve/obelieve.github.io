@@ -4,45 +4,12 @@
     <link rel="self" type="application/atom+xml" href="https://obelieve.github.io/tags/android/atom.xml"/>
     <link rel="alternate" type="text/html" href="https://obelieve.github.io"/>
     <generator uri="https://www.getzola.org/">Zola</generator>
-    <updated>2025-12-21T00:00:00+00:00</updated>
+    <updated>2026-02-07T00:00:00+00:00</updated>
     <id>https://obelieve.github.io/tags/android/atom.xml</id>
     <entry xml:lang="zh">
-        <title>Android 资源限定符</title>
-        <published>2025-12-21T00:00:00+00:00</published>
-        <updated>2025-12-21T00:00:00+00:00</updated>
-        
-        <author>
-          <name>
-            
-              Obelieve
-            
-          </name>
-        </author>
-        
-        <link rel="alternate" type="text/html" href="https://obelieve.github.io/blog/android-zi-yuan-xian-ding-fu/"/>
-        <id>https://obelieve.github.io/blog/android-zi-yuan-xian-ding-fu/</id>
-        
-        <content type="html" xml:base="https://obelieve.github.io/blog/android-zi-yuan-xian-ding-fu/">&lt;p&gt;&lt;a href=&quot;https:&#x2F;&#x2F;developer.android.com&#x2F;guide&#x2F;topics&#x2F;resources&#x2F;providing-resources?hl=zh-cn#BestMatch&quot;&gt;官方资源限定符查找顺序&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
-&lt;h2 id=&quot;sw-n-dp&quot;&gt;&lt;code&gt;sw&amp;lt;N&amp;gt;dp&lt;&#x2F;code&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#sw-n-dp&quot; aria-label=&quot;Anchor link for: sw-n-dp&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
-&lt;p&gt;应用可用屏幕区域的最短尺寸，系统会选择最接近（但不超过）设备的值。&lt;&#x2F;p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;限定符顺序：&lt;code&gt;drawable-sw300dp-xhdpi&lt;&#x2F;code&gt;，不然会报错。&lt;&#x2F;p&gt;
-&lt;&#x2F;li&gt;
-&lt;li&gt;
-&lt;p&gt;对于 &lt;code&gt;drawable&lt;&#x2F;code&gt; 资源：如果只有一个资源，只在某个&lt;code&gt;drawable-sw&amp;lt;N&amp;gt;dp&lt;&#x2F;code&gt;目录下，编译时不会报错，但是如果sw不匹配，应用会判定找不到资源，&lt;code&gt;应用会奔溃&lt;&#x2F;code&gt;。&lt;&#x2F;p&gt;
-&lt;&#x2F;li&gt;
-&lt;li&gt;
-&lt;p&gt;对于 &lt;code&gt;values&lt;&#x2F;code&gt; 资源：如果只有一个资源，只在某个&lt;code&gt;values-sw&amp;lt;N&amp;gt;dp&lt;&#x2F;code&gt;定义IDE会提示报错，必须 &lt;code&gt;values&lt;&#x2F;code&gt; 要有定义同名的资源。&lt;&#x2F;p&gt;
-&lt;&#x2F;li&gt;
-&lt;&#x2F;ul&gt;
-</content>
-        
-    </entry>
-    <entry xml:lang="zh">
         <title>Android 模拟器创建系统应用</title>
-        <published>2025-02-07T00:00:00+00:00</published>
-        <updated>2025-02-07T00:00:00+00:00</updated>
+        <published>2026-02-07T00:00:00+00:00</published>
+        <updated>2026-02-07T00:00:00+00:00</updated>
         
         <author>
           <name>
@@ -117,6 +84,39 @@ adb reboot
     android:sharedUserId=&amp;quot;android.uid.system&amp;quot;&amp;gt;
 &amp;lt;&amp;#x2F;manifest&amp;gt;
 &lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="zh">
+        <title>Android 资源限定符</title>
+        <published>2025-12-21T00:00:00+00:00</published>
+        <updated>2025-12-21T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Obelieve
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://obelieve.github.io/blog/android-zi-yuan-xian-ding-fu/"/>
+        <id>https://obelieve.github.io/blog/android-zi-yuan-xian-ding-fu/</id>
+        
+        <content type="html" xml:base="https://obelieve.github.io/blog/android-zi-yuan-xian-ding-fu/">&lt;p&gt;&lt;a href=&quot;https:&#x2F;&#x2F;developer.android.com&#x2F;guide&#x2F;topics&#x2F;resources&#x2F;providing-resources?hl=zh-cn#BestMatch&quot;&gt;官方资源限定符查找顺序&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;sw-n-dp&quot;&gt;&lt;code&gt;sw&amp;lt;N&amp;gt;dp&lt;&#x2F;code&gt;&lt;a class=&quot;zola-anchor&quot; href=&quot;#sw-n-dp&quot; aria-label=&quot;Anchor link for: sw-n-dp&quot;&gt;🔗&lt;&#x2F;a&gt;&lt;&#x2F;h2&gt;
+&lt;p&gt;应用可用屏幕区域的最短尺寸，系统会选择最接近（但不超过）设备的值。&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;限定符顺序：&lt;code&gt;drawable-sw300dp-xhdpi&lt;&#x2F;code&gt;，不然会报错。&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;对于 &lt;code&gt;drawable&lt;&#x2F;code&gt; 资源：如果只有一个资源，只在某个&lt;code&gt;drawable-sw&amp;lt;N&amp;gt;dp&lt;&#x2F;code&gt;目录下，编译时不会报错，但是如果sw不匹配，应用会判定找不到资源，&lt;code&gt;应用会奔溃&lt;&#x2F;code&gt;。&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;对于 &lt;code&gt;values&lt;&#x2F;code&gt; 资源：如果只有一个资源，只在某个&lt;code&gt;values-sw&amp;lt;N&amp;gt;dp&lt;&#x2F;code&gt;定义IDE会提示报错，必须 &lt;code&gt;values&lt;&#x2F;code&gt; 要有定义同名的资源。&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
 </content>
         
     </entry>
